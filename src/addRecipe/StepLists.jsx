@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import {tempRecipe} from "./addRecipeMain";
 
 const useStyles = makeStyles(theme => ({
     font: {
@@ -30,6 +31,7 @@ function StepLists() {
         const list = [...inputList];
         list[index] = value;
         setInputList(list);
+        tempRecipe.setInstruction(list);
     };
 
     // handle click event of the Remove button
@@ -37,6 +39,8 @@ function StepLists() {
         const list = [...inputList];
         list.splice(index, 1);
         setInputList(list);
+        tempRecipe.setInstruction(list);
+
     };
 
     // handle click event of the Add button

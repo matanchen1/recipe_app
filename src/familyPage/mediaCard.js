@@ -3,10 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
-// import CardContent from '@material-ui/core/CardContent';
 import StoryDialog from './StoryDialog'
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {useHistory} from "react-router-dom";
 
@@ -17,7 +15,8 @@ const useStyles = makeStyles({
     },
     media: {
         height: 240,
-    borderRadius:"12%"},
+    borderRadius:"12%",
+    textAlign:"center"},
 });
 
 export default function MediaCard(props) {
@@ -25,8 +24,8 @@ export default function MediaCard(props) {
     const history = useHistory();
 
     return (
-        <Card className={classes.root} >
-            <CardActionArea onClick={()=> history.push("/showrecipe")}>
+        <Card className={classes.root}  onClick={()=> history.push("/showrecipe")}>
+            <CardActionArea >
                 <CardMedia
                     className={classes.media}
                     image={props.img}
@@ -41,9 +40,9 @@ export default function MediaCard(props) {
                 </Typography>
             </CardActionArea>
             <CardActions>
-
                     <StoryDialog title={props.title} text={props.text} img = {props.img}/>
             </CardActions>
         </Card>
     );
 }
+

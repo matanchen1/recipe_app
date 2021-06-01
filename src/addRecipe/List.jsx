@@ -5,6 +5,7 @@ import {IconButton, makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import {tempRecipe} from "./addRecipeMain";
 
 const useStyles = makeStyles(theme => ({
         margin: {
@@ -50,9 +51,8 @@ function List() {
         const {name, value} = e.target;
         const list = [...inputList];
         list[index][name] = value;
-        console.log({value})
-        console.log({name})
         setInputList(list);
+        tempRecipe.setIngredientsList(list);
     };
 
     // handle click event of the Remove button
@@ -60,6 +60,8 @@ function List() {
         const list = [...inputList];
         list.splice(index, 1);
         setInputList(list);
+        tempRecipe.setIngredientsList(list);
+
     };
 
     // handle click event of the Add button

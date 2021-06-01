@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Item(props) {
-    const classes = useStyles();
+    // const classes = useStyles();
     return (
         <ListItem button>
             <ListItemIcon>
@@ -37,13 +37,9 @@ function Item(props) {
                                       fontSize: "15px"
                                   }}>{props.num}</span>
             </ListItemIcon>
-            <ListItemText classes={{primary: classes.check}} primary={props.text}/>
+            <ListItemText   primary={props.text}/>
         </ListItem>
     )
-}
-
-function ListItemLink(props) {
-    return <ListItem button component="a" {...props} />;
 }
 
 export default function SimpleList() {
@@ -54,7 +50,7 @@ export default function SimpleList() {
             <List component="nav"
                   aria-label="main mailbox folders">
                 <Item text={FIRST_DISH} num={8}/>
-                <Divider style={{color:"white"}}/>
+                <Divider/>
                 <Item text={SECOND_DISH} num={12}/>
                 <Divider/>
                 <Item text={THIRD_DISH} num={23}/>

@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
         minHeight: "47vh",
     }
 }));
-export default function Ingredients() {
+export default function Ingredients(recipe) {
     const classes = useStyles();
     return (
         <div >

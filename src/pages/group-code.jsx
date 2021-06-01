@@ -1,10 +1,29 @@
 import React, {useRef, useState} from 'react'
-import App from "../App"
 import "../styles/styles.css"
 
-import { Button, Form, FormGroup, FormControl } from "react-bootstrap";
+import {Button, Form, FormGroup, FormControl, Alert} from "react-bootstrap";
+import {useAuth} from "../contexts/AuthContext";
+import {useHistory} from "react-router-dom";
 
 export default function GroupCode({ setShowSignUp }) {
+    const groupcodeRef = useRef();
+    const { login } = useAuth();
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const history = useHistory();
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        try {
+            setError("");
+            setLoading(true);
+            await login(groupcodeRef.current.value);
+            history.push("/main");
+        } catch (err) {
+            setError(err.message);
+        }
+        setLoading(false);
+    }
 
     return (
         <div id="group-code">
@@ -13,9 +32,14 @@ export default function GroupCode({ setShowSignUp }) {
                 <br />
                 and connecting
             </h2>
-            <Form>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formBasicEmail">
-                    <Form.Control type="text" placeholder="Group code" />
+                    <Form.Control
+                        type="text"
+                        placeholder="Group code"
+                        ref={groupcodeRef}
+                    />
                     <Form.Text className="text-muted">
                         Don't have a group code?
                         <Button
@@ -28,8 +52,11 @@ export default function GroupCode({ setShowSignUp }) {
                         to create a family recipe book
                     </Form.Text>
                 </Form.Group>
+                <Button disabled={loading} variant="success" type="submit">
+                    Enter to see and create
+                </Button>
             </Form>
-            <Button variant="success">Enter to see and create</Button>
+
         </div>
     );
 }

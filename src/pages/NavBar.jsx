@@ -13,7 +13,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 
 export default function NavBar() {
-    const { currentUser, logout } = useAuth();
+    const { currentUser, logout, fetchData, recipes} = useAuth();
     const [error, setError] = useState("");
     const history = useHistory();
 
@@ -25,6 +25,17 @@ export default function NavBar() {
             history.push("/");
         } catch (err) {
             setError("Failed to Logout, " + err.message);
+        }
+    }
+
+    async function testGettingRecipes() {
+        setError("");
+        try {
+            await fetchData();
+            // while(!recipes) {}
+            console.log(recipes);
+        } catch (err) {
+            setError(err.message);
         }
     }
 
@@ -40,7 +51,7 @@ export default function NavBar() {
     return (
         <>
             <Navbar bg="light" expand="lg" className="sticky-top">
-                <Navbar.Brand href="#home" onClick={handleLogoClick}>Grandma Cooked Oatmeal</Navbar.Brand>
+                <Navbar.Brand onClick={handleLogoClick}>Grandma Cooked Oatmeal</Navbar.Brand>
 
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
@@ -52,7 +63,7 @@ export default function NavBar() {
                     {currentUser && currentUser.email}
                     {error && <Alert variant="danger">{error}</Alert>}
                     {currentUser && <Button className="ml-sm-2" onClick={handleLogout}>Logout</Button>}
-
+                    {currentUser && <Button className="ml-sm-2" onClick={testGettingRecipes}>Log Recipes To Console</Button>}
                     {/*<Form inline>*/}
                     {/*    <FormControl*/}
                     {/*        type="text"*/}

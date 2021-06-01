@@ -1,11 +1,11 @@
 import Typography from "@material-ui/core/Typography";
 import {makeStyles, Slider} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import React from "react";
+import React, {useRef} from "react";
+import TextField from "@material-ui/core/TextField";
+import {tempRecipe} from "./addRecipeMain";
 
-const useStyles = makeStyles(theme => ({
-
-}));
+const useStyles = makeStyles(theme => ({}));
 export default function SlideBar() {
     const classes = useStyles()
     const marks = [
@@ -28,7 +28,7 @@ export default function SlideBar() {
         {
             value: 200,
             label: '200°C',
-        },  {
+        }, {
             value: 225,
             label: '225°C',
         },
@@ -41,6 +41,7 @@ export default function SlideBar() {
     function valuetext(value) {
         return `${value}°C`;
     }
+
     return (
         <div>
             <Typography id="discrete-slider-custom" gutterBottom>
@@ -55,6 +56,13 @@ export default function SlideBar() {
                 max={250}
                 valueLabelDisplay="auto"
                 marks={marks}
+                onChangeCommitted={(event, val) => {
+                    tempRecipe.setOvenHeat(`${val}°C`);
+                    console.log(val);
+                    console.log(`${val}°C`);
+
+                }}
+
                 // orientation="vertical"
 
             />

@@ -1,0 +1,64 @@
+.main_body_items_and_filter{
+    flex: border-box;
+    min-height: 90vh;
+    display: grid;
+    grid-template-columns: [column1] 25px [column2] 150px [column3] 40px [column4] auto [column5] 25px [column6];
+    grid-template-rows: [row1] 10px [row2] auto [row3] auto [row4] 10px [row5];
+}
+
+.marginLeft {
+    grid-area: row1 / column1 / row4 / column2;
+}
+.marginRight {
+    grid-area: row1 / column5 / row4 / column6;
+}
+
+.filters_and_recipes{
+    grid-area: row3 / column2 / row4 / column5;
+}
+
+.filters {
+    grid-area: row3 / column2 / row4 / column3;
+    /*margin: 20px;*/
+    display: flex;
+    flex-direction: row ;
+    max-height:350px;
+    margin-top: 60px;
+}
+
+.recipes {
+    grid-area: row3 / column4 / row5 / column5;
+    margin-left: 50px;
+    margin-right: 30px;
+    margin-top: 30px;
+}
+.header {
+    /*grid-row: row2/ row3;*/
+    /*grid-column: column1/column5;*/
+    grid-area: row2 / column2 / row3 / column5;
+}
+
+
+/*.main-body-recipes {*/
+/*    grid-column-start: recpies;*/
+/*    grid-column-end: span buffer2;*/
+/*    grid-row-start: mainPageContent;*/
+/*    grid-row-end: span end;*/
+/*}*/
+
+/*.main-body-filters {*/
+/*    grid-column-start: filterStart;*/
+/*    grid-column-end: span bufferStart;*/
+/*    grid-row-start: mainPageContent;*/
+/*    grid-row-end: span endrow   ;*/
+/*}*/
+
+.family-img{
+    width: 250px;
+    /*minWidth: 150px;*/
+    height: 160px;
+    padding: 1px;
+    margin: 30px 0 0 45px;
+    /*borderRadius: 10%;*/
+    /*boxShadow: 0 0 1px 1px;*/
+}

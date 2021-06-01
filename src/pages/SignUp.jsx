@@ -9,6 +9,7 @@ export default function SignUp({ setShowSignUp }) {
     const emailRef = useRef();
     const passRef = useRef();
     const passwordConfRef = useRef();
+    const familyNameRef = useRef();
     const { signup } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -24,7 +25,7 @@ export default function SignUp({ setShowSignUp }) {
         try {
             setError("");
             setLoading(true);
-            await signup(emailRef.current.value, passRef.current.value);
+            await signup(emailRef.current.value, passRef.current.value, familyNameRef.current.value);
             history.push("/main");
         } catch (err) {
             setError(err.message);
@@ -41,6 +42,14 @@ export default function SignUp({ setShowSignUp }) {
             </h2>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
+                <Form.Group id="family-name">
+                    <Form.Control
+                        type="text"
+                        placeholder="Family Name"
+                        ref={familyNameRef}
+                        required
+                    />
+                </Form.Group>
                 <Form.Group id="email">
                     {/*<Form.Label>Email</Form.Label> */}
                     <Form.Control

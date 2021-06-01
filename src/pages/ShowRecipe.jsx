@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
     Form,
     Button,
@@ -6,18 +6,23 @@ import {
     Container,
     Collapse,
     Row,
-    Col
+    Col, Alert
 } from "react-bootstrap";
 import CardDeck from "react-bootstrap/CardDeck";
 import Nav from "react-bootstrap/Nav";
 import Tabs from "react-bootstrap/Tabs";
 import "../styles/ShowRecipe.css";
+import {useAuth} from "../contexts/AuthContext";
 
 
-export default function ShowRecipe() {
+export default function ShowRecipe(props) {
     const [open, setOpen] = React.useState(false);
+    const {recipes} = useAuth();
     const [btnMessage, setBtnMessage] = React.useState("Show Full Recipe");
-    const recipeName = "Grandma Shoshana's Challah";
+    let recipeName = "Grandma Shoshana's Challah";
+    const author = "Noah"
+    const prepTime = "1 hour"
+    const serving = "4 medium Challah's"
     const storyline1 = "Grandma Shoshana used to make this Challah every Shabbat. It's a recipe that passes in the family. " +
         "The word challah originally meant only the small portion of dough that was put in the oven when baking bread as a reminder of the destruction of the Temple in Jerusalem. " +
         " It has evolved into the twisted, sweet, almost brioche-like bread that was brought to America by immigrants from Central and Eastern Europe. " +
@@ -35,8 +40,8 @@ export default function ShowRecipe() {
         "8 to 8 ½ cups all-purpose flour",
         "Poppy or sesame seeds for sprinkling",
     ];
-    const lessIngredients = allIngredients.slice(0, 0);
-    const restOfIngredients = allIngredients.slice(0);
+    const lessIngredients = allIngredients.slice(0, 3);
+    const restOfIngredients = allIngredients.slice(3);
     const directions = [
         "In a large bowl, dissolve yeast and 1 tablespoon sugar in 1 3/4 cups lukewarm water.",
         "Whisk oil into yeast, then beat in 4 eggs, one at a time, with remaining sugar and salt. Gradually add flour. " +
@@ -67,12 +72,14 @@ export default function ShowRecipe() {
         }
     }
 
+    //  usage:
+    //  arrayname.map(message => (<Item key={message} message={item}/>))
     function Item(props) {
         return <li>{props.message}</li>;
     }
 
-    return (
-        <div className="outer_div">
+    function DefaultRecipe() {
+        return (
             <Card className="colored-background">
                 <div className="showrecipe">
                     {/*<h3 style={{ padding: "10px" }}>
@@ -89,17 +96,32 @@ export default function ShowRecipe() {
                                 </Nav.Item>
                             </Nav>
                         </Card.Header>
-                        <h1>{recipeName}</h1>
+                        <Card>
+                            <Col>
+                                <Row>
+                                    <h1>{recipeName}</h1>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <h3>By: {author} </h3>
+                                    </Col>
+                                    <Col>
+                                        <h3> Servings: {serving} </h3>
+                                    </Col>
+                                    <Col>
+                                        <h3>Preparation Time: {prepTime}</h3>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Card>
                         <CardDeck>
                             <Card>
-
                                 <Card.Body>
-                                    <h4>Recipe:</h4>
+                                    <h4>Ingredients:</h4>
                                     <ul className="show_ingredients">
                                         {lessIngredients.map(message => (
                                             <Item key={message} message={message} />
                                         ))}
-                                        <h5>Ingredients</h5>
                                         {restOfIngredients.map(message => (
                                             <Item key={message} message={message} />
                                         ))}
@@ -124,9 +146,111 @@ export default function ShowRecipe() {
                                 </Card.Body>
                             </Card>
                         </CardDeck>
+                        <CardDeck className= "Tags">
+                            <Card.Header>
+                                Tags:
+                            </Card.Header>
+                            <Card>
+                                <t1>Bread</t1>
+                            </Card>
+                            <Card>
+                                <t1>Shabbat</t1>
+                            </Card>
+                            <Card>
+                                <t1>with eggs</t1>
+                            </Card>
+                        </CardDeck>
                     </Card>
                 </div>
             </Card>
+        )
+    }
+
+
+    return (
+        <div className="outer_div">
+            {!props.id && <DefaultRecipe/>}
+            {props.id && recipes && recipes.length <= props.id && <Alert variant="danger">Error: recipe does not exist!</Alert>}
+            {props.id && recipes.length > props.id &&
+            <Card className="colored-background">
+                <div className="showrecipe">
+                    <Card className="recipecard">
+                        <Card.Header>
+                            <Nav variant="tabs" defaultActiveKey="/showrecipe">
+                                <Nav.Item>
+                                    <Nav.Link href="/showstory">Story</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link href="/showrecipe">Recipe</Nav.Link>
+                                </Nav.Item>
+                            </Nav>
+                        </Card.Header>
+                        <Card>
+                            <Col>
+                                <Row>
+                                    <h1>{recipes[props.id].name}</h1>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <h3>By: {recipes[props.id].author} </h3>
+                                    </Col>
+                                    <Col>
+                                        <h3> Servings: {recipes[props.id].serving} </h3>
+                                    </Col>
+                                    <Col>
+                                        <h3>Preparation Time: {recipes[props.id].prepTime}</h3>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Card>
+                        <CardDeck>
+                            <Card>
+                                <Card.Body>
+                                    <h4>Ingredients:</h4>
+                                    <ul className="show_ingredients">
+                                        {recipes[props.id].IngredientsList.map(message => (
+                                                <Item key={message} message={message}/>
+                                            ))
+                                        }
+                                    </ul>
+                                </Card.Body>
+                                <Card.Img
+                                    className="Head_Picture_Story"
+                                    variant="top"
+                                    fluid="false"
+                                    src="https://cdn.glitch.com/0b57df91-f600-46a4-956b-70a322817e9a%2Frebecca-matthews-yjWNJRwt8mc-unsplash.jpg?v=1619471178279"
+                                />
+                            </Card>
+                            <Card>
+                                <h5>Instructions:</h5>
+                                <ol className="show_instruction">
+                                    {recipes[props.id].instructionDetails.map(message => (
+                                        <Item key={message} message={message}/>
+                                    ))}
+                                </ol>
+                                <Card.Body>
+                                    <Button variant="outline-success">Edit Recipe</Button>
+                                </Card.Body>
+                            </Card>
+                        </CardDeck>
+                        <CardDeck className="Tags">
+                            <Card.Header>
+                                Tags:
+                            </Card.Header>
+                            <Card>
+                                <t1>Bread</t1>
+                            </Card>
+                            <Card>
+                                <t1>Shabbat</t1>
+                            </Card>
+                            <Card>
+                                <t1>with eggs</t1>
+                            </Card>
+                        </CardDeck>
+                    </Card>
+                </div>
+            </Card>
+            }
         </div>
     );
 }
