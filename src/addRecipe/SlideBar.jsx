@@ -1,13 +1,13 @@
 import Typography from "@material-ui/core/Typography";
 import {makeStyles, Slider} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
+// import Grid from "@material-ui/core/Grid";
 import React, {useRef} from "react";
-import TextField from "@material-ui/core/TextField";
+// import TextField from "@material-ui/core/TextField";
 import {tempRecipe} from "./addRecipeMain";
 
 const useStyles = makeStyles(theme => ({}));
 export default function SlideBar() {
-    const classes = useStyles()
+    // const classes = useStyles()
     const marks = [
         {
             value: 100,

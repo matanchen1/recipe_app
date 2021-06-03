@@ -25,7 +25,7 @@ export default function DropDown(props) {
             </ListItem>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <CheckboxListSecondary values={props.values}/>
+                    <CheckboxListSecondary dictValues={props.dictValues}/>
 
                     {/* <ListItem button className={classes.nested}>
             <ListItemIcon>

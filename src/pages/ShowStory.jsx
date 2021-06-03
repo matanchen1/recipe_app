@@ -1,16 +1,16 @@
 import React from "react";
 import {
-    Form,
-    Button,
+    // Form,
+    // Button,
     Card,
-    Container,
-    Collapse,
+    // Container,
+    // Collapse,
     Row,
-    Col
+    // Col
 } from "react-bootstrap";
 import CardDeck from "react-bootstrap/CardDeck";
 import Nav from "react-bootstrap/Nav";
-import Tabs from "react-bootstrap/Tabs";
+// import Tabs from "react-bootstrap/Tabs";
 import "../styles/ShowRecipe.css";
 
 
@@ -53,9 +53,9 @@ export default function ShowRecipe() {
         }
     }
 
-    function Item(props) {
-        return <li>{props.message}</li>;
-    }
+    // function Item(props) {
+    //     return <li>{props.message}</li>;
+    // }
 
     return (
         <div className="outer_div">

@@ -1,5 +1,5 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useEffect} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -17,45 +17,53 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CheckboxListSecondary(props) {
+
     const classes = useStyles();
     const [checked, setChecked] = React.useState([1]);
-    const change = props.clickChange;
+    const values = props.values
+
+    useEffect(()=>{
+        console.log("value",Object.keys(values))
+    },[values])
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
+        console.log("newChecked",checked)
 
+        const newChecked = [...checked];
         if (currentIndex === -1) {
             newChecked.push(value);
+            props.clickChange(props.stateNum, value)
+
         } else {
             newChecked.splice(currentIndex, 1);
         }
         setChecked(newChecked);
-        //TODO: remove
-        change(value,checked);
-    };
-
+        console.log("check", newChecked)
+        props.handlefilter();
+    }
     return (
         <List dense className={classes.root}>
-            {props.values.map((value) => {
+            {Object.keys(values).map((value) => {
                 const labelId = `checkbox-list-secondary-label-${value}`;
                 return (
                     <ListItem key={value} button className={classes.nested}>
                         {/*<ListItemIcon>*/}
                         {/*    maybe avatars in case of users?*/}
-                            <span className="badge badge-primary badge-pill"
-                                  style={{
-                                      background: "#269026",
-                                      fontSize: "12px"
-                                  }}>{5}</span>
+                        <span className="badge badge-primary badge-pill"
+                              style={{
+                                  background: "#269026",
+                                  fontSize: "12px"
+                              }}>{5}</span>
                         {/*</ListItemIcon>*/}
                         &nbsp;
-                        <ListItemText id={labelId} primary={`${value}`} />
+                        <ListItemText id={labelId} primary={`${value}`}/>
                         <ListItemSecondaryAction>
                             <Checkbox
                                 edge="end"
-                                checked={checked.indexOf(value) !== -1}
-                                onChange={handleToggle(value,checked)}
-                                inputProps={{ 'aria-labelledby': labelId }}
+                                checked={checked.indexOf(value) !== -1 }
+                                onChange={handleToggle(value)}
+                                handlefilter={props.handlefilter}
+                                inputProps={{'aria-labelledby': labelId}}
                             />
                         </ListItemSecondaryAction>
                     </ListItem>

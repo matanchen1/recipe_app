@@ -4,23 +4,96 @@ export const filterOptions = [
     'GlutenFree'];
 
 export const categoryOption = [
-    'Salads',
-    'Pies',
-    'Fish',
-    'Holidays',
-    'Deserts',
-    'Vegan',
-    'Soup',
-    'Other',
+    {
+        "_id": 0,
+        "name": "Salads"
+    },
+    {
+        "_id": 1,
+        "name": "Pies"
+    },
+    {
+        "_id": 2,
+        "name": "Fish"
+    },
+    {
+        "_id": 3,
+        "name": "Deserts"
+    },
+    {
+        "_id": 4,
+        "name": "Soup"
+    },
+    {
+        "_id": 5,
+        "name": "Other"
+    },
+
+
 ];
+
+export const dietOption = [
+    {
+        "_id": 100,
+        "name": "Vegan"
+    },
+    {
+        "_id": 101,
+        "name": "Kosher"
+    },
+    {
+        "_id": 102,
+        "name": "GlutenFree"
+    },
+];
+
+export const holidayOption = [
+    'Passover',
+    'Purim',
+    'Rosh Hashana',
+    'Shavuot'
+];
+export const AllFiltersOption = {
+    filterOptions: [
+        'Vegan',
+        'Kosher',
+        'GlutenFree'],
+
+    categoryOption: [
+        'Salads',
+        'Pies',
+        'Fish',
+        'Deserts',
+        'Soup',
+        'Other',
+    ],
+
+    holidayOption: [
+        'Passover',
+        'Purim',
+        'Rosh Hashana',
+        'Shavuot'
+    ],
+    getDietFilters() {
+        return dietOption
+    },
+    getFoodTypes() {
+        return categoryOption;
+    },
+
+
+    size() {
+        return 3;
+    }
+}
 
 
 export default class Recipe {
+
     constructor(name = "", author = "", serving = "", images = [], notes = "", tags = "",
                 prepTime = "", ingredientsList = [], ovenHeat = "", instructionDetails = [],
-                storyContent = "", storyImages = [], category = "",
-                Vegan = false, Kosher = false, GlutenFree = false,
-                flitterArr = []) {
+                storyContent = "", storyImages = [], category = "", filtersList = [],
+                Vegan = false, Kosher = false, GlutenFree = false, holiday = "",) {
         this.name = name;
         this.author = author;
         this.serving = serving;
@@ -36,12 +109,9 @@ export default class Recipe {
             images: storyImages,
         };
         this.category = category;
-        this.filter = {
-            isVegan: Vegan,
-            isKosher: Kosher,
-            isGlutenFree: GlutenFree,
-            filterList: flitterArr
-        };
+        this.holiday = holiday;
+
+        this.filtersList =filtersList ;
     }
 
     setName(name) {
@@ -95,18 +165,22 @@ export default class Recipe {
     }
 
     setFilterList(filterArr) {
-        this.filter.filterList = filterArr
+        this.filteresList = filterArr
+    }
+
+    getStoryContent() {
+        return this.story.content;
     }
 
     setAnotherFilter(filterList) {
-        this.filter.isVegan = filterList.includes("Vegan");
-        this.filter.isKosher = filterList.includes("Kosher");
-        this.filter.isGlutenFree =filterList.includes("GlutenFree");
-        this.filter.filterList = filterList;
-        console.log("this: ",this.filter)
-        console.log("not this:", filterList)
-
+        this.filtersList = filterList;
+        console.log("filterList: ", this.filtersList)
     }
+
+    getFilters() {
+        return this.filtersList;
+    }
+
 
 
     getName() {
@@ -116,20 +190,32 @@ export default class Recipe {
     getCategory() {
         return this.category;
     }
-    getAuthor(){
+
+    getAuthor() {
         return this.author;
     }
 
-    getImages() {
+    getMainImage() {
         return this.images[0];
     }
-    getFilterOption(){
+
+    getFilterOption() {
         return filterOptions;
     }
-    getCategoryOption(){
+
+    getCategoryOption() {
         return categoryOption;
     }
-    ;
+
+    getHoliday() {
+        return this.holiday;
+    }
+
+    setHoliday(value) {
+        this.holiday = value;
+    };
+
+
 }
 
 
@@ -140,29 +226,30 @@ export const recipeConverter = {
             author: Recipe.author,
             serving: Recipe.serving,
             notes: Recipe.notes,
-            tags: Recipe.tags,
+            // tags: Recipe.tags,
             prepTime: Recipe.prepTime,
             IngredientsList: Recipe.IngredientsList,
             OvenHeat: Recipe.ovenHeat,
             instructionDetails: Recipe.instructionDetails,
             images: Recipe.images,
-            story: Recipe.story,
             category: Recipe.category,
+            filtersList: Recipe.filtersList,
         };
     },
 
 
-    fromFirestore: function (recipe) {
-        const ingredient = [];
-            recipe.IngredientsList.forEach(item => (
-            ingredient.push(item.amount + item.typeAmount + " " + item.ingredient)
-        ))
-        return new Recipe(recipe.name, recipe.author, recipe.serving, recipe.images, recipe.notes, recipe.tags,
-            recipe.prepTime, ingredient, recipe.OvenHeat, recipe.instructionDetails,
-            recipe.story.content, recipe.story.images, recipe.category);
-    }
+        fromFirestore: function (recipe) {
+            console.log(recipe.IngredientsList)
+            const ingredient = [];
+            // recipe.IngredientsList.forEach(item => (
+            //     ingredient.push(item.amount + item.typeAmount + " " + item.ingredient)
+            // ))
+            return new Recipe(recipe.name, recipe.author, recipe.serving, recipe.images, recipe.notes, recipe.tags,
+                recipe.prepTime, ingredient, recipe.OvenHeat, recipe.instructionDetails,
+                "",  [], recipe.category, recipe.filtersList);
+        }
 
-};
+    };
 
 //
 // this.name = recipe.name;
@@ -179,3 +266,24 @@ export const recipeConverter = {
 //     content: "",
 //     images: [],
 // };
+//
+// const RecipesFilter = () => {
+//     //food Type Filter
+//     let tempList = AllRecipes;
+//     let foodTypeList = getSelectedFoodType()
+//     if (foodTypeList.length > 0) {
+//         tempList = (tempList.filter((recipe) => {
+//             foodTypeList.includes(recipe.getCategory())
+//         }));
+//     }
+//
+//     let dietFilter = getSelectedDietFilter()
+// // no battery
+//     if (dietFilter.length > 0) {
+//         tempList.filter((recipe) => {
+//             filterRecipeByDiet(recipe)
+//         });
+//     }
+//
+//     setCurRecipes(tempList);
+// }

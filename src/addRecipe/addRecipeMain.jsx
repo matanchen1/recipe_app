@@ -104,7 +104,9 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const steps = ["Recipe's details", "Ingredients", " Instructions", "Story"];
+const steps = ["Recipe's details", "Ingredients", " Instructions"];
+
+// const steps = ["Recipe's details", "Ingredients", " Instructions", "Story"];
 
 function getStepContent(step) {
     switch (step) {
@@ -121,10 +123,10 @@ function getStepContent(step) {
             return (
                 <InstructionsForm/>
             );
-        case 3:
-            return (
-                <RecipeDetails/>
-            )
+        // case 3:
+        //     return (
+        //         <RecipeDetails/>
+        //     )
 
         default:
             throw new Error("Unknown step");
@@ -239,7 +241,7 @@ export const tempRecipe = new Recipe();
 export default function AddRecipeMain() {
     const classes = useStyles();
     const [activeStep, setActiveStep] = useState(0);
-    const [completed, setCompleted] = useState({});
+    // const [completed, setCompleted] = useState({});
     const history = useHistory();
     const {addRecipe} = useAuth();
 
@@ -247,6 +249,8 @@ export default function AddRecipeMain() {
         if (activeStep === steps.length - 1) {
             addRecipe(tempRecipe);
         }
+        console.log("tempREcipe: ",tempRecipe)
+        console.log("groupCode: ",)
         setActiveStep(activeStep + 1);
 
     };

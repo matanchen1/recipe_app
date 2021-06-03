@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
-import { Button, Form, FormGroup, FormControl, Alert } from "react-bootstrap";
+import { Button, Form, Alert } from "react-bootstrap";
 
 export default function SignUp({ setShowSignUp }) {
     // const [email, setEmail] = React.useState("");

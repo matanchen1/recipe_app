@@ -1,16 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {
-    Form,
     Button,
     Card,
-    Container,
-    Collapse,
     Row,
     Col, Alert
 } from "react-bootstrap";
 import CardDeck from "react-bootstrap/CardDeck";
 import Nav from "react-bootstrap/Nav";
-import Tabs from "react-bootstrap/Tabs";
 import "../styles/ShowRecipe.css";
 import {useAuth} from "../contexts/AuthContext";
 
@@ -63,14 +59,14 @@ export default function ShowRecipe(props) {
         "Bake in middle of oven for 35 to 40 minutes, or until golden. Cool loaves on a rack."
     ];
 
-    function toggle() {
-        setOpen(!open);
-        if (open) {
-            setBtnMessage("Show Recipe");
-        } else {
-            setBtnMessage("Show Story");
-        }
-    }
+    // function toggle() {
+    //     setOpen(!open);
+    //     if (open) {
+    //         setBtnMessage("Show Recipe");
+    //     } else {
+    //         setBtnMessage("Show Story");
+    //     }
+    // }
 
     //  usage:
     //  arrayname.map(message => (<Item key={message} message={item}/>))

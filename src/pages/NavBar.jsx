@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import {
     Navbar,
     Nav,
-    NavItem,
-    NavDropdown,
-    Form,
-    FormControl,
+    // NavItem,
+    // NavDropdown,
+    // Form,
+    // FormControl,
     Button,
     Alert
 } from "react-bootstrap";
@@ -13,7 +13,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 
 export default function NavBar() {
-    const { currentUser, logout, fetchData, recipes} = useAuth();
+    const { currentUser, logout} = useAuth();
     const [error, setError] = useState("");
     const history = useHistory();
 
@@ -28,16 +28,16 @@ export default function NavBar() {
         }
     }
 
-    async function testGettingRecipes() {
-        setError("");
-        try {
-            await fetchData();
-            // while(!recipes) {}
-            console.log(recipes);
-        } catch (err) {
-            setError(err.message);
-        }
-    }
+    // async function testGettingRecipes() {
+    //     setError("");
+    //     try {
+    //         await fetchData();
+    //         // while(!recipes) {}
+    //         console.log(recipes);
+    //     } catch (err) {
+    //         setError(err.message);
+    //     }
+    // }
 
     function handleLogoClick() {
         if (currentUser) {
@@ -63,7 +63,7 @@ export default function NavBar() {
                     {currentUser && currentUser.email}
                     {error && <Alert variant="danger">{error}</Alert>}
                     {currentUser && <Button className="ml-sm-2" onClick={handleLogout}>Logout</Button>}
-                    {currentUser && <Button className="ml-sm-2" onClick={testGettingRecipes}>Log Recipes To Console</Button>}
+                    {/*{currentUser && <Button className="ml-sm-2" onClick={testGettingRecipes}>Log Recipes To Console</Button>}*/}
                     {/*<Form inline>*/}
                     {/*    <FormControl*/}
                     {/*        type="text"*/}

@@ -66,6 +66,7 @@ export default function FilterSelect() {
     useEffect(() => {
         console.log(filterListState);
         tempRecipe.setAnotherFilter(filterListState)
+
     }, [filterListState]);
 
 
@@ -83,6 +84,7 @@ export default function FilterSelect() {
                     id="demo-mutiple-chip"
                     multiple
                     fullWidth
+                    defaultValue={filterListState}
                     value={filterListState}
                     onChange={handleChange}
                     input={<Input id="select-multiple-chip"/>}

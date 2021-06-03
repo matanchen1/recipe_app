@@ -4,6 +4,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import WhatsAppShare from "./WhatsAppShare";
 import DishesView from "./DishesView";
 import {useAuth} from "../contexts/AuthContext";
+import DishesView2 from "./DishesView2";
 
 
 
@@ -37,7 +38,9 @@ function Header(props) {
             <Grid item xs={3} sm={2}>
                 <br/>
                 <div>
-                    <Image className="img-thumbnail" class={classes.FamImgStyle}
+                    <Image
+                        // className="img-thumbnail"
+                        className={classes.FamImgStyle}
                            src={"https://images.unsplash.com/photo-1606787842514-a7998e6bee38?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjF8fGZhbWlseXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60"}
                            alt="family's img"/>
                 </div>
@@ -76,7 +79,7 @@ function FamilyPage() {
                         <br/>
                         {/*TODO: send image to header from firebase*/}
                     </div>
-                    <DishesView/>
+                    <DishesView2/>
                 </div>
             {/*</Container>*/}
         </div>

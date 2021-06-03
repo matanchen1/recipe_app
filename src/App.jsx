@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import {useParams} from "react-router";
 import "./styles/app.css";
@@ -13,11 +13,11 @@ import {AuthProvider} from "./contexts/AuthContext"
 import FamilyPage from "./familyPage/FamilyPage"
 import SandBox2 from "./ShowRecipeDir/ShowRecipeCopy"
 
-
-import TestAddRecipeToFB from "./addRecipe/TestAddRecipeToFB";
-import uploadImage from "./addRecipe/UploadImage";
+//
+// import TestAddRecipeToFB from "./addRecipe/TestAddRecipeToFB";
+// import uploadImage from "./addRecipe/UploadImage";
 import PrivateRoute from "./PrivateRoute";
-import ImageCarousel from "./ShowRecipeDir/ImageCarousel";
+
 
 
 function App() {
@@ -52,7 +52,7 @@ function App() {
                             </Route>
 
                             <Route path="/recipe/:id" children={<TempShowRecipe />} />
-                            {/*<PrivateRoute path="/addstory" component={AddStory} />*/}
+                            <PrivateRoute path="/addstory" component={AddStory} />
                             <PrivateRoute path="/main" component={FamilyPage} />
                             <Route path="/addstory" component={AddStory}/>
                             <Route path="/addrecipe" component={AddRecipeMain}/>
@@ -60,7 +60,6 @@ function App() {
                             <Route path="/showstory" component={ShowStory}/>
                             <Route path="/main" component={FamilyPage}/>
                             <Route path="/sandbox2" component={SandBox2}/>
-                            <Route path="/test" component={ImageCarousel}/>
                         </Switch>
 
                     </div>

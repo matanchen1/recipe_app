@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react'
 import "../styles/styles.css"
 
-import {Button, Form, FormGroup, FormControl, Alert} from "react-bootstrap";
+import {Button, Form, Alert} from "react-bootstrap";
 import {useAuth} from "../contexts/AuthContext";
 import {useHistory} from "react-router-dom";
 

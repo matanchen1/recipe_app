@@ -112,7 +112,7 @@ export default function UploadImage() {
                     .getDownloadURL()
                     .then(url => {
                         setUrl(url);
-                        const arr = [...tempRecipe.getImages(), url]
+                        const arr = [...tempRecipe.getMainImage(), url]
                         tempRecipe.setImage(arr)
                         setLoading(false);
                         setSuccess(true);

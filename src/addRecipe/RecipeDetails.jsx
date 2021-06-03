@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import {makeStyles} from "@material-ui/core/styles";
 import {tempRecipe} from "./addRecipeMain";
-import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
+// import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 import UploadImage from "./UploadImage";
 import Category from "./Category";
 import PrepTime from "./PrepTime";
@@ -29,16 +29,16 @@ const useStyles = makeStyles(theme => ({
 export default function RecipeDetails() {
     const classes = useStyles();
 
-    const recipeNameRef = useRef();
-    const servingsRef = useRef();
-    const notesRef = useRef();
-    const tagsRef = useRef();
-    const authorRef = useRef();
-    const [prepTime, setPrepTime] = useState("");
+    const recipeNameRef = useRef("");
+    const servingsRef = useRef("");
+    const notesRef = useRef("");
+    const tagsRef = useRef("");
+    const authorRef = useRef("");
+    // const [prepTime, setPrepTime] = useState("");
 
-    const handleSelectLabelChange = (event) => {
-        tempRecipe.setPrepTime(event.target.value);
-    };
+    // const handleSelectLabelChange = (event) => {
+    //     tempRecipe.setPrepTime(event.target.value);
+    // };
 
 
     return (
@@ -57,6 +57,7 @@ export default function RecipeDetails() {
                                 id="recipeName"
                                 name="RecipeName"
                                 label="Recipe name"
+                                defaultValue= {recipeNameRef.current.value}
                                 inputRef={recipeNameRef}
                                 fullWidth
                                 autoComplete="given-name"
@@ -79,6 +80,7 @@ export default function RecipeDetails() {
                                 name="author"
                                 label="Author"
                                 fullWidth
+                                defaultValue= {authorRef.current.value}
                                 inputRef={authorRef}
                                 onChange={(e) => {
                                     tempRecipe.setAuthor(authorRef.current.value);
@@ -96,6 +98,7 @@ export default function RecipeDetails() {
                                 name="tags"
                                 label="Add tag, separated by commas"
                                 fullWidth
+                                defaultValue= {tagsRef.current.value}
                                 inputRef={tagsRef}
                                 onChange={(e) => {
                                     tempRecipe.setTags(tagsRef.current.value);
@@ -110,7 +113,8 @@ export default function RecipeDetails() {
                                 label="Servings:"
                                 fullWidth
                                 color="secondary"
-                                inputRef={servingsRef}
+                                defaultValue= {servingsRef.current.value}
+                                inputRef={servingsRef.current.value}
                                 onChange={(e) => {
                                     tempRecipe.setServing(servingsRef.current.value);
                                 }}
@@ -125,6 +129,7 @@ export default function RecipeDetails() {
                                 name="Notes"
                                 label="Notes"
                                 fullWidth
+                                defaultValue= {notesRef.current.value}
                                 inputRef={notesRef}
                                 onChange={(e) => {
                                     tempRecipe.setNotes(notesRef.current.value);

@@ -62,3 +62,7 @@
     /*borderRadius: 10%;*/
     /*boxShadow: 0 0 1px 1px;*/
 }
+.ant-checkbox-group-item {
+    display: block;
+    margin-right: 0;
+}

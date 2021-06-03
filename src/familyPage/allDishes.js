@@ -1,20 +1,20 @@
-
+//
 const alldishes = [
-    // {
-    //     types:["salads","breakfast"],
-    //     img: 'https://ifoodreal.com/wp-content/uploads/2018/12/FG-healthy-spinach-salad-recipe.jpg',
-    //     title: 'ceaser salad',
-    //     author: 'Grandma',
-    //     text: '\n' +
-    //         'It is a widely believed misconception that Caesar Salad originated in Rome and was named after Julius Caesar. Rather, it was invented in 1924 by Caesar Cardini, an Italian immigrant in Mexico. It so happened that on a very busy day, Cardini, the owner of a restaurant on a buzzing street, was running low on ingredients. Very soon many customers arrived and in an attempt to make something he tossed together some remaining items. These were lettuce, garlic, croutons, Parmesan cheese, olive oil, eggs, and Worcestershire sauce. Thus the Caesar Salad was born!'
-    // },
-    // {
-    //     types:["salads","breakfast"],
-    //     img: 'https://images.unsplash.com/photo-1571047399553-603e2138b646?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHNhbGFkfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60',
-    //     title: 'Fajita salad',
-    //     author: 'Naomi',
-    //     text: 'One of the most interesting facets of the American culinary revolution of the past 50 years is our growing fascination with culinary history. It seems the more we learn about the ethnic melting pot that makes up the American table, the more curious we become about regional cuisines and the origin of specific dishes. Texas is the proud home of an authentic regional cuisine, and the provenance of Tex-Mex foods is currently a very hot topic with everyone from academic researchers to cookbook authors to magazine and newspaper food writers. In exploring the history of fajitas, several credible stories emerge, and all of them have roots in the Rio Grande Valley of Texas. It only makes sense that several people from the same ethnic group with roots in the same geographic area would come up with similar cooking techniques and names for the raw materials at hand.'
-    // },
+    {
+        types:["salads","breakfast"],
+        img: 'https://ifoodreal.com/wp-content/uploads/2018/12/FG-healthy-spinach-salad-recipe.jpg',
+        title: 'ceaser salad',
+        author: 'Grandma',
+        text: '\n' +
+            'It is a widely believed misconception that Caesar Salad originated in Rome and was named after Julius Caesar. Rather, it was invented in 1924 by Caesar Cardini, an Italian immigrant in Mexico. It so happened that on a very busy day, Cardini, the owner of a restaurant on a buzzing street, was running low on ingredients. Very soon many customers arrived and in an attempt to make something he tossed together some remaining items. These were lettuce, garlic, croutons, Parmesan cheese, olive oil, eggs, and Worcestershire sauce. Thus the Caesar Salad was born!'
+    },
+    {
+        types:["salads","breakfast"],
+        img: 'https://images.unsplash.com/photo-1571047399553-603e2138b646?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHNhbGFkfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60',
+        title: 'Fajita salad',
+        author: 'Naomi',
+        text: 'One of the most interesting facets of the American culinary revolution of the past 50 years is our growing fascination with culinary history. It seems the more we learn about the ethnic melting pot that makes up the American table, the more curious we become about regional cuisines and the origin of specific dishes. Texas is the proud home of an authentic regional cuisine, and the provenance of Tex-Mex foods is currently a very hot topic with everyone from academic researchers to cookbook authors to magazine and newspaper food writers. In exploring the history of fajitas, several credible stories emerge, and all of them have roots in the Rio Grande Valley of Texas. It only makes sense that several people from the same ethnic group with roots in the same geographic area would come up with similar cooking techniques and names for the raw materials at hand.'
+    },
     {
         categories:["Dinner","Soup"],
         // types:["salads","breakfast"],
