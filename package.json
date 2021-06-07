@@ -46,6 +46,7 @@
   "devDependencies": {
     "@material-ui/core": "^4.11.4",
     "clsx": "^1.1.1",
+    "cross-env": "^7.0.3",
     "react-helmet-async": "^1.0.9",
     "react-router-dom": "^5.2.0"
   }
