@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, BrowserRouter} from "react-router-dom";
 import {useParams} from "react-router";
 import "./styles/app.css";
 import GroupCode from "./pages/group-code";
@@ -41,6 +41,8 @@ function App() {
     //TODO: shelly - use private routes
     return (
         <div className="App">
+            <BrowserRouter basename={process.env.PUBLIC_URL}>
+
             <Router>
                 <AuthProvider>
                     <NavBar/>
@@ -50,9 +52,7 @@ function App() {
                                 <div className="fix">
                                     <StartPage/>
                                 </div>
-
                             </Route>
-
                             <Route path="/recipe/:id" children={<TempShowRecipe />} />
                             <PrivateRoute path="/addstory" component={AddStory} />
                             <PrivateRoute path="/main" component={FamilyPage} />
@@ -68,6 +68,8 @@ function App() {
                     </div>
                 </AuthProvider>
             </Router>
+            </BrowserRouter>
+
         </div>
     );
     // }

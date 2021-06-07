@@ -1,29 +1,28 @@
 {
-  "homepage": "https://matanchen1.github.io/recipe_app",
-  "name": "recipe_app",
+  "name": "flootest",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
-    "@material-ui/icons": "^4.11.2",
+    "@material-ui/core": "^4.11.4",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
+    "antd": "^4.16.1",
     "bootstrap": "^4.6.0",
-    "firebase": "^8.4.3",
-    "gh-pages": "^3.1.0",
+    "bootstrap-icons": "^1.4.1",
+    "firebase": "^8.6.2",
+    "immutable": "^4.0.0-rc.12",
     "material-ui-dropzone": "^3.5.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.2",
-    "react-icons": "^4.2.0",
+    "react-rounded-image": "^2.0.13",
     "react-router": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-share": "^4.4.0",
+    "react-spring": "^9.1.2",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -48,9 +47,11 @@
     ]
   },
   "devDependencies": {
-    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "clsx": "^1.1.1",
+    "prop-types": "^15.7.2",
     "react-helmet-async": "^1.0.9",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "wouter": "^2.7.4"
   }
 }
