@@ -10,6 +10,13 @@ import {AllFiltersOption, categoryOption, dietOption} from "../addRecipe/Recipe"
 import "./familyPage.css";
 
 import FilterList from "./FilterList";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import Collapse from "@material-ui/core/Collapse";
+import List from "@material-ui/core/List";
+import CheckboxListSecondary from "./checkBox";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -101,6 +108,8 @@ export default function DishesView2(props) {
         }
         return false;
     }
+
+
     const updateRecipesForDiet = (newFilters) => {
         let dietList = newFilters[FilterOptionStates["2"]];
         console.log("diet", dietList)
@@ -147,30 +156,35 @@ export default function DishesView2(props) {
         }
         setCurRecipes(tempRecipes)
     }
-    const renderRecipes = () => curRecipes.map((tile, index) => (
+    const renderRecipes = () => curRecipes.map((recipe, index) => (
         <div>
             <GridListTile>
                 <MediaCard
-                    author={tile.getAuthor()}
-                    img={tile.getMainImage() || 'https://ifoodreal.com/wp-content/uploads/2018/12/FG-healthy-spinach-salad-recipe.jpg'}
-                    title={tile.getName()}
+                    recipe={recipe}
+                    author={recipe.getAuthor()}
+                    img={recipe.getMainImage() || 'https://ifoodreal.com/wp-content/uploads/2018/12/FG-healthy-spinach-salad-recipe.jpg'}
+                    title={recipe.getName()}
                 />
             </GridListTile>
         </div>
     ))
 
 
-    if (curRecipes.length < 0) {
+    if (AllRecipes.length === 0) {
         return (
             <div className="recipes">
                 <h1>
-                    Empty for now. add a recipe!
-                </h1></div>
+                    Add your first recipe!
+                </h1>
+            </div>
+
+
         );
     } else {
         console.log("not empty")
         return (
             <div className="recipes">
+
                 <div className="filters">
                     <CheckBox2 className="ant-checkbox-group-item" handleFilters={handleFilters}
                                FoodTypeCatList={AllFiltersOption.getFoodTypes()}
@@ -183,8 +197,12 @@ export default function DishesView2(props) {
                               cols={getGridListCols()}>
                         {renderRecipes()}
                     </GridList>
-                </div>
 
+                </div>
+                {(curRecipes.length === 0) &&
+                <h1>
+                    Empty for now. add a recipe!
+                </h1>}
             </div>)
     }
 }

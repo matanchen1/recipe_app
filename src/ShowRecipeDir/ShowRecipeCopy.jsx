@@ -1,99 +1,191 @@
 import React from "react";
-import {
-    // Form,
-    // Button,
-    // Card,
-    // Container,
-    // Collapse,
-    Row,
-    Col
-} from "react-bootstrap";
-// import CardDeck from "react-bootstrap/CardDeck";
-// import Nav from "react-bootstrap/Nav";
-// import Tabs from "react-bootstrap/Tabs";
-import "./ShowRecipeCopy.css";
-import {useAuth} from "../contexts/AuthContext";
+import { Button, Card, Row, Col, Alert } from "react-bootstrap";
+import CardDeck from "react-bootstrap/CardDeck";
+import Nav from "react-bootstrap/Nav";
+import "../styles/ShowRecipe.css";
+import { useAuth } from "../contexts/AuthContext";
+import { makeStyles } from "@material-ui/core/styles";
+import CardMedia from "@material-ui/core/CardMedia";
 
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 250,
+    width: 500,
+  },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    maxWidth: "760px",
+    margin: "0 auto",
+  },
+  header: {
+    "& img": {
+      width: "100%",
+      height: "200px",
+      objectFit: "cover",
+    },
+    "& h1": {
+      textAlign: "center",
+    },
+    "& p": {
+      textAlign: "center",
+    },
+  },
+  story: {
+    marginTop: "20px",
+    display: "grid",
+    gridTemplateColumns: "2fr 1fr",
+    columnGap: "20px",
+  },
+  storyImages: {
+    display: "grid",
+    gridGap: "20px",
+    "& img": { width: "100%" },
+  },
+  recipe: {
+    marginTop: "30px",
+    display: "grid",
+    gridTemplateColumns: "1fr 2fr",
+    gap: "20px",
+  },
+  recipeInfo: {
+    display: "flex",
+    justifyContent: "space-between",
+    gridColumn: "1 / -1",
+    fontSize: "20px",
+  },
+  recipeIngredients: {},
+  recipeInstructions: {},
+  comments: {},
+});
 
 export default function ShowRecipe(props) {
-    const [open, setOpen] = React.useState(false);
-    const {recipes} = useAuth();
-    const [btnMessage, setBtnMessage] = React.useState("Show Full Recipe");
-    let recipeName = "Grandma Shoshana's Challah";
-    const author = "Noah"
-    const prepTime = "1 hour"
-    const serving = "4 medium Challah's"
-    const storyline1 = "THis is a story we're telling. it's a beautiful story and we love telling it, so we're doing that now";
-    const allIngredients = [
-        "Poppy or sesame seeds for sprinkling",
-    ];
-    const lessIngredients = allIngredients.slice(0, 0);
-    const restOfIngredients = allIngredients.slice(0);
-    const directions = [
-        "Bake in middle of oven for 35 to 40 minutes, or until golden. Cool loaves on a rack."
-    ];
+  const { recipes } = useAuth();
 
-    function toggle() {
-        setOpen(!open);
-        if (open) {
-            setBtnMessage("Show Recipe");
-        } else {
-            setBtnMessage("Show Story");
-        }
-    }
-    //  usage:
-    //  arrayname.map(message => (<Item key={message} message={item}/>))
-    function Item(props) {
-        return <li>{props.message}</li>;
-    }
+  const classes = useStyles();
 
-    return (
-        <div className="recipe_and_story_display_outer_div">
+  const recipe = {
+    ...recipes[0],
+    story: {
+      content:
+          "היי היי!  לפני שבועיים עלה לבלוג גלאט פטל מבצק ספידי שהיה הצלחה מסחררת.  אחרי שהוא עלה הותקפתי בהודעות ששואלות איך אפשר לעשות את הבצק הזה מלוח.  ואני מבינה אתכן, זה בצק מושלם, הכי קל לעבודה, הכי מהיר להכנה ומתאים להכל.  אני מכינה אותו מלוח המון בבית בכל מיני צורות וטעמים אז ברגע שביקשתן קפצתי על המציאה להעלות מתכון לזה בבלוג.  בחרתי להכין מהבצק שבלולי פסטו וגבינות טבעוניות כי זה קל וטעים וכולם אוהבים את זה 🙂",
+      images: [
+        "https://tivoneat.co.il/wp-content/uploads/2021/06/IMG_0231.jpg",
+      ],
+    },
+  };
 
-            <div className={"ShowRecipeHeader"}>
-                Name of recipe
-            </div>
-            <div className={"ShowRecipeStoryPart-Text"}>
-                <t1 className='storyText'>{storyline1}</t1>
-            </div>
-            <div className="ShowRecipeStoryPart-pictures">
-             <img
-                 height={"20px"}
-                 src="https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/project%20files%2Fcurry-with-chicken-onions-indian-food-asian-cuisine.jpg?alt=media&token=af453929-6983-4808-b400-7656887a7a1f"
-                 alt = "can't load, ooops"
-             />
-                <button>Jump to recipe</button>
-         </div>
-            <div className={"ShowRecipeInstructionsPart"}>
-                <div className={"recipe-general-details"}>
-                    <Col>
-                        <Row>
-                            <h1>{recipeName}</h1>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <h3>Uploaded by: {author} </h3>
-                            </Col>
-                            <Col>
-                                <h3> Servings: {serving} </h3>
-                            </Col>
-                            <Col>
-                                <h3>Preparation Time: {prepTime}</h3>
-                            </Col>
-                        </Row>
-                    </Col>
-                </div>
-                <h4>Ingredients:</h4>
-                <ul className="show_ingredients">
-                    {lessIngredients.map(message => (
-                        <Item key={message} message={message}/>
-                    ))}
-                    {restOfIngredients.map(message => (
-                        <Item key={message} message={message}/>
-                    ))}
-                </ul>
-            </div>
+  const comments = [
+    { author: "sivan", date: 12346645452, content: "וואי סבתא, פינקת." },
+    {
+      author: "דן",
+      date: 12346645455,
+      content: "סבא היה עושה את זה יותר טעים.",
+    },
+  ];
+
+  return (
+      <div className="outer_div">
+        {/*{!props.id && <DefaultRecipe/>}*/}
+        {/*{props.id && recipes && recipes.length <= props.id &&*/}
+        {/*<Alert variant="danger">Error: recipe does not exist!</Alert>}*/}
+        {/*{props.id && recipes.length > props.id &&*/}
+        <div className={classes.container}>
+          <Header recipe={recipe} />
+          <Story recipe={recipe} />
+          <Recipe recipe={recipe} />
+          <Comments comments={comments} />
         </div>
+        {/*}*/}
+      </div>
+  );
+}
 
-    );
+function Header({ recipe }) {
+  const classes = useStyles();
+
+  return (
+      <div className={classes.header}>
+        <img src={recipe.images[0]} />
+        <h1>{recipe.name}</h1>
+        <p>
+          {" "}
+          don't want to read the whole story?{" "}
+          <a href="#">get straight to the recipe </a>
+        </p>
+      </div>
+  );
+}
+
+function Story({ recipe }) {
+  const classes = useStyles();
+
+  return (
+      <div className={classes.story}>
+        <div>{recipe.story.content}</div>
+        <div className={classes.storyImages}>
+          {recipe.story.images.map((image) => (
+              <img src={image} />
+          ))}
+        </div>
+      </div>
+  );
+}
+
+function Recipe({ recipe }) {
+  const classes = useStyles();
+
+  return (
+      <div className={classes.recipe}>
+        <div className={classes.recipeInfo}>
+          {recipe.author && <span>By: {recipe.author} </span>}
+          {recipe.serving && <span>Servings: {recipe.serving} </span>}
+          {recipe.prepTime && <span>Preparation Time: {recipe.prepTime}</span>}
+        </div>
+        <div className={classes.recipeIngredients}>
+          <h2>Ingredients</h2>
+          <ul className="show_ingredients">
+            {recipe.IngredientsList.map((ingredient) => (
+                <li key={ingredient}>{ingredient}</li>
+            ))}
+          </ul>
+        </div>
+        <div className={classes.recipeInstructions}>
+          <h2>Instructions</h2>
+          <ol className="show_instruction">
+            {recipe.instructionDetails.map((recipeStep) => (
+                <li key={recipeStep}>{recipeStep}</li>
+            ))}
+          </ol>
+        </div>
+        <button variant="outline-success">Edit Recipe</button>
+      </div>
+  );
+}
+
+function Comment ({comment}){
+  return (
+      <div>
+        <span>{comment.author}</span>
+        <span>{comment.date}</span>
+        <p>{comment.content}</p>
+      </div>
+  )
+
+}
+
+function Comments({ comments }) {
+  const classes = useStyles();
+
+  return <div>
+    <h2>Comments</h2>
+    <div className={classes.storyImages}>
+      {comments.map((comment) => (
+          <Comment comment={comment} />
+      ))}
+    </div>
+  </div>;
 }

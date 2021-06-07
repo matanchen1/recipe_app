@@ -57,7 +57,7 @@ function Header(props) {
                     <br/><br/>
                     <h5> Group code : <strong>{groupcode}</strong></h5>
                     <div>
-                        {WhatsAppShare(groupcode)}
+                        {WhatsAppShare({groupcode})}
                     </div>
                 </div>
             </Grid>

@@ -80,6 +80,15 @@ export const AllFiltersOption = {
     getFoodTypes() {
         return categoryOption;
     },
+    getOnlyNameCategoryOption() {
+        return ['Salads',
+            'Pies',
+            'Fish',
+            'Deserts',
+            'Soup',
+            'Other',
+        ];
+    },
 
 
     size() {
@@ -90,9 +99,10 @@ export const AllFiltersOption = {
 
 export default class Recipe {
 
-    constructor(name = "", author = "", serving = "", images = [], notes = "", tags = "",
-                prepTime = "", ingredientsList = [], ovenHeat = "", instructionDetails = [],
-                storyContent = "", storyImages = [], category = "", filtersList = [],
+    constructor(name = "", author = "", serving = -1, images = [], notes = "", tags = "",
+                prepTime = "Not mentioned", ingredientsList =[{ingredient: "", amount: "", typeAmount: ""}], ovenHeat = "", instructionDetails = [],
+                storyContent = "", storyImages = [], category = "Other", filtersList = [],
+                likeCounter = 0,
                 Vegan = false, Kosher = false, GlutenFree = false, holiday = "",) {
         this.name = name;
         this.author = author;
@@ -110,8 +120,12 @@ export default class Recipe {
         };
         this.category = category;
         this.holiday = holiday;
+        this.filtersList = filtersList;
+        this.likeCounter = likeCounter;
+    }
 
-        this.filtersList =filtersList ;
+    setStoryContent(text){
+        this.story.content = text;
     }
 
     setName(name) {
@@ -154,8 +168,7 @@ export default class Recipe {
         console.log(this.prepTime); //  TODO:REMOVE THIS
     }
 
-    setImage(image) {
-
+    setImages(image) {
         this.images = image;
         console.log(this.images)
     }
@@ -182,7 +195,6 @@ export default class Recipe {
     }
 
 
-
     getName() {
         return this.name;
     }
@@ -199,6 +211,9 @@ export default class Recipe {
         return this.images[0];
     }
 
+    getImageArr(){
+        return this.images;
+    }
     getFilterOption() {
         return filterOptions;
     }
@@ -226,7 +241,7 @@ export const recipeConverter = {
             author: Recipe.author,
             serving: Recipe.serving,
             notes: Recipe.notes,
-            // tags: Recipe.tags,
+            tags: Recipe.tags,
             prepTime: Recipe.prepTime,
             IngredientsList: Recipe.IngredientsList,
             OvenHeat: Recipe.ovenHeat,
@@ -238,18 +253,18 @@ export const recipeConverter = {
     },
 
 
-        fromFirestore: function (recipe) {
-            console.log(recipe.IngredientsList)
-            const ingredient = [];
-            // recipe.IngredientsList.forEach(item => (
-            //     ingredient.push(item.amount + item.typeAmount + " " + item.ingredient)
-            // ))
-            return new Recipe(recipe.name, recipe.author, recipe.serving, recipe.images, recipe.notes, recipe.tags,
-                recipe.prepTime, ingredient, recipe.OvenHeat, recipe.instructionDetails,
-                "",  [], recipe.category, recipe.filtersList);
-        }
+    fromFirestore: function (recipe) {
+        console.log(recipe.IngredientsList)
+        const ingredient = [];
+        recipe.IngredientsList.forEach(item => (
+            ingredient.push(item.amount + item.typeAmount + " of " + item.ingredient)
+        ))
+        return new Recipe(recipe.name, recipe.author, recipe.serving, recipe.images, recipe.notes, recipe.tags,
+            recipe.prepTime, ingredient, recipe.OvenHeat, recipe.instructionDetails,
+            "", [], recipe.category, recipe.filtersList);
+    }
 
-    };
+};
 
 //
 // this.name = recipe.name;

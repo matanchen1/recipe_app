@@ -2,7 +2,7 @@ import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 import {tempRecipe} from "./addRecipeMain";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {categoryOption} from "./Recipe";
+import {AllFiltersOption, categoryOption} from "./Recipe";
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -23,7 +23,7 @@ const MenuProps = {
     },
 };
 
-const category_option = categoryOption;
+const category_option = AllFiltersOption.getOnlyNameCategoryOption();
 
 
 export default function Category() {
@@ -41,9 +41,9 @@ export default function Category() {
                     }}
                     MenuProps={MenuProps}
                 >
-                    {category_option.map((category) => (
-                        <MenuItem key={category} value={category}>
-                            {category}
+                    {category_option.map((categoryName) => (
+                        <MenuItem key={categoryName} value={categoryName}>
+                            {categoryName}
                         </MenuItem>
                     ))}
                 </Select>

@@ -1,4 +1,3 @@
-
 import {useEffect, useRef, useState} from "react"
 import firebase from "firebase";
 import {tempRecipe} from "./addRecipeMain";
@@ -15,10 +14,11 @@ const useStyles = makeStyles(theme => ({
         input: {
             display: 'none',
         },
-        root: {
-
-            // display: 'flex',
-            // alignItems: 'center',
+        imgCenter: {
+            alignItems: 'center',
+            justifyContent: "centre",
+            textAlign: 'center',
+            margin: 'auto'
         },
         wrapper: {
             margin: theme.spacing(1),
@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
 ));
 
 
-export default function UploadImage() {
+export default function UploadImage(FilesFlag) {
     const [file, setFile] = useState(null);
     const [url, setUrl] = useState("");
 
@@ -93,13 +93,16 @@ export default function UploadImage() {
 
     const upload = async (e) => {
         let target = e.target.files[0];
-        const storageRef = firebase.storage().ref("images");
+        if (!target) return;
+        await setFile(target);
+        const storageRef = await firebase.storage().ref("images");
         let fileName = target.name;
-        const fileRef = storageRef.child(fileName)
+        const fileRef = await storageRef.child(fileName)
 
-        setFile(target);
+        // const response = await fetch(uri)
+        // const blob = await response.blob()
         setLoading(true);
-        fileRef.put(file).on(
+        await fileRef.put(target).on(
             "state_changed",
             (snapshot) => {
                 setLoading(true);
@@ -112,8 +115,8 @@ export default function UploadImage() {
                     .getDownloadURL()
                     .then(url => {
                         setUrl(url);
-                        const arr = [...tempRecipe.getMainImage(), url]
-                        tempRecipe.setImage(arr)
+                        const arr = [url,...(tempRecipe.getImageArr())]
+                        tempRecipe.setImages(arr)
                         setLoading(false);
                         setSuccess(true);
                     });
@@ -122,15 +125,23 @@ export default function UploadImage() {
     };
 
 
-    console.log("image: ", file);
     console.log("url: ", url);
-    console.log('loading: ', loading);
-    console.log('sucsses: ', success);
 
+
+    function getPreviewImg() {
+        if (url !== "") {
+            return (<div className={classes.imgCenter}>
+                <img src={url}
+                     height="135" width="150"
+                     alt="Recipe Photo"/>
+            </div>)
+        }
+        return <div className={classes.imgCenter}/>
+    }
 
     return (
         <div>
-            <div>
+            <div className={classes.imgCenter}>
                 <input accept="image/*" className={classes.input} id="icon-button-add-image-1" type="file"
                        onChange={upload}/>
                 <Typography>Add photo (optional)</Typography>
@@ -152,9 +163,10 @@ export default function UploadImage() {
                         {!loading && file != null &&
                         "     " + file.name}
                     </div>
-
                 </label>
             </div>
+            {getPreviewImg()}
+
             {/*{/{<LinearProgress variant="determinate" value={progress}/>}/}*/}
             {/*{/<input accept="image/" className={classes.input} id="icon-button-file" type="file"*!/*/}
             {/*/!*       onChange={upload}*!/*/}

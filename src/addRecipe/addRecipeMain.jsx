@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {createRef, useRef, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 // import AppBar from "@material-ui/core/AppBar";
@@ -22,6 +22,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import Recipe from "./Recipe"
 import {useAuth} from "../contexts/AuthContext";
 import RecipeDetails from "./RecipeDetails";
+import AddStoryRecipe from "./AddStoryRecipe";
 
 // function Copyright() {
 //     return (
@@ -35,7 +36,6 @@ import RecipeDetails from "./RecipeDetails";
 //         </Typography>
 //     );
 // }
-
 
 
 const useStyles = makeStyles(theme => ({
@@ -104,34 +104,10 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const steps = ["Recipe's details", "Ingredients", " Instructions"];
+// const steps = ["Recipe's details", "Ingredients", " Instructions"];
 
-// const steps = ["Recipe's details", "Ingredients", " Instructions", "Story"];
+const steps = ["Recipe's details", "Ingredients", " Instructions", "Story"];
 
-function getStepContent(step) {
-    switch (step) {
-        case 0:
-            return (
-                <RecipeDetails/>
-            );
-        case 1:
-            return (
-                <Ingredients/>
-            );
-
-        case 2:
-            return (
-                <InstructionsForm/>
-            );
-        // case 3:
-        //     return (
-        //         <RecipeDetails/>
-        //     )
-
-        default:
-            throw new Error("Unknown step");
-    }
-}
 
 const useColorlibStepIconStyles = makeStyles({
     root: {
@@ -159,7 +135,6 @@ const useColorlibStepIconStyles = makeStyles({
 function ColorlibStepIcon(props) {
     const classes = useColorlibStepIconStyles();
     const {active, completed} = props;
-
     const icons = {
         1: <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
             <path d="M0 0h24v24H0V0z" fill="none"/>
@@ -241,17 +216,52 @@ export const tempRecipe = new Recipe();
 export default function AddRecipeMain() {
     const classes = useStyles();
     const [activeStep, setActiveStep] = useState(0);
-    // const [completed, setCompleted] = useState({});
     const history = useHistory();
     const {addRecipe} = useAuth();
+    let formRef = useRef(null);
+
+    function getStepContent(step) {
+
+
+        switch (step) {
+            case 0:
+                return (
+                    <RecipeDetails ref={formRef}/>
+                );
+            case 1:
+                return (
+                    <Ingredients ref={formRef}/>
+                );
+
+            case 2:
+                return (
+                    <InstructionsForm ref={formRef}/>
+
+
+                );
+            case 3:
+                return (
+                    <AddStoryRecipe ref={formRef}/>
+                )
+
+            default:
+                throw new Error("unknown step")
+        }
+    }
 
     const handleNext = () => {
-        if (activeStep === steps.length - 1) {
-            addRecipe(tempRecipe);
+        if (activeStep < steps.length) {
+            console.log("formatRef", formRef)
+            if (formRef.current.ValidBeforeNext()) {
+                console.log("step:", activeStep)
+                if (activeStep === steps.length - 1) {
+                    formRef = null;
+                    setActiveStep(activeStep + 1)
+                } else {
+                    setActiveStep(activeStep + 1)
+                }
+            }
         }
-        console.log("tempREcipe: ",tempRecipe)
-        console.log("groupCode: ",)
-        setActiveStep(activeStep + 1);
 
     };
 
@@ -259,9 +269,9 @@ export default function AddRecipeMain() {
         setActiveStep(activeStep - 1);
     };
     const handleStep = (step) => () => {
+        if(activeStep === steps.length) return
         setActiveStep(step);
     };
-
 
 
     return (
@@ -280,38 +290,30 @@ export default function AddRecipeMain() {
                             activeStep={activeStep}
                             connector={<ColorlibConnector/>}
                         >
-                            {steps.map((label,index) => (
+                            {steps.map((label, index) => (
                                 <Step key={label}>
-                                        <StepButton onClick={handleStep(index)}
-                                                    // completed={completed[index]}
-                                        >
+                                    <StepButton onClick={handleStep(index)}
+                                        // completed={completed[index]}
+                                    >
 
-                                    <StepLabel StepIconComponent={ColorlibStepIcon}>
-                                        {label}
-                                    </StepLabel>
+                                        <StepLabel StepIconComponent={ColorlibStepIcon}>
+                                            {label}
+                                        </StepLabel>
                                     </StepButton>
                                 </Step>
                             ))}
                         </Stepper>
                         <React.Fragment>
-                            {activeStep === steps.length ? (
+                            {(activeStep === steps.length) ? (
                                     //final page
                                     <React.Fragment>
                                         <Typography variant="h5" gutterBottom align="center">
-                                            Thank you for adding a recipe.
+                                            The recipe was successfully added
                                         </Typography>
-
-                                        <div className={classes.emptyDiv}></div>
                                         <div className={classes.finalPage}>
                                             <Typography variant="subtitle1">
-                                                <h3></h3>
-
-                                                <h3> Would you like to add a story to your recipe? </h3>
+                                                <h3> Thank you for BLA BLA BLA.</h3>
                                                 <div className={classes.buttons}>
-                                                    <Button onClick={() => history.push("/addstory")}
-                                                            className={classes.button}>
-                                                        Add Story
-                                                    </Button>
                                                     <Button onClick={handleBack} className={classes.button}>
                                                         Back Home
                                                     </Button>

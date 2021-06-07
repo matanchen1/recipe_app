@@ -17,6 +17,8 @@ import SandBox2 from "./ShowRecipeDir/ShowRecipeCopy"
 // import TestAddRecipeToFB from "./addRecipe/TestAddRecipeToFB";
 // import uploadImage from "./addRecipe/UploadImage";
 import PrivateRoute from "./PrivateRoute";
+import AddStoryRecipe from "./addRecipe/AddStoryRecipe";
+import StoryDropImage from "./addRecipe/StoryDropImage";
 
 
 
@@ -56,10 +58,11 @@ function App() {
                             <PrivateRoute path="/main" component={FamilyPage} />
                             <Route path="/addstory" component={AddStory}/>
                             <Route path="/addrecipe" component={AddRecipeMain}/>
-                            <Route path="/showrecipe" component={ShowRecipe}/>
+                            <Route path="/showrecipe" component={SandBox2}/>
                             <Route path="/showstory" component={ShowStory}/>
                             <Route path="/main" component={FamilyPage}/>
                             <Route path="/sandbox2" component={SandBox2}/>
+                            <Route path="/test" component={StoryDropImage}/>
                         </Switch>
 
                     </div>

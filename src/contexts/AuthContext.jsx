@@ -36,6 +36,7 @@ export function AuthProvider( {children}) {
     }, [setGroupcode])
 
     function addRecipe(recipe) {
+        console.log(recipe)
         return db.collection('users').doc(groupcode).update({
                 recipes: firebase.firestore.FieldValue.arrayUnion(recipeConverter.toFirestore(recipe))
             })

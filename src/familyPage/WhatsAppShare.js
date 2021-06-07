@@ -4,7 +4,7 @@ function WhatsAppShare(GroupCode) {
     return (<div>
             <WhatsappShareButton
                 title="Family Share"
-                url={GroupCode.codeUrl}
+                url={"GroupCode" + GroupCode}
             >
                 <WhatsappIcon size={64} round/>
             </WhatsappShareButton>

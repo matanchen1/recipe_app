@@ -9,6 +9,8 @@ import CardDeck from "react-bootstrap/CardDeck";
 import Nav from "react-bootstrap/Nav";
 import "../styles/ShowRecipe.css";
 import {useAuth} from "../contexts/AuthContext";
+import {makeStyles} from "@material-ui/core/styles";
+import CardMedia from "@material-ui/core/CardMedia";
 
 
 export default function ShowRecipe(props) {
@@ -70,11 +72,25 @@ export default function ShowRecipe(props) {
 
     //  usage:
     //  arrayname.map(message => (<Item key={message} message={item}/>))
+
+    const useStyles = makeStyles({
+        root: {
+            maxWidth: 345,
+        },
+        media: {
+            height: 250,
+            width:500
+        },
+    });
+
     function Item(props) {
         return <li>{props.message}</li>;
     }
 
     function DefaultRecipe() {
+        const recipe = props.location.recipe
+        const classes = useStyles();
+
         return (
             <Card className="colored-background">
                 <div className="showrecipe">
@@ -95,17 +111,17 @@ export default function ShowRecipe(props) {
                         <Card>
                             <Col>
                                 <Row>
-                                    <h1>{recipeName}</h1>
+                                    <h1>{recipe.name || recipeName}</h1>
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <h3>By: {author} </h3>
+                                        <h3>By: {recipe.author || author} </h3>
                                     </Col>
                                     <Col>
-                                        <h3> Servings: {serving} </h3>
+                                        <h3> Servings: {recipe.serving || serving} </h3>
                                     </Col>
                                     <Col>
-                                        <h3>Preparation Time: {prepTime}</h3>
+                                        <h3>Preparation Time: {recipe.prepTime || prepTime}</h3>
                                     </Col>
                                 </Row>
                             </Col>
@@ -115,26 +131,31 @@ export default function ShowRecipe(props) {
                                 <Card.Body>
                                     <h4>Ingredients:</h4>
                                     <ul className="show_ingredients">
-                                        {lessIngredients.map(message => (
-                                            <Item key={message} message={message} />
+                                        {recipe.IngredientsList.map(message => (
+                                            <Item key={message} message={message}/>
                                         ))}
-                                        {restOfIngredients.map(message => (
-                                            <Item key={message} message={message} />
-                                        ))}
+                                        {/*{restOfIngredients.map(message => (*/}
+                                        {/*    <Item key={message} message={message}/>*/}
+                                        {/*))}*/}
                                     </ul>
                                 </Card.Body>
+                                {/*<CardMedia*/}
+                                {/*    className={classes.media}*/}
+                                {/*    image={recipe.getMainImage() || "https://cdn.glitch.com/0b57df91-f600-46a4-956b-70a322817e9a%2Frebecca-matthews-yjWNJRwt8mc-unsplash.jpg?v=1619471178279"}*/}
+                                {/*    title="Contemplative Reptile"*/}
+                                {/*/>*/}
                                 <Card.Img
-                                    className="Head_Picture_Story"
+                                className="Head_Picture_Story"
                                     variant="top"
                                     fluid="false"
-                                    src="https://cdn.glitch.com/0b57df91-f600-46a4-956b-70a322817e9a%2Frebecca-matthews-yjWNJRwt8mc-unsplash.jpg?v=1619471178279"
+                                    src={recipe.getMainImage() || "https://cdn.glitch.com/0b57df91-f600-46a4-956b-70a322817e9a%2Frebecca-matthews-yjWNJRwt8mc-unsplash.jpg?v=1619471178279"}
                                 />
                             </Card>
                             <Card>
                                 <h5>Instructions:</h5>
-                                <ol className= "show_instruction">
-                                    {directions.map(message => (
-                                        <Item key={message} message={message} />
+                                <ol className="show_instruction">
+                                    {recipe.instructionDetails.map(message => (
+                                        <Item key={message} message={message}/>
                                     ))}
                                 </ol>
                                 <Card.Body>
@@ -142,7 +163,7 @@ export default function ShowRecipe(props) {
                                 </Card.Body>
                             </Card>
                         </CardDeck>
-                        <CardDeck className= "Tags">
+                        <CardDeck className="Tags">
                             <Card.Header>
                                 Tags:
                             </Card.Header>
@@ -166,7 +187,8 @@ export default function ShowRecipe(props) {
     return (
         <div className="outer_div">
             {!props.id && <DefaultRecipe/>}
-            {props.id && recipes && recipes.length <= props.id && <Alert variant="danger">Error: recipe does not exist!</Alert>}
+            {props.id && recipes && recipes.length <= props.id &&
+            <Alert variant="danger">Error: recipe does not exist!</Alert>}
             {props.id && recipes.length > props.id &&
             <Card className="colored-background">
                 <div className="showrecipe">
@@ -204,9 +226,13 @@ export default function ShowRecipe(props) {
                                 <Card.Body>
                                     <h4>Ingredients:</h4>
                                     <ul className="show_ingredients">
-                                        {recipes[props.id].IngredientsList.map(message => (
-                                                <Item key={message} message={message}/>
+                                        {recipes.IngredientsList.map(message => (
+                                            <Item key={message} message={message}/>
                                             ))
+                                        // ||
+                                        //     [props.id].IngredientsList.map(message => (
+                                        //     <Item key={message} message={message}/>
+                                        // ))
                                         }
                                     </ul>
                                 </Card.Body>

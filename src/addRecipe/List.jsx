@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 ));
 
 function List() {
-    const [inputList, setInputList] = useState([{ingredient: "", amount: "", typeAmount: " "}]);
+    const [inputList, setInputList] = useState(tempRecipe.IngredientsList);
 
     // handle input change
     const handleInputChange = (e, index) => {
@@ -78,15 +78,9 @@ function List() {
             {inputList.map((x, i) => {
                 return (
                     <div>
-
-
-                        <Grid container spacing={3}>
-
-                            <Grid item xs={3} sm={2}>
-
+                        <Grid container spacing={3} id={i+"grid"}>
+                            <Grid item xs={3} sm={2} >
                                 <TextField
-
-                                    InputProps={{inputProps: {min: 0}}}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -95,10 +89,9 @@ function List() {
                                     name="ingredient"
                                     color="secondary"
                                     label="ingredient"
-                                    value={x.ingredient}
+                                    value={x["ingredient"]}
                                     onChange={e => handleInputChange(e, i)}
                                 />
-
                             </Grid>
                             <Grid item xs={4} sm={2}>
                                 <TextField
@@ -107,7 +100,7 @@ function List() {
                                     color="secondary"
                                     fullWidth
                                     name="amount"
-                                    InputProps={{inputProps: {min: 0}}}
+                                    inputProps={{ min: 0,step:(1/10)}}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -117,13 +110,11 @@ function List() {
                                 />
                             </Grid>
                             <Grid item xs={4} sm={3}>
-
                                 <TextField
                                     required
                                     color="secondary"
                                     fullWidth
                                     name="typeAmount"
-
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
