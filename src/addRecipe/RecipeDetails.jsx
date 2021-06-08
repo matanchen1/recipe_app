@@ -66,7 +66,7 @@ const RecipeDetails = forwardRef((props, ref) => {
 
                 <div className={classes.body}>
                     <b><Typography className={classes.textField} variant="h4" gutterBottom>
-                        Add a New Recipe
+                         Add a New Recipe
                     </Typography></b>
                     <div>
                         <Grid container spacing={3}>
