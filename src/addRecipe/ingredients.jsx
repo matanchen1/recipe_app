@@ -43,7 +43,7 @@ const Ingredients = forwardRef((props, ref) => {
                     e.preventDefault()
                 }}/>
                 <b><Typography className={classes.textField} variant="h4" gutterBottom background="#007F80">
-                    Ingredients
+                   The Ingredients
             </Typography></b>
                 <div className={classes.body}>
                     <List tempRecipe={tempRecipe}> </List>

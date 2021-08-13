@@ -13,6 +13,9 @@ import Button from "@material-ui/core/Button";
 import {tempRecipe} from "../addRecipe/tempRecipeObj";
 import {Checkbox, FormControlLabel} from "@material-ui/core";
 import {Favorite, FavoriteBorder, Star, StarBorder} from "@material-ui/icons";
+import MediaCardComments from "./MediaCardComments";
+import 'antd/dist/antd.css';
+import {Card} from 'antd';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,6 +40,16 @@ const useStyles = makeStyles((theme) => ({
     mainRecipeGrid: {
         marginBottom: "40px",
     },
+    mediaCardHover: {
+        // marginRight: "20px",
+        // marginLeft: "20px",
+        // marginBottom: "30px",
+        maxWidth: "350px",
+        // "&:hover": {
+        //     boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+        // }
+    },
+
 }));
 
 const FilterOptionStates = {
@@ -50,11 +63,10 @@ function GetRecipes() {
     return {recipes}.recipes;
 }
 
-
 export default function DishesView(props) {
 
     const classes = useStyles();
-    const {member, members,findMemberInArr} = useAuth()
+    const {member, members, findMemberInArr} = useAuth()
     const AllRecipes = GetRecipes();
     const [curRecipes, setCurRecipes] = useState(GetRecipes());
     const [sort, setSorted] = useState(false);
@@ -97,10 +109,24 @@ export default function DishesView(props) {
 
 
     const handleFilters = (filters, category) => {
-        console.log("category", category)
+
+
+        if (filters === "clearChoice") {
+            const newFilters = {
+                FoodCategoryFilter: [],
+                DietFilter: [],
+                curMembers: [],
+                favChecked: false,
+            }
+            setCheck(false);
+            updateCurRecipe(newFilters)
+            setFilters(newFilters)
+            return;
+        }
+
         const newFilters = {...Filters}
         newFilters[category] = filters
-        console.log("filters", filters)
+        // console.log("filters", filters)
 
         //        newFilters[FoodCategory] = [Salades, Pies, Others]
 
@@ -246,7 +272,7 @@ export default function DishesView(props) {
 
     const renderRecipes = (Recipes) => getFilterRecipe(Recipes).map((recipe, i) => (//TODO: can we remove this index?
         <Col lg={8} md={12} sm={24} id={i}
-             style={{padding: "2%"}}
+             className={classes.mediaCardHover}
         >
             <MediaCard
                 recipe={recipe}
@@ -255,6 +281,7 @@ export default function DishesView(props) {
                 title={recipe.getName()}
                 recipeIndex={recipe.key}
             />
+            <Card><MediaCardComments comments={recipe.comments}/></Card>
         </Col>
     ))
     return (
@@ -287,7 +314,7 @@ export default function DishesView(props) {
                 {AllRecipes.length === 0 ? "\n Add Your First Recipe :)" : "\n There's nothing here! Add recipes and memories to your collection :)"}
             </h1>}
             <div className={"recipes"}>
-                <Row className={classes.mainRecipeGrid} gutter={[70, 50]}>
+                <Row className={classes.mainRecipeGrid} gutter={[55, 30]}>
                     {renderRecipes(curRecipes)}
                 </Row>
             </div>

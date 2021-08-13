@@ -19,7 +19,9 @@ const useStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(1)
     },
     inputRoot: {
-        fontSize: 25
+        fontSize: 25,
+        height: 100,
+
     },
     labelRoot: {
         fontSize: 25,
@@ -62,6 +64,7 @@ function StepLists(props) {
                 handleAddClick();
             }
         };
+        console.log("1z", tempRecipe.story)
         document.addEventListener("keydown", listener);
         return () => {
             document.removeEventListener("keydown", listener);
@@ -75,6 +78,7 @@ function StepLists(props) {
     return (
         <div className="App">
             {inputList.map((x, i) => {
+                const step = "Step " +(i+1)+ "                                                                                                                                                                                                                  details:"
                 return (
                     <div className="box">
                         <TextField
@@ -91,7 +95,7 @@ function StepLists(props) {
                             name="step"
                             multiline
                             color="secondary"
-                            label="Step details:"
+                            label={step}
                             value={x["step"]}
                             onChange={e => handleInputChange(e, i)}
                         />

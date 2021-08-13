@@ -16,6 +16,10 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import Fab from "@material-ui/core/Fab";
+import WhatsAppShare from "./WhatsAppShare";
+import FaceBookShare from "./FaceBookShare";
+import {useAuth} from "../contexts/AuthContext";
+import CopyShareLink from "./CopyShareLink";
 
 
 const styles = (theme) => ({
@@ -60,6 +64,8 @@ const DialogActions = withStyles((theme) => ({
 
 export default function StoryDialog(props) {
     const [open, setOpen] = React.useState(false);
+    const {groupcode} = useAuth();
+    const recipeShareLink = "https://grandma-cooked-oatmeal.web.app/shared-recipe/" + groupcode + "/" + props.id;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -69,7 +75,7 @@ export default function StoryDialog(props) {
     };
     return (
         <div>
-            <ShareOutlinedIcon color={"#f12382"} onClick={handleClickOpen}/>
+            <ShareOutlinedIcon style={{fill:"#3b9ce5"}} fill={"green"} onClick={handleClickOpen}/>
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                     Share the recipe
@@ -95,25 +101,23 @@ export default function StoryDialog(props) {
                     {/*</Typography>*/}
                     <br/><br/>
                     <IconButton color="primary" aria-label="upload picture" component="span">
-                        <WhatsAppIcon/>
+                        {/*<WhatsAppIcon/>*/}
+                        <WhatsAppShare shareValue={recipeShareLink} message="Check out my recipe! "/>
                     </IconButton>
                     <IconButton color="primary" aria-label="upload picture" component="span">
-                        <FacebookIcon/>
-                    </IconButton><IconButton color="primary" aria-label="upload picture"
-                                             component="span">
-                    <TwitterIcon/>
-                </IconButton><IconButton color="primary" aria-label="upload picture"
-                                         component="span">
-                    <InstagramIcon/>
-                </IconButton>
+                        {/*<FacebookIcon/>*/}
+                        <FaceBookShare shareValue={recipeShareLink} message="Check out my recipe! "/>
+                    </IconButton>
+
+                    <CopyShareLink shareValue={recipeShareLink}/>
                     <br/>
 
                 </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleClose} color="primary">
-                        Back
-                    </Button>
-                </DialogActions>
+                {/*<DialogActions>*/}
+                {/*    /!*<Button autoFocus onClick={handleClose} color="primary">*!/*/}
+                {/*    /!*    Back*!/*/}
+                {/*    /!*</Button>*!/*/}
+                {/*</DialogActions>*/}
             </Dialog>
         </div>
     );

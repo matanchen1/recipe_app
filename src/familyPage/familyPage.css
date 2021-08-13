@@ -4,9 +4,9 @@
     display: grid;
     grid-template-columns: [column1] 25px [column2] 200px [column3] 40px [column4] auto [column5] 25px [column6];
     grid-template-rows: [row1] 10px [row2] auto [row3] auto [row4] 10px [row5];
-    background-image: url(https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/project%20files%2FShortLeavesApple.png?alt=media&token=31e28930-38b5-4d04-994f-ac32a4cdd6f7);
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/project%20files%2Fspoon%20with%20black%20spice%20side.jpg?alt=media&token=c93d6ac4-1334-41b3-b89e-54855bca5630);
     background-size: cover;
-    background-position: bottom right;
+    background-position: top right;
 }
 
 .marginLeft {

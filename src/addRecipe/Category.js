@@ -1,7 +1,9 @@
-import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
+import {FormControl, InputLabel, ListItemIcon, MenuItem, Select} from "@material-ui/core";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {getOnlyNameCategoryOption} from "./Recipe";
+import ClassIcon from '@material-ui/icons/Class';
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -35,15 +37,18 @@ export default function Category(props) {
 
                 <InputLabel>Category</InputLabel>
                 <Select
-
+                    // IconComponent={ClassIcon}
                     defaultValue={tempRecipe.category}
                     onChange={(e) => {
                         tempRecipe.setCategory(e.target.value)
                     }}
                     MenuProps={MenuProps}
                 >
+
+
                     {category_option.map((categoryName) => (
                         <MenuItem key={categoryName} value={categoryName}>
+
                             {categoryName}
                         </MenuItem>
                     ))}

@@ -23,21 +23,24 @@ import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router-dom";
 
 
-export const icons = [s, s1, s2, s3, s4, s5];
+
+export const icons = [s, s1, s2, s3, s4, s5,"https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/project%20files%2FAvatars%2FHaim.png?alt=media&token=d006c402-0b01-4e9d-94ee-29b40c1c985b",
+    "https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/project%20files%2FAvatars%2FJess.png?alt=media&token=8da3130b-bbb4-4cb8-99a2-c201445baed8",
+    "https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/project%20files%2FAvatars%2FGinger.png?alt=media&token=0222ce3a-7ace-4304-beb9-c9801aba3e08"];
 
 const useStyles = makeStyles(theme => ({
     font: {
         // color: 'rgba(80,13,9,0.9)',
     },
     backgroundImg: {
-        backgroundImage: `url(https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/project%20files%2FallButTop.png?alt=media&token=dfef7639-c472-49bd-bc9a-faf47c45122c)`,
+        backgroundImage: `url(https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/project%20files%2Ffour%20spoons%20new%20user%20red%20on%20the%20right.jpg?alt=media&token=b4304d94-1558-4782-b679-7b4145444bb2)`,
+        minHeight: "86vh",
         height: "auto",
         // position: "fixed",
         backgroundSize: "cover",
         backgroundPosition: "center",
         textAlign: "center",
         backgroundAttachment: "fixed"
-        // minHeight: "88.5vh"
     }, layout: {
         pa: "3px",
         marginLeft: theme.spacing(2),
@@ -91,6 +94,9 @@ const useStyles = makeStyles(theme => ({
         '& > *': {
             margin: theme.spacing(1),
         }
+    },
+    input: {
+        display: "none",
     }
 }))
 
@@ -116,9 +122,10 @@ export default function ChooseUser() {
 
     function FormDialog() {
         const [selectedAvatar, setSelectedAvatar] = useState([0]);
-        const {addMember} = useAuth();
+        const {addMember, members} = useAuth();
         const [open, setOpen] = useState(false);
         const [error, setError] = useState("");
+        const [avatarImg, setAvatarImg] = useState("");
         const memberNameRef = useRef();
 
 
@@ -133,11 +140,21 @@ export default function ChooseUser() {
 
         async function handleSave(e) {
             e.preventDefault();
-            if (memberNameRef.current.value === '') {
+            let name = memberNameRef.current.value;
+            if (name === '') {
                 return setError("Please enter your Name!");
             }
+            try {
+                members.forEach(function (arrayItem) {
+                    if (arrayItem.getName() === name) {
+                        throw new Error();
+                    }
+                })
+            } catch (e) {
+                return setError("Please choose another Name!");
+            }
             //create new member
-            let toAdd = new Member(memberNameRef.current.value, selectedAvatar[0])
+            let toAdd = new Member(name, selectedAvatar[0])
             addMember(toAdd);
             setMember(toAdd);
             setStorageMemberKey(toAdd.getMemberKey());
@@ -153,18 +170,16 @@ export default function ChooseUser() {
                 </Fab>
 
                 <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle style={{textAlign: "center"}} id="form-dialog-title"><h2>Add
-                        aChef</h2>
+                    <DialogTitle style={{textAlign: "center"}} id="form-dialog-title"><h2>
+                         New Chef</h2>
                     </DialogTitle>
 
                     <DialogContent>
                         {error && <Alert variant="danger">{error}</Alert>}
                         <DialogContentText>
-                            <b> Insert your Name </b>
+                            <b> Whats your Name? </b>
                         </DialogContentText>
                         <Form.Control
-                            // type="email"
-                            // placeholder="Email"
                             ref={memberNameRef}
                             required
                         />
@@ -186,16 +201,30 @@ export default function ChooseUser() {
                                             src={icon} alt={index}/>
                                     </Radio>
                                 ))}
+                                {/*<Button>*/}
+                                {/*<input accept="image/*" className={classes.input} id="add-avatar-img" type="file"*/}
+                                {/*       onChange={() => {*/}
+
+                                {/*       }}*/}
+                                {/*/>*/}
+                                {/*<label htmlFor="add-avatar-img">*/}
+                                {/*    {<img*/}
+                                {/*        src={"https://static.thenounproject.com/png/348334-200.png"}*/}
+                                {/*        width="75"*/}
+                                {/*        height="75"/>}*/}
+                                {/*</label>*/}
+                                {/*</Button>*/}
                             </Radio.Group>
                         </Row>
                     </DialogContent>
 
                     <DialogActions style={{marginRight: "30px"}}>
-                        <Button onClick={handleClose} color="primary">
+                        <Button onClick={handleClose} color="secondary">
                             Cancel
                         </Button>
-                        <Button onClick={handleSave} color="secondary">
-                            Save
+                        &nbsp;
+                        <Button onClick={handleSave} color="primary">
+                           <b> Join now</b>
                         </Button>
                     </DialogActions>
                 </Dialog>

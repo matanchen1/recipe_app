@@ -9,12 +9,18 @@ import List from "@material-ui/core/List";
 import {makeStyles} from "@material-ui/core/styles";
 import {useAuth} from "../contexts/AuthContext";
 import {Image} from "antd";
+import {Button} from "react-bootstrap";
+import Fab from "@material-ui/core/Fab";
 // import noGluten from "../assets/GlutenFree.png"
 
 const useStyles = makeStyles((theme) => ({
     checkBoxText: {
         fontSize: "100%",
-    }
+    },
+    margin: {
+        marginTop: "30px",
+
+    },
 }));
 
 
@@ -108,7 +114,7 @@ export default function CheckBox(props) {
                 />&nbsp;&nbsp;
                 <span
                     className={classes.checkBoxText}>{value.name}<img
-                    style={{height: 25, width:25,float:"right",marginTop:"5px"}}
+                    style={{height: 25, width: 25, float: "right", marginTop: "5px"}}
                     src={value.icon}/></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </React.Fragment>
         </div>
@@ -129,9 +135,17 @@ export default function CheckBox(props) {
         </div>
     ))
 
+    const clearChoice = () => {
+        setCheckedDiet([]);
+        setChecked([]);
+        setCheckedMembers([]);
+        props.handleFilters("clearChoice")
+    }
+
 // TODO: Style Filtering
     return (
         <div className={"filterHeader"}>
+
             {/*<Collapse defaultActiveKey={['0']} >*/}
             {/*<Panel header="Food Type" key="1"/>*/}
             {/*style={{boxShadow: "0px 4px 2px #888888"}}*/}
@@ -171,6 +185,18 @@ export default function CheckBox(props) {
                     {renderCheckboxLists3("curMembers")}
                 </List>
             </Collapse>
+            <Fab
+                variant="extended"
+                size="large"
+                color="black"
+                aria-label="add"
+                className={classes.margin}
+                onClick={() => {
+                    clearChoice()
+                }} style={{marginLeft:"15px"}}
+            >
+                Clear
+            </Fab>
         </div>
     )
 }

@@ -4,9 +4,10 @@ import "../styles/styles.css"
 import {Button, Form, Alert} from "react-bootstrap";
 import {useAuth} from "../contexts/AuthContext";
 
-export default function GroupCode({setShowSignUp, setForgotCode}) {
-    const groupcodeRef = useRef();
-    const {login, ForceFetchData} = useAuth();
+export default function ForgotGroupcode({setForgotCode}) {
+    const emailRef = useRef();
+    const passRef = useRef();
+    const {loginWithEmail, ForceFetchData} = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -15,7 +16,8 @@ export default function GroupCode({setShowSignUp, setForgotCode}) {
         try {
             setError("");
             setLoading(true);
-            await login(groupcodeRef.current.value);
+            await loginWithEmail(emailRef.current.value, passRef.current.value);
+            setForgotCode(false);
             ForceFetchData();
         } catch (err) {
             setError(err.message);
@@ -34,24 +36,26 @@ export default function GroupCode({setShowSignUp, setForgotCode}) {
                 <Form.Group controlId="formBasicEmail">
                     <Form.Control
                         type="text"
-                        placeholder="Family Code"
-                        ref={groupcodeRef}
+                        placeholder="Email"
+                        ref={emailRef}
                     />
                 </Form.Group>
+                <Form.Group id="password">
+                    <Form.Control
+                        type="password"
+                        placeholder="Password"
+                        ref={passRef}
+                        required
+                    />
 
+                </Form.Group>
                 <Button disabled={loading} variant="success" type="submit">
                     Start making memories
                 </Button>
                 <Form.Text className="text-muted">
-                    Don't have a Family Code?
-                    <Button variant="link" size="sm" onClick={() => setShowSignUp(true)}>
-                        Create a new collection
-                    </Button>
-                </Form.Text>
-                <Form.Text className="text-muted">
-                    Forgot your Family Code?
-                    <Button variant="link" size="sm" onClick={() => setForgotCode(true)}>
-                        Login with email and password
+                    Remember your Family Code?
+                    <Button variant="link" size="sm" onClick={() => setForgotCode(false)}>
+                        Enter with code
                     </Button>
                 </Form.Text>
             </Form>

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import {useHistory, useParams} from "react-router";
+import {Redirect, useHistory, useParams} from "react-router";
 import "./styles/app.css";
 import GroupCode from "./pages/group-code";
 import SignUp from "./pages/SignUp";
@@ -10,7 +10,7 @@ import NavBar from "./pages/NavBar";
 // import ShowStory from "./pages/ShowStory"
 import {useAuth, AuthProvider} from "./contexts/AuthContext";
 // import SandBox2 from "./ShowRecipeDir/ShowRecipeCopy"
-import ShowRecipeCopy from "./ShowRecipeDir/ShowRecipeCopy"
+import ShowRecipe from "./ShowRecipeDir/ShowRecipeCopy"
 import ChooseUser from "./userSelect/ChooseUser";
 
 //
@@ -23,10 +23,13 @@ import ViewOnlyRecipe from "./ShowRecipeDir/ViewOnlyRecipe";
 import FamilyPage from "./familyPage/FamilyPage";
 import AddRecipeMain from "./addRecipe/addRecipeMain";
 import NewStoryDropImg from "./addRecipe/NewStoryDropImg";
+import {render} from "@testing-library/react";
+import ForgotGroupcode from "./pages/ForgotGroupcode";
 
 
 function App() {
     const [showSignUp, setShowSignUp] = React.useState(false);
+    const [forgotCode, setForgotCode] = React.useState(false);
     const history = useHistory();
 
     function StartPage() {
@@ -41,14 +44,16 @@ function App() {
             // return <ChooseUser/>;
         } else if (showSignUp) {
             return <SignUp setShowSignUp={setShowSignUp}/>;
+        } else if (!forgotCode) {
+            return <GroupCode setShowSignUp={setShowSignUp} setForgotCode={setForgotCode}/>;
         } else {
-            return <GroupCode setShowSignUp={setShowSignUp}/>;
+            return <ForgotGroupcode setForgotCode={setForgotCode}/>;
         }
     }
 
-    function ShowRecipe() {
+    function ShowRecipeFunc() {
         let {id} = useParams();
-        return <ShowRecipeCopy id={id}/>;
+        return <ShowRecipe id={id}/>;
     }
 
     function EditRecipe() {
@@ -59,54 +64,60 @@ function App() {
 
     function ViewOnly() {
         let {group, key} = useParams();
-        const {getSingleRecipe, viewOnly} = useAuth();
-        // const [viewOnly, setViewOnly] = useState();
-        // try {
-            getSingleRecipe(group, key);
-            //     .then(viewRecipe => {
-            //     console.log("view-only "+viewRecipe);
-            //     if (!viewRecipe) {
-            //         return <Alert variant="danger">Invalid Recipe Link</Alert>
-            //     }
-            //     // return (<ViewOnlyRecipe recipe={viewRecipe}/>)
-            // }); //TODO: maybe try to make async and use .then?
-            // while (!viewOnly) {
-            //
-            // }
-            if (viewOnly === -1) {
-                return <Alert variant="danger">Invalid Recipe Link</Alert>
-            }
-            console.log("view-only "+viewOnly);
-            return null;
-            // return (<ViewOnlyRecipe recipe={viewRecipe}/>)
-            // return <ShowRecipeCopy id={id}/>;
-        // } catch (err) {
-        //     return <Alert variant="danger">Invalid Recipe Link</Alert>
-        // }
-         //TODO: shelly - check it works
+        const {getSingleRecipe} = useAuth();
+        const [message, setMessage] = useState("Loading");
+        const history = useHistory();
+        const renderGetPage = async () => {
+            return getSingleRecipe(group, key);
+        }
+
+        renderGetPage().then(()=> {
+            history.push("/view-recipe/"+ group + key);
+        }).catch(err => {
+            setMessage(err.message);
+        });
+        return <h1>{message}</h1>;
     }
 
     function LoginFromLink() {
         let {id} = useParams();
         const {login, currentUser, logout} = useAuth();
+        const history = useHistory();
+        const [message, setMessage] = useState("Logging in with Group Code: " + id);
 
-        if (currentUser) {
-            logout().then(() => {
-                login(id).then(() => {
-                    history.push("/changeuser");
-                }).catch(err => {
-                    return <Alert variant="danger">Invalid Group Code: {err.message}</Alert>
+        const tryLogin = async () => {
+            if (currentUser) {
+                logout().then(() => {
+                    return login(id);
                 })
-            })
-        } else {
-            login(id).then(() => {
-
-                history.push("/changeuser");
-            }).catch(err => {
-                return <Alert variant="danger">Invalid Group Code: {err.message}</Alert>
-            })
+            } else {
+                return login(id);
+            }
         }
-        return <h1>Logging in with Group Code: {id}</h1>;
+        tryLogin().then(() => {history.push("/")}).catch(err => {
+            setMessage(err.message);
+        });
+        return <h1>{message}</h1>;
+        // } catch (err) {
+        //     return <Alert variant="danger">Invalid Group Code: {err.message}</Alert>
+        // }
+        // if (currentUser) {
+        //     logout().then(() => {
+        //         login(id).then(() => {
+        //             // return <Redirect to="/" />
+        //             history.push("/");
+        //         }).catch(err => {
+        //             return <Alert variant="danger">Invalid Group Code: {err.message}</Alert>
+        //         })
+        //     })
+        // } else {
+        //     login(id).then(() => {
+        //         // return <Redirect to="/" />
+        //         history.push("/");
+        //     }).catch(err => {
+        //         return <Alert variant="danger">Invalid Group Code: {err.message}</Alert>
+        //     })
+        // }
 
     }
 
@@ -126,7 +137,8 @@ function App() {
                             </Route>
                             <Route path="/family/:id" children={<LoginFromLink/>}/>
                             <Route path="/shared-recipe/:group/:key" children={<ViewOnly/>}/>
-                            <PrivateRoute path="/recipe/:id" children={<ShowRecipe/>}/>
+                            <Route path="/view-recipe/:path" children={<ViewOnlyRecipe/>}/>
+                            <PrivateRoute path="/recipe/:id" children={<ShowRecipeFunc/>}/>
                             <PrivateRoute path="/edit/:id" children={<EditRecipe/>}/>
                             {/*<PrivateRoute path="/addstory" component={AddStory} />*/}
                             {/*<PrivateRoute path="/main" component={FamilyPage} />*/}

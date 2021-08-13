@@ -11,19 +11,25 @@ import {icons} from "../userSelect/ChooseUser";
 import StoryDialog from "./StoryDialog";
 import StarIcon from '@material-ui/icons/Star';
 import Member from '../userSelect/Member'
+import ss from "../familyPage/story-icon-png-16.jpg"
+const FONT = "'Trebuchet MS', sans-serif";
 
 const {Meta} = Card;
-
+const LENGTH_BRIEF_STORY = 58
 export default function MediaCard(props) {
     const history = useHistory();
     const {member, members, addFavourite} = useAuth();
     const recipePath = "/recipe/"
     const [memberFav, setMemberFav] = useState(member.getFavourites());
-
     const [render, setrender] = useState(false)
+    const briefStory = (props.recipe.story.content.length > LENGTH_BRIEF_STORY) ?
+        <span style={{fontFamily:FONT,fontSize:"120%"}}> <img style={{ width: "22px"}} src={ss}/> <strong> {props.recipe.story.content.slice(0, LENGTH_BRIEF_STORY) + "..."} </strong>  </span>
+        :<span style={{fontFamily:FONT,fontSize:"120%"}}> <img style={{ width: "22px"}} src={ss}/> <strong>{props.recipe.story.content}</strong> </span>;
+
+
     useEffect(() => {
         console.log("memberFaUSEffect", memberFav)
-    },[memberFav])
+    }, [memberFav])
 
     function getAvatar() {
         let avatar = null;
@@ -41,7 +47,6 @@ export default function MediaCard(props) {
 
     function renderFavBtn(memberFav, recipeKey) {
         console.log("memberFAV", memberFav)
-
         return (!memberFav || !memberFav.has(recipeKey)) ?
             (
                 <StarOutlineIcon style={{fill: "#e5a407"}} key="ellipsis" onClick={async () => {
@@ -61,8 +66,8 @@ export default function MediaCard(props) {
     }
 
     return (
-        <Card hoverable={true}
-              style={{width: "100%", maxWidth: "350px"}}
+        <Card hoverable={false}
+              style={{width: "100%", maxWidth: "350px", cursor: "pointer"}}
               cover={
                   <img style={{height: 225, objectFit: "cover", objectPosition: "center"}}
                        alt="example"
@@ -78,18 +83,17 @@ export default function MediaCard(props) {
                   />
               }
               actions={[
-                  <IconButton size={"small"} color="primary" aria-label="upload picture"
-                              component="span">
-                      <FavoriteBorderIcon color={"secondary"} key="Like" onClick={() => {
-                          console.log(member)
-                      }}/>
-                  </IconButton>,
-                  // <WhatsAppIcon style={{fill: "#2faf27"}} key="ellipsis"/>,
+                  // <IconButton size={"small"} color="primary" aria-label="upload picture"
+                  //             component="span">
+                  //     <FavoriteBorderIcon color={"secondary"} key="Like" onClick={() => {
+                  //         console.log(member)
+                  //     }}/>
+                  // </IconButton>,
                   <IconButton size={"small"} aria-label="upload picture" component="span">
-                      {renderFavBtn(memberFav, props.recipe.key,render)}
+                      {renderFavBtn(memberFav, props.recipe.key, render)}
                   </IconButton>,
                   <StoryDialog title={props.title} text={props.recipe.getStoryContent()}
-                               author={props.author}
+                               author={props.author} id={props.recipeIndex}
                                img={props.img}/>,
               ]}
 
@@ -101,10 +105,16 @@ export default function MediaCard(props) {
                     recipe: props.recipe,
                 })
                 }
+
+                title={<span style={{fontSize: 19, maxWidth: 150}}><strong>{props.title}</strong> </span>}
                 avatar={getAvatar()}
-                title={<span style={{fontSize: 21, maxWidth: 150}}>{props.title} </span>}
                 description={
-                    <span> <b>{props.author || props.recipe.getUploadedBy()}</b> <br/> Uploaded by: {props.recipe.getUploadedBy()}</span>}
+                    <span> <b>{(props.author || props.recipe.getUploadedBy()) + " recipe"}</b>
+                        {/*<br/>Uploaded by: {props.recipe.getUploadedBy()*/}
+                        <br/>
+                        <br/>
+                        {briefStory}
+                    </span>}
 
 
             />

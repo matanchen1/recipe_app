@@ -5,6 +5,7 @@ import NoFatIcon from "../assets/no-fat.png"
 import SugarFreeIcon from "../assets/sugar-free.png"
 import VeganIcon from "../assets/vegan (1).png"
 import VegetarianIcon from "../assets/vegetarian.png"
+
 export const filterOptions = [
     'Vegan',
     'Kosher',
@@ -14,68 +15,49 @@ export const filterOptions = [
     'Vegetarian'];
 
 export const categoryOption = [
+
     {
         "_id": 0,
-        "name": "Breakfast"
-    },
-    {
-        "_id": 1,
-        "name": "Chicken"
-    },
-    {
-        "_id": 2,
         "name": "Dinner"
     },
     {
-        "_id": 3,
+        "_id": 1,
         "name": "Deserts"
     },
     {
-        "_id": 4,
+        "_id": 2,
         "name": "Drinks"
     },
     {
-        "_id": 5,
+        "_id": 3,
         "name": "Fish"
     },
     {
-        "_id": 6,
-        "name": "Main Dish"
-    },
-    {
-        "_id": 7,
+        "_id": 4,
         "name": "Meat"
     },
     {
-        "_id": 8,
-        "name": "Pasta"
-    },
-    {
-        "_id": 9,
+        "_id": 5,
         "name": "Pastry"
     },
     {
-        "_id": 10,
+        "_id": 6,
         "name": "Pies"
     },
     {
-        "_id": 11,
+        "_id": 7,
         "name": "Salads"
     },
     {
-        "_id": 12,
+        "_id": 8,
         "name": "Side dish"
     },
     {
-        "_id": 13,
+        "_id": 9,
         "name": "Soups"
     },
     {
-        "_id": 14,
-        "name": "Vegetables"
-    },
-    {
-        "_id": 15,
+        "_id": 10,
         "name": "Other"
     },
 
@@ -136,13 +118,8 @@ export const AllFiltersOption = {
         'Deserts',
         'Soup',
         'Other',
-        'Breakfast',
-        'Main Dish',
         'Meat',
-        'Chicken',
         'Side dish',
-        'Pasta',
-        'Vegetables',
         'Pastry',
         'Dinner',
         'Drinks'
@@ -176,7 +153,7 @@ export const getOnlyNameCategoryOption = () => {
 
 // }
 const generateUniqueKey = () => {
-    return ""+new Date().getTime()
+    return "" + new Date().getTime()
 }
 
 export default class Recipe {
@@ -186,7 +163,7 @@ export default class Recipe {
                 ingredientsList = [{ingredient: "", amount: "", typeAmount: ""}], ovenHeat = "None",
                 instructionDetails = [{step: ""}], storyContent = "",
                 storyImages = [], category = "Other", filtersList = [], ingredientNameForFilter = [], uploadedBy = "",
-                key = 0, comments = [], likeCounter = 0,
+                key = 0, comments = [], storyBrief = "",
     ) {
         this.name = name;
         this.author = author;
@@ -201,7 +178,7 @@ export default class Recipe {
         this.category = category;
         this.filtersList = filtersList;
         this.ingredientNameForFilter = ingredientNameForFilter
-        this.likeCounter = likeCounter;
+        this.storyBrief = storyBrief;
         this.key = key;
         this.comments = comments;
         this.uploadedBy = uploadedBy;
@@ -211,14 +188,16 @@ export default class Recipe {
         };
         this.uniqueId = generateUniqueKey()
         this.tempStoryImages = [];
+
     }
+
     getServing() {
         let n = parseFloat(this.serving);
         n.toFixed(1);
         return n
     }
 
-    setUniqueId(){
+    setUniqueId() {
         this.uniqueId = generateUniqueKey()
     }
 
@@ -282,7 +261,7 @@ export default class Recipe {
     }
 
     setPrepTime(prepTime) {
-        this.prepTime = prepTime;
+        this.prepTime = prepTime.toLowerCase();
     }
 
 
@@ -328,14 +307,16 @@ export default class Recipe {
     getMainImage() {
         return this.images[0];
     }
-    recipeHasImage(){
-        if (!this.images || this.images.length === 0){
+
+    recipeHasImage() {
+        if (!this.images || this.images.length === 0) {
             return false
         }
         return true
     }
-    getOvenHeatShowRecipe(){
-        if(this.ovenHeat === "" || this.ovenHeat<=100){
+
+    getOvenHeatShowRecipe() {
+        if (this.ovenHeat === "" || this.ovenHeat <= 100) {
             return "None"
         }
         return this.ovenHeat;
@@ -367,8 +348,8 @@ export default class Recipe {
         this.key = key;
     }
 
-    addComment(author, date, content) {
-        this.comments.push({author: author, date: date, content: content});
+    addComment(author, date, content, imgUrl="") {
+        this.comments.push({author: author, date: date, content: content, imgUrl: imgUrl});
         //TODO chang name of author to key
     }
 
@@ -386,6 +367,10 @@ export default class Recipe {
             steps.push(step.step);
         }
         return steps
+    }
+
+    setStoryBrief(storyBrief) {
+        this.storyBrief = storyBrief;
     }
 }
 
@@ -408,9 +393,10 @@ export const recipeConverter = {
             filtersList: Recipe.filtersList,
             key: Recipe.key,
             comments: Recipe.comments,
-            storyContent: Recipe.story.content ,
+            storyContent: Recipe.story.content,
             storyImages: Recipe.story.images,
             uploadedBy: Recipe.uploadedBy,
+            storyBrief: Recipe.storyBrief,
         };
     },
 
@@ -423,7 +409,8 @@ export const recipeConverter = {
 
         return new Recipe(recipe.name, recipe.author, recipe.serving, recipe.images, recipe.notes, recipe.tags,
             recipe.prepTime, recipe.IngredientsList, recipe.OvenHeat, recipe.instructionDetails,
-            recipe.storyContent, recipe.storyImages, recipe.category, recipe.filtersList, ingredientNameForFilter, recipe.uploadedBy, recipe.key, recipe.comments, recipe.likeCounter);
+            recipe.storyContent, recipe.storyImages, recipe.category,
+            recipe.filtersList, ingredientNameForFilter, recipe.uploadedBy, recipe.key, recipe.comments, recipe.storyBrief);
     }
 
 };

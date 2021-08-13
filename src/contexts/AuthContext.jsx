@@ -5,6 +5,7 @@ import {recipeConverter} from "../addRecipe/Recipe";
 
 import {memberConverter} from "../userSelect/Member";
 import {getStorageMemberKey, setStorageMemberKey} from '../userSelect/ChooseUser'
+import {useHistory} from "react-router-dom";
 
 
 /**
@@ -31,6 +32,7 @@ export function AuthProvider({children}) {
     const [viewOnly, setViewOnly] = useState();
     // const [isChangeUser,SetIsChangeUser] = useState(false);
 
+    const history = useHistory();
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             setCurrentUser(user)
@@ -117,10 +119,10 @@ export function AuthProvider({children}) {
                         console.log("start", memberArray)
                         console.log("Storage", getStorageMemberKey())
                         console.log(findMemberInArr(memberArray, getStorageMemberKey()))
-
+                        console.log(memberArray, "5555555")
                         setMembers(memberArray)
                         let key = getStorageMemberKey();
-                        if(key!='-1') {
+                        if (key != '-1') {
                             let tempMember = memberArray[0];
                             for (let i = 0; i < memberArray.length; i++) {
                                 if (memberArray[i].getMemberKey() == key) {
@@ -195,7 +197,7 @@ export function AuthProvider({children}) {
     }
 
 
-    function addComment(key, author, date, content) {
+    function addComment(key, author, date, content, imgUrl = "") {
         const recipeByKey = findRecipeInArr(recipes, key);
         // const recipeToChange = findRecipeInArr(recipes, key);
 
@@ -203,7 +205,7 @@ export function AuthProvider({children}) {
         db.collection('users').doc(groupcode).update({
             recipes: firebase.firestore.FieldValue.arrayRemove(recipeConverter.toFirestore(recipeByKey))
         }).then(() => {
-            recipeByKey.addComment(author, date, content);
+            recipeByKey.addComment(author, date, content,imgUrl);
             // console.log("after change" + recipeToChange);
             return db.collection('users').doc(groupcode).update({
                 recipes: firebase.firestore.FieldValue.arrayUnion(recipeConverter.toFirestore(recipeByKey))
@@ -272,19 +274,24 @@ export function AuthProvider({children}) {
 
 
     function getSingleRecipe(code, key) {
-        db.collection('users').doc(code).get().then(doc => {
+        return db.collection('users').doc(code).get().then(doc => {
             const allRecipes = doc.data().recipes;
-            console.log("the key is " + key);
+            // console.log("the key is " + key);
+            console.log("getting single recipe");
             for (let i = 0; i < allRecipes.length; i++) {
                 if (allRecipes[i].key == key) {
-                    console.log(allRecipes[i].name + " this key is " + allRecipes[i].key);
-                    console.log(recipeConverter.fromFirestore(allRecipes[i]));
-                    setViewOnly(recipeConverter.fromFirestore(allRecipes[i]));
+                    // console.log(allRecipes[i].name + " this key is " + allRecipes[i].key);
+                    const recipe = recipeConverter.fromFirestore(allRecipes[i]);
+                    // console.log(recipeConverter.fromFirestore(allRecipes[i]));
+                    // console.log(recipe);
+                    setViewOnly(recipe);
                     return;
                     // return recipeConverter.fromFirestore(allRecipes[i]);
                 }
             }
-            setViewOnly(-1);
+            throw new Error();
+        }).catch(() => {
+            throw new Error("Recipe does not exist");
         })
     }
 
@@ -299,12 +306,16 @@ export function AuthProvider({children}) {
         })
     }
 
+    function loginWithEmail(email, pass) {
+        return auth.signInWithEmailAndPassword(email, pass);
+    }
 
     function logout() {
         return auth.signOut().then(() => {
                 setStorageMemberKey(-1);
                 setMember(null);
                 setMembers([]);
+
             }
         )
     }
@@ -322,12 +333,14 @@ export function AuthProvider({children}) {
         familyName,
         recipes,
         viewOnly,
+        loginWithEmail,
         login,
         signup,
         logout,
         members,
         setMember,
         member,
+        setLoading,
         changeFamilyImg,
         addFavourite,
         familyImgUrl,

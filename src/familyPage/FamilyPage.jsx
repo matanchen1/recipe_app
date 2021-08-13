@@ -22,6 +22,7 @@ function Header(props) {
             fontSize: '55px',
             border: "white",
             textAlign: "center",
+            fontFamily: "'Trebuchet MS', sans-serif"
         },
         FamImgStyle: {
             width: "300px",
@@ -56,7 +57,7 @@ function Header(props) {
             <div className={classes.groupCodeShareMain}>
                 <h5> Family Code: <strong> {groupcode} </strong></h5>
                 <WhatsAppShare className={classes.whatappIconShare}
-                               shareValue={webSiteFamilyUrl + {groupcode}.groupcode}/>
+                               shareValue={webSiteFamilyUrl + {groupcode}.groupcode} message="Join me on Recipe Generation! "/>
             </div>
         </div>
     )

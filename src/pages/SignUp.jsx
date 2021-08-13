@@ -22,6 +22,7 @@ export default function SignUp({ setShowSignUp }) {
             setError("");
             setLoading(true);
             await signup(emailRef.current.value, passRef.current.value, familyNameRef.current.value);
+            setShowSignUp(false);
         } catch (err) {
             setError(err.message);
         }

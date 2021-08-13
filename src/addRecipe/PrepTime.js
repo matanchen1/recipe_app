@@ -1,8 +1,9 @@
-import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
+import {FormControl, InputAdornment, InputLabel, MenuItem, Select} from "@material-ui/core";
 import React, {useRef} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -36,8 +37,9 @@ export default function PrepTime(props) {
             {/*    </Select>*/}
             {/*</FormControl>*/}
             <TextField
-                // className={classes.textField}
                 id="prepTime"
+                variant="outlined"
+                // className={classes.textField}
                 color="secondary"
                 name="prepTime"
                 label="Prep. Time"
@@ -46,7 +48,18 @@ export default function PrepTime(props) {
                 inputRef={prepTimeRef}
                 onChange={(e) => {
                     tempRecipe.setPrepTime(prepTimeRef.current.value);
-                }}/>
+                }}
+                InputProps={{
+                    startAdornment: (
+                        <>
+                            <InputAdornment position="start">
+                                <AccessTimeIcon/>
+                            </InputAdornment>
+                        </>
+                    ),
+                }}
+
+            />
         </div>
     );
 }

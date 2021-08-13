@@ -10,6 +10,8 @@
     flex-direction: column;
     overflow: auto;
     height: auto;
+    min-height: 83vh;
+
 
 }
 .navbar{

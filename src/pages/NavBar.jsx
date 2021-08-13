@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
     ,
     textCenter: {
         textAlign: "center",
+        marginRight:"3px"
     }
     ,
     memberAvatar: {
@@ -34,13 +35,17 @@ const useStyles = makeStyles(theme => ({
             {
                 margin: theme.spacing(1),
             }
-    }
+    },
+    stickyTop: {
+        backgroundColor: "#fafaf8",
+    //    can change here to any color! currently used spoons background color
+    },
 }))
 
 
 export default function NavBar() {
     const {familyName, member} = useAuth()
-    const {currentUser, logout, ForceFetchData} = useAuth();
+    const {currentUser, logout, ForceFetchData, setLoading} = useAuth();
     const [error, setError] = useState("");
     const history = useHistory();
     const classes = useStyles();
@@ -48,10 +53,13 @@ export default function NavBar() {
 
     async function handleLogout() {
         setError("");
-
+        setLoading(true);
         try {
-            await logout();
-            history.push("/");
+
+            logout().then(()=> {history.push("/");}).catch(err=> {
+                setError("Failed to Logout, " + err.message);
+            })
+            // history.push("/");
         } catch (err) {
             setError("Failed to Logout, " + err.message);
         }
@@ -64,20 +72,13 @@ export default function NavBar() {
 
     return (
         <>
-            <Navbar bg="light" expand="lg" className="sticky-top">
+            <Navbar variant="light" expand="lg" className={classes.stickyTop}>
                 <Navbar.Brand onClick={HandleLogoClick}>
                     <a className="navbar-brand" href="#">
                         <img
                             src="https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/images%2FLogo1.png?alt=media&token=bc78965c-aad2-4121-81f9-6feb9ccf5301"
                             width="150" height="45" alt="">
                         </img></a> </Navbar.Brand>
-                {/*<a class="navbar-brand" href="#">
-                        https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/images%2FLogo1.png?alt=media&token=bc78965c-aad2-4121-81f9-6feb9ccf5301" width="30" height="30" alt="">
-                   </a>
-                   <a className="navbar-brand" href="#">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/images%2FLogo1.png?alt=media&token=bc78965c-aad2-4121-81f9-6feb9ccf5301" width="30" height="30" alt="">
-                </a>
-               <img src="https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/images%2FLogo1.png?alt=media&token=bc78965c-aad2-4121-81f9-6feb9ccf5301" width="30" height="30" alt=""> </img> */}
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">

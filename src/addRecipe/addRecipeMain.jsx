@@ -25,7 +25,7 @@ import firebase from "firebase";
 
 const useStyles = makeStyles(theme => ({
     backgroundImg: {
-        backgroundImage: `url(https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/project%20files%2FallButTop.png?alt=media&token=dfef7639-c472-49bd-bc9a-faf47c45122c)`,
+        backgroundImage: `url(https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/project%20files%2Fspoons%20with%20green%20and%20black%20spices.jpg?alt=media&token=fdbcc64b-4a64-4590-ad6f-8e5cf7ee27a8)`,
         height: "auto",
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -87,15 +87,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const steps = ["General Info", "Memories", "Ingredients", " Instructions"];
+const steps = [ "Memories", "General Info", "Ingredients", " Instructions"];
 
 const useColorlibStepIconStyles = makeStyles({
     root: {
         backgroundColor: "#ccc",
         zIndex: 1,
         color: "#fff",
-        width: 50,
-        height: 50,
+        width: 60,
+        height: 60,
         display: "flex",
         borderRadius: "50%",
         justifyContent: "center",
@@ -208,31 +208,32 @@ export default function AddRecipeMain(props) {
     let formRef = useRef(null);
 
 
-    useEffect(() => {
-        window.scrollTo(0, 15);
-        const listener = event => {
-            if ((event.code === "Enter" || event.code === "NumpadEnter") && (activeStep < steps.length)
-            && activeStep<2) {
-                handleNext();
-            }
-        };
-        console.log("1z", tempRecipe.story)
-        document.addEventListener("keydown", listener);
-        return () => {
-            document.removeEventListener("keydown", listener);
-        };
-    }, [activeStep]);
+    // useEffect(() => {
+    //     window.scrollTo(0, 15);
+    //     const listener = event => {
+    //         if ((event.code === "Enter" || event.code === "NumpadEnter") && (activeStep < steps.length)
+    //         && activeStep<2) {
+    //             handleNext();
+    //         }
+    //     };
+    //     console.log("1z", tempRecipe.story)
+    //     document.addEventListener("keydown", listener);
+    //     return () => {
+    //         document.removeEventListener("keydown", listener);
+    //     };
+    // }, [activeStep]);
 
     function getStepContent(step) {
         switch (step) {
+
             case 0:
-                return (
-                    <RecipeDetails ref={formRef} editMode={editMode} tempRecipe={tempRecipe}/>
-                );
-            case 1:
                 return (
                     <AddStoryRecipe ref={formRef} tempRecipe={tempRecipe}/>
                 )
+            case 1:
+                return (
+                    <RecipeDetails ref={formRef} editMode={editMode} tempRecipe={tempRecipe}/>
+                );
             case 2:
                 return (
                     <Ingredients ref={formRef} tempRecipe={tempRecipe}/>
@@ -327,6 +328,7 @@ export default function AddRecipeMain(props) {
                 } else {
                     setActiveStep(activeStep + 1)
                     // window.scrollTo(0, 0)
+
                 }
             }
         }
@@ -358,7 +360,6 @@ export default function AddRecipeMain(props) {
                         {/*    <p className={classes.font}> Add Recipe </p>*/}
                         {/*</Typography>*/}
                         {/*{resetRecipe}*/}
-                        <br/> <br/>
                         <Stepper
                             className={classes.stepper}
                             alternativeLabel

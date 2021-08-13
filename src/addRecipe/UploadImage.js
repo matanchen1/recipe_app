@@ -146,7 +146,7 @@ export default function UploadImage(props) {
                 <input accept="image/*" className={classes.input} id="icon-button-add-image-1" type="file"
                        onChange={upload}/>
                 <Typography>
-                    {editMode ? "Edit Recipe Main image" : "Add photo (optional)"}
+                    {editMode ? "Edit Recipe Main image" : "Add Display photo (optional)"}
                 </Typography>
 
                 <label htmlFor="icon-button-add-image-1">
@@ -170,23 +170,7 @@ export default function UploadImage(props) {
             </div>
             {getPreviewImg()}
 
-            {/*{/{<LinearProgress variant="determinate" value={progress}/>}/}*/}
-            {/*{/<input accept="image/" className={classes.input} id="icon-button-file" type="file"*!/*/}
-            {/*/!*       onChange={upload}*!/*/}
-            {/*{//>/}*/}
-            {/*{/<label htmlFor="icon-button-file">/}*/}
-            {/*/!*    <IconButton color="primary" aria-label="upload picture" component="span">*!/*/}
-            {/*/!*        <PhotoCamera/>*!/*/}
-            {/*/!*    </IconButton>*!/*/}
-            {/*{/</label>/}*/}
 
-            {/*// {/{/{file !== null &&/}/}*/}
-            {/*// {/{/<Button className={classes.button}/}/}*/}
-            {/*//!        startIcon={<CloudUploadIcon/>}!//}*/}
-            {/*// {//!        onClick={upload}>!//}*/}
-            {/*// {/{/</Button>/}/}*/}
-            {/*// {//!    // <img src={url || "http://via.placeholder.com/300"} alt="firebase-image"/>!//}*/}
-            {/*// {/{/}/}/}*/}
         </div>
     );
 
