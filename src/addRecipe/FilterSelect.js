@@ -63,7 +63,6 @@ export default function FilterSelect(props) {
     const classes = useStyles();
     const theme = useTheme();
     useEffect(() => {
-        console.log(filterListState);
         tempRecipe.setAnotherFilter(filterListState)
     }, [filterListState]);
 

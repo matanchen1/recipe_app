@@ -32,7 +32,6 @@ class NewStoryDropImg extends React.Component {
     handleCancel = () => this.setState({ previewVisible: false });
     //Image Preview
     handlePreview = async (file) => {
-        console.log("handle preview");
         if (!file.url && !file.preview) {
             file.preview = await getBase64(file.originFileObj);
         }
@@ -52,14 +51,12 @@ class NewStoryDropImg extends React.Component {
         }
 
         this.props.tempRecipe.tempStoryImages = fileList;
-        console.log("handle change", fileList);
 
         this.setState({ fileList });
     };
 
     render() {
         const { previewVisible, previewImage, fileList, previewTitle } = this.state;
-        console.log(fileList);
         return (
             <div className="UploadDiv">
                 <h2 className="header1">Every picture tells a story</h2>

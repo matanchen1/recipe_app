@@ -123,7 +123,6 @@ const AddStoryRecipe = forwardRef((props, ref) => {
                                 defaultValue={tempRecipe.author}
                                 inputRef={authorRef}
                                 onChange={(e, value) => {
-                                    console.log(value, "test")
                                     setAuthorRef(value)
                                     tempRecipe.setAuthor(value);
 
@@ -152,7 +151,6 @@ const AddStoryRecipe = forwardRef((props, ref) => {
                                             ),
                                         }}
                                         onChange={(e, v) => {
-                                            console.log(e.target.value, "test")
                                             setAuthorRef(e.target.value)
                                             tempRecipe.setAuthor(e.target.value);
                                         }}/>

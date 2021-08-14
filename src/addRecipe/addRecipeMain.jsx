@@ -236,7 +236,7 @@ export default function AddRecipeMain(props) {
 
     const UploadFiles = async () => { //TODO: remove this?
         const files = tempRecipe.tempStoryImages
-        console.log("FILES,", files)
+        // console.log("FILES,", files)
         if (!files || files.length === 0) return tempRecipe;
         for (let i = 0; i < files.length; i++) {
             let file = files[i];
@@ -252,7 +252,6 @@ export default function AddRecipeMain(props) {
                 },
                 () => {
                     storageRef.child(fileName).getDownloadURL().then(url => {
-                        console.log("FILE GET URL", url)
                         tempRecipe.story.images = ([...urlArr, url])
                         setUrlArr([...urlArr, url]);
                         return tempRecipe

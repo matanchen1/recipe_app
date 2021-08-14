@@ -44,7 +44,6 @@ const RecipeDetails = forwardRef((props, ref) => {
             ValidBeforeNext(test) {
                 if (test === "test") return true;
                 if (!formHtmlRef.current.checkValidity()) submitRef.current.click();
-                console.log("valid? ", formHtmlRef.current.checkValidity());
                 setSubmitFlag(true);
                 if (!formHtmlRef || !formHtmlRef.current) return false;
                 else return (formHtmlRef.current.checkValidity());

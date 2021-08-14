@@ -252,7 +252,6 @@ export default class Recipe {
     }
 
     setOvenHeat(ovenHeat) {
-        console.log("recipe", ovenHeat)
         this.ovenHeat = ovenHeat
     }
 
@@ -284,7 +283,6 @@ export default class Recipe {
 
     setAnotherFilter(filterList) {
         this.filtersList = filterList;
-        console.log("filterList: ", this.filtersList)
     }
 
     getFilters() {

@@ -61,7 +61,6 @@ export default function SlideBar(props) {
     const handleChange = () => {
         setDisable(!disable);
     }
-    console.log("tempRecipe.OvenHeat", tempRecipe.OvenHeat)
 
     return (
         <div>

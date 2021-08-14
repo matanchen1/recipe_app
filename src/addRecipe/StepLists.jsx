@@ -63,7 +63,6 @@ function StepLists(props) {
                 handleAddClick();
             }
         };
-        console.log("1z", tempRecipe.story)
         document.addEventListener("keydown", listener);
         return () => {
             document.removeEventListener("keydown", listener);

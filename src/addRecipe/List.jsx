@@ -238,7 +238,6 @@ function List(props) {
     // handle input change
     const handleInputChange = (e, index) => {
         const {name, value} = e.target;
-        console.log(name, value)
         const list = [...inputList];
         list[index][name] = value;
         setInputList(list);
@@ -246,10 +245,7 @@ function List(props) {
     };
     const handleInputChangeAC = (e, v, index) => {
         const {name} = e.target;
-        console.log(name)
-        console.log(e.target, v)
         const list = [...inputList];
-        console.log("list", list)
         list[index][name] = v;
         setInputList(list);
         tempRecipe.setIngredientsList(list);
