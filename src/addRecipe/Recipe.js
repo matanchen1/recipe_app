@@ -1,49 +1,98 @@
+// Diet icon imports
+import GlutenFreeIcon from "../assets/GlutenFree.png"
+import kosherIcon from "../assets/kosher.png"
+import NoFatIcon from "../assets/no-fat.png"
+import SugarFreeIcon from "../assets/sugar-free.png"
+import VeganIcon from "../assets/vegan (1).png"
+import VegetarianIcon from "../assets/vegetarian.png"
+
 export const filterOptions = [
     'Vegan',
     'Kosher',
-    'GlutenFree'];
+    'GlutenFree',
+    'Sugar Free',
+    'Low Calories',
+    'Vegetarian'];
 
 export const categoryOption = [
+
     {
         "_id": 0,
-        "name": "Salads"
+        "name": "Dinner"
     },
     {
         "_id": 1,
-        "name": "Pies"
-    },
-    {
-        "_id": 2,
-        "name": "Fish"
-    },
-    {
-        "_id": 3,
         "name": "Deserts"
     },
     {
+        "_id": 2,
+        "name": "Drinks"
+    },
+    {
+        "_id": 3,
+        "name": "Fish"
+    },
+    {
         "_id": 4,
-        "name": "Soup"
+        "name": "Meat"
     },
     {
         "_id": 5,
+        "name": "Pastry"
+    },
+    {
+        "_id": 6,
+        "name": "Pies"
+    },
+    {
+        "_id": 7,
+        "name": "Salads"
+    },
+    {
+        "_id": 8,
+        "name": "Side dish"
+    },
+    {
+        "_id": 9,
+        "name": "Soups"
+    },
+    {
+        "_id": 10,
         "name": "Other"
     },
-
 
 ];
 
 export const dietOption = [
     {
         "_id": 100,
-        "name": "Vegan"
+        "name": "Gluten Free",
+        "icon": VeganIcon
     },
     {
         "_id": 101,
-        "name": "Kosher"
+        "name": "Kosher",
+        "icon": kosherIcon
     },
     {
         "_id": 102,
-        "name": "GlutenFree"
+        "name": "Low Calories",
+        "icon": GlutenFreeIcon
+    },
+    {
+        "_id": 103,
+        "name": "Sugar Free",
+        "icon": SugarFreeIcon
+    },
+    {
+        "_id": 104,
+        "name": "Vegan",
+        "icon": NoFatIcon
+    },
+    {
+        "_id": 105,
+        "name": "Vegetarian",
+        "icon": VegetarianIcon
     },
 ];
 
@@ -57,7 +106,10 @@ export const AllFiltersOption = {
     filterOptions: [
         'Vegan',
         'Kosher',
-        'GlutenFree'],
+        'GlutenFree',
+        'Sugar Free',
+        'Low Calories',
+        'Vegetarian'],
 
     categoryOption: [
         'Salads',
@@ -66,6 +118,11 @@ export const AllFiltersOption = {
         'Deserts',
         'Soup',
         'Other',
+        'Meat',
+        'Side dish',
+        'Pastry',
+        'Dinner',
+        'Drinks'
     ],
 
     holidayOption: [
@@ -74,36 +131,40 @@ export const AllFiltersOption = {
         'Rosh Hashana',
         'Shavuot'
     ],
-    getDietFilters() {
-        return dietOption
-    },
-    getFoodTypes() {
-        return categoryOption;
-    },
-    getOnlyNameCategoryOption() {
-        return ['Salads',
-            'Pies',
-            'Fish',
-            'Deserts',
-            'Soup',
-            'Other',
-        ];
-    },
-
-
-    size() {
-        return 3;
-    }
+}
+export const getDietFilters = () => {
+    return dietOption;
+}
+export const getFoodTypes = () => {
+    return categoryOption;
+}
+export const getOnlyNameFiltersOption = () => {
+    const dietOptionsArr = []
+    dietOption.forEach(option => dietOptionsArr.push(option.name))
+    return dietOptionsArr
 }
 
+
+export const getOnlyNameCategoryOption = () => {
+    const categoryOptions = []
+    categoryOption.forEach(option => categoryOptions.push(option.name))
+    return categoryOptions
+}
+
+// }
+const generateUniqueKey = () => {
+    return "" + new Date().getTime()
+}
 
 export default class Recipe {
 
     constructor(name = "", author = "", serving = "", images = [], notes = "", tags = "",
-                prepTime = "Not mentioned", ingredientsList =[{ingredient: "", amount: "", typeAmount: ""}], ovenHeat = "", instructionDetails = [],
-                storyContent = "", storyImages = [], category = "Other", filtersList = [],
-                likeCounter = 0,
-                Vegan = false, Kosher = false, GlutenFree = false, holiday = "",) {
+                prepTime = "",
+                ingredientsList = [{ingredient: "", amount: "", typeAmount: ""}], ovenHeat = "None",
+                instructionDetails = [{step: ""}], storyContent = "",
+                storyImages = [], category = "Other", filtersList = [], ingredientNameForFilter = [], uploadedBy = "",
+                key = 0, comments = [], storyBrief = "",
+    ) {
         this.name = name;
         this.author = author;
         this.serving = serving;
@@ -114,18 +175,46 @@ export default class Recipe {
         this.IngredientsList = ingredientsList;
         this.ovenHeat = ovenHeat;
         this.instructionDetails = instructionDetails;
+        this.category = category;
+        this.filtersList = filtersList;
+        this.ingredientNameForFilter = ingredientNameForFilter
+        this.storyBrief = storyBrief;
+        this.key = key;
+        this.comments = comments;
+        this.uploadedBy = uploadedBy;
         this.story = {
             content: storyContent,
             images: storyImages,
         };
-        this.category = category;
-        this.holiday = holiday;
-        this.filtersList = filtersList;
-        this.likeCounter = likeCounter;
+        this.uniqueId = generateUniqueKey()
+        this.tempStoryImages = [];
+
     }
 
-    setStoryContent(text){
+    getServing() {
+        let n = parseFloat(this.serving);
+        n.toFixed(1);
+        return n
+    }
+
+    setUniqueId() {
+        this.uniqueId = generateUniqueKey()
+    }
+
+    setUploadedBy(userName) {
+        this.uploadedBy = userName
+    }
+
+    getUploadedBy() {
+        return this.uploadedBy
+    }
+
+    setStoryContent(text) {
         this.story.content = text;
+    }
+
+    getStoryContent() {
+        return this.story.content;
     }
 
     setName(name) {
@@ -138,7 +227,8 @@ export default class Recipe {
     }
 
     setServing(serving) {
-        this.serving = serving;
+        this.serving = serving.toString();
+
     }
 
     setNotes(notes) {
@@ -151,26 +241,36 @@ export default class Recipe {
 
     setIngredientsList(IngredientsList) {
         this.IngredientsList = IngredientsList;
-        console.log(this.IngredientsList); //  TODO:REMOVE THIS
     }
 
     setInstruction(stepsList) {
         this.instructionDetails = stepsList;
-        console.log(this.instructionDetails); //  TODO:REMOVE THIS
+    }
+
+    getInstruction() {
+        return this.instructionDetails;
     }
 
     setOvenHeat(ovenHeat) {
-        this.ovenHeat = ovenHeat;
+        console.log("recipe", ovenHeat)
+        this.ovenHeat = ovenHeat
+    }
+
+    getOvenHeat() {
+        return this.ovenHeat
     }
 
     setPrepTime(prepTime) {
-        this.prepTime = prepTime;
-        console.log(this.prepTime); //  TODO:REMOVE THIS
+        this.prepTime = prepTime.toLowerCase();
     }
 
-    setImages(image) {
+
+    setStoryImages(imagesArr) {
+        this.story.images = imagesArr;
+    }
+
+    setMainImage(image) {
         this.images = image;
-        console.log(this.images)
     }
 
     setCategory(category) {
@@ -181,9 +281,6 @@ export default class Recipe {
         this.filteresList = filterArr
     }
 
-    getStoryContent() {
-        return this.story.content;
-    }
 
     setAnotherFilter(filterList) {
         this.filtersList = filterList;
@@ -211,9 +308,20 @@ export default class Recipe {
         return this.images[0];
     }
 
-    getImageArr(){
-        return this.images;
+    recipeHasImage() {
+        if (!this.images || this.images.length === 0) {
+            return false
+        }
+        return true
     }
+
+    getOvenHeatShowRecipe() {
+        if (this.ovenHeat === "" || this.ovenHeat <= 100) {
+            return "None"
+        }
+        return this.ovenHeat;
+    }
+
     getFilterOption() {
         return filterOptions;
     }
@@ -222,20 +330,54 @@ export default class Recipe {
         return categoryOption;
     }
 
+
     getHoliday() {
         return this.holiday;
     }
+
 
     setHoliday(value) {
         this.holiday = value;
     };
 
+    getIngredientsList() {
+        return this.IngredientsList
+    }
 
+    setKey(key) {
+        this.key = key;
+    }
+
+    addComment(author, date, content, imgUrl="") {
+        this.comments.push({author: author, date: date, content: content, imgUrl: imgUrl});
+        //TODO chang name of author to key
+    }
+
+    getIngredientsListMap() {
+        const ingredient = [];
+        for (const item of this.IngredientsList) {
+            ingredient.push(item.amount + " " + item.typeAmount + " " + item.ingredient);
+        }
+        return ingredient
+    }
+
+    getStepsListMap() {
+        const steps = []
+        for (const step of this.instructionDetails) {
+            steps.push(step.step);
+        }
+        return steps
+    }
+
+    setStoryBrief(storyBrief) {
+        this.storyBrief = storyBrief;
+    }
 }
 
 
 export const recipeConverter = {
     toFirestore: function (Recipe) {
+        // console.log("recipePrint",Recipe)
         return {
             name: Recipe.name,
             author: Recipe.author,
@@ -249,19 +391,26 @@ export const recipeConverter = {
             images: Recipe.images,
             category: Recipe.category,
             filtersList: Recipe.filtersList,
+            key: Recipe.key,
+            comments: Recipe.comments,
+            storyContent: Recipe.story.content,
+            storyImages: Recipe.story.images,
+            uploadedBy: Recipe.uploadedBy,
+            storyBrief: Recipe.storyBrief,
         };
     },
 
 
     fromFirestore: function (recipe) {
-        console.log(recipe.IngredientsList)
-        const ingredient = [];
-        recipe.IngredientsList.forEach(item => (
-            ingredient.push(item.amount + item.typeAmount + " of " + item.ingredient)
-        ))
+        const ingredientNameForFilter = []
+        for (const item of recipe.IngredientsList) {
+            ingredientNameForFilter.push(item.name);
+        }
+
         return new Recipe(recipe.name, recipe.author, recipe.serving, recipe.images, recipe.notes, recipe.tags,
-            recipe.prepTime, ingredient, recipe.OvenHeat, recipe.instructionDetails,
-            "", [], recipe.category, recipe.filtersList);
+            recipe.prepTime, recipe.IngredientsList, recipe.OvenHeat, recipe.instructionDetails,
+            recipe.storyContent, recipe.storyImages, recipe.category,
+            recipe.filtersList, ingredientNameForFilter, recipe.uploadedBy, recipe.key, recipe.comments, recipe.storyBrief);
     }
 
 };

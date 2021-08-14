@@ -31,10 +31,7 @@
     margin: 20px 0px;
     position: relative;
     left: 50%;
-    transform: translateX(-50%)
-}
-
-.showrecipe {
+    transform: translateX(-50%);
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -51,10 +48,9 @@
 }
 
 .colored-background {
-    background: url("https://cdn.glitch.com/0b57df91-f600-46a4-956b-70a322817e9a%2Fmadison-bracaglia-fcWAwPKpkTU-unsplash.jpg?v=1618811435437");
     height: 100%;
     background-size: cover;
-    background-position: center;
+    background: url("https://cdn.glitch.com/0b57df91-f600-46a4-956b-70a322817e9a%2Fmadison-bracaglia-fcWAwPKpkTU-unsplash.jpg?v=1618811435437") center;
     text-align: center;
 }
 
@@ -69,12 +65,8 @@
     font-size: 20px;
 }
 
-.show_ingredients{
-    text-align: left;
-}
-
-.show_instruction{
-    text-align: left;
+.show_instruction li{
+    margin-bottom: 1em;
 }
 
 .headline {
@@ -84,4 +76,48 @@
 .Main_headline{
     font-size: 100px;
     color: white;
+}
+
+
+/*collapsable stuff*/
+
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 8px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
+.collapsible:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: white;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .collapsible:hover {
+    background-color: #ccc;
+}
+
+
+/* Style the collapsible content. Note: hidden by default */
+.collapsedcontent {
+    padding: 0 18px;
+    overflow: hidden;
+    background-color: whitesmoke;
+    transition: max-height 0.2s ease-out;
 }

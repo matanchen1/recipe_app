@@ -1,16 +1,14 @@
 import React, {useRef, useState} from 'react'
-import "../styles/styles_GroupCode.css"
+import "../styles/styles.css"
 
 import {Button, Form, Alert} from "react-bootstrap";
 import {useAuth} from "../contexts/AuthContext";
-import {useHistory} from "react-router-dom";
 
-export default function GroupCode({ setShowSignUp }) {
+export default function GroupCode({setShowSignUp, setForgotCode}) {
     const groupcodeRef = useRef();
-    const { login } = useAuth();
+    const {login, ForceFetchData} = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const history = useHistory();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -18,7 +16,7 @@ export default function GroupCode({ setShowSignUp }) {
             setError("");
             setLoading(true);
             await login(groupcodeRef.current.value);
-            // history.push("/");
+            ForceFetchData();
         } catch (err) {
             setError(err.message);
         }
@@ -28,36 +26,35 @@ export default function GroupCode({ setShowSignUp }) {
     return (
         <div id="group-code">
             <h2>
-                Get cooking
-                <br />
-                and connecting
+                Food brings the family together<br /> Connect to collect
             </h2>
+            <br/>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Control
                         type="text"
-                        placeholder="Group code"
+                        placeholder="Family Code"
                         ref={groupcodeRef}
                     />
-                    <Form.Text className="text-muted">
-                        Don't have a group code?
-                        <Button
-                            variant="link"
-                            size="sm"
-                            onClick={() => setShowSignUp(true)}
-                        >
-                            Sign up
-                        </Button>{" "}
-                        to create a family recipe book
-                    </Form.Text>
                 </Form.Group>
-                <Button disabled={loading} variant="success" type="submit">
-                    Enter to see and create
-                </Button>
-            </Form>
 
+                <Button disabled={loading} variant="success" type="submit">
+                    Start making memories
+                </Button>
+                <Form.Text className="text-muted">
+                    Don't have a Family Code?
+                    <Button variant="link" size="sm" onClick={() => setShowSignUp(true)}>
+                        Create a new collection
+                    </Button>
+                </Form.Text>
+                <Form.Text className="text-muted">
+                    Forgot your Family Code?
+                    <Button variant="link" size="sm" onClick={() => setForgotCode(true)}>
+                        Login with email and password
+                    </Button>
+                </Form.Text>
+            </Form>
         </div>
     );
 }
-//

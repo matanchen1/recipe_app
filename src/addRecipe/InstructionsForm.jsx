@@ -6,44 +6,50 @@ import StepLists from "./StepLists";
 import SlideBar from "./SlideBar";
 import {Form} from "react-bootstrap";
 import {makeStyles} from "@material-ui/core/styles";
+
 const useStyles = makeStyles(theme => ({
     form: {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '60vh',
-    }
+    },
+    textField: {
+        marginBottom: "10px",
+        textAlign: 'center'
+
+    },
 }));
 
-const InstructionsForm = forwardRef( (props ,ref) => {
+const InstructionsForm = forwardRef((props, ref) => {
     const formHtmlRef = createRef();
     const submitRef = createRef();
+    const tempRecipe = props.tempRecipe;
+
     useImperativeHandle(ref, () => ({
 
             ValidBeforeNext(test) {
-                if(test === "test") return true;
+                if (test === "test") return true;
                 if (!formHtmlRef.current.checkValidity()) submitRef.current.click();
                 console.log("valid? ", formHtmlRef.current.checkValidity())
                 return formHtmlRef.current.checkValidity();
             }
         }
     ))
-const classes = useStyles();
+    const classes = useStyles();
     return (
-        <form ref={formHtmlRef} >
+        <form ref={formHtmlRef}>
             <React.Fragment>
-                <input type="submit" value="" hidden={true} ref={submitRef} onSubmit={(e)=>{
+                <input type="submit" value="" hidden={true} ref={submitRef} onSubmit={(e) => {
                     e.preventDefault()
-                }} />
-            <Typography variant="h6" gutterBottom>
-                Instructions
-            </Typography>
-            <SlideBar/>
-
-            <Grid container spacing={3}>
-                <Grid item xs={12} sm={12}>
-                    <StepLists/>
-                </Grid></Grid>
-        </React.Fragment>
+                }}/>
+                <b><Typography className={classes.textField} variant="h4" gutterBottom background="#007F80">
+                    Instructions
+                </Typography></b>
+                <SlideBar tempRecipe={tempRecipe}/>
+                <div>
+                <StepLists tempRecipe={tempRecipe}/>
+                </div>
+            </React.Fragment>
         </form>
     );
 })

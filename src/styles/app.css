@@ -10,15 +10,21 @@
     flex-direction: column;
     overflow: auto;
     height: auto;
+    min-height: 83vh;
+
 
 }
 .navbar{
     position: relative;
-    width: 100%;
-    overflow: auto;
-    display: flex;
+    /*width: 100%;*/
+    /*overflow: auto;*/
+    /*display: flex;*/
 
     /*min-height: 100vh;*/
+}
+
+.sticky-top{
+    color: #8BE3B0;
 }
 
 .fix {

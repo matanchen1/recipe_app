@@ -1,13 +1,17 @@
 import Typography from "@material-ui/core/Typography";
 import {makeStyles, Slider} from "@material-ui/core";
 // import Grid from "@material-ui/core/Grid";
-import React, {useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 // import TextField from "@material-ui/core/TextField";
-import {tempRecipe} from "./addRecipeMain";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const useStyles = makeStyles(theme => ({}));
-export default function SlideBar() {
+export default function SlideBar(props) {
+
     // const classes = useStyles()
+    const tempRecipe = props.tempRecipe;
+
     const marks = [
         {
             value: 100,
@@ -42,14 +46,40 @@ export default function SlideBar() {
         return `${value}°C`;
     }
 
+    const [value, setValue] = useState(getInitValue());
+
+    const [disable, setDisable] = useState((tempRecipe === ""));
+
+    useEffect(() => {
+        tempRecipe.setOvenHeat(value);
+    }, [value])
+
+    function getInitValue() {
+        if (!tempRecipe.ovenHeat || tempRecipe.ovenHeat === "None" || tempRecipe.ovenHeat === "") {
+            return Number(100);
+        } else {
+            return Number(tempRecipe.ovenHeat);
+        }
+    }
+
+
+    const handleChange = () => {
+        setDisable(!disable);
+    }
+    console.log("tempRecipe.OvenHeat", tempRecipe.OvenHeat)
+
     return (
         <div>
-            <Typography id="discrete-slider-custom" gutterBottom>
-                Oven heat
-            </Typography>
+            <FormControlLabel
+                control={<Checkbox size="small" checked={!disable} onChange={handleChange} name="checkedA"/>}
+                label="Oven Heat"
+            />
             <Slider
-                defaultValue={100}
+                key={`slider-${1}`}
+                disabled={disable}
+                defaultValue={value}
                 getAriaValueText={valuetext}
+                value={tempRecipe.OvenHeat}
                 aria-labelledby="discrete-slider-custom"
                 step={25}
                 min={100}
@@ -57,10 +87,7 @@ export default function SlideBar() {
                 valueLabelDisplay="auto"
                 marks={marks}
                 onChangeCommitted={(event, val) => {
-                    tempRecipe.setOvenHeat(`${val}°C`);
-                    console.log(val);
-                    console.log(`${val}°C`);
-
+                    setValue(val)
                 }}
 
                 // orientation="vertical"

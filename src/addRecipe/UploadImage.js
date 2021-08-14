@@ -1,6 +1,5 @@
-import {useEffect, useRef, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import firebase from "firebase";
-import {tempRecipe} from "./addRecipeMain";
 import {makeStyles} from "@material-ui/core";
 import {PhotoCamera} from "@material-ui/icons";
 import Typography from "@material-ui/core/Typography";
@@ -9,6 +8,7 @@ import Fab from "@material-ui/core/Fab";
 import CheckIcon from "@material-ui/icons/Check";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import clsx from "clsx";
+import {Image} from "antd";
 
 const useStyles = makeStyles(theme => ({
         input: {
@@ -18,7 +18,9 @@ const useStyles = makeStyles(theme => ({
             alignItems: 'center',
             justifyContent: "centre",
             textAlign: 'center',
-            margin: 'auto'
+            margin: 'auto',
+            maxHeight: '135',
+            maxWidth: "150",
         },
         wrapper: {
             margin: theme.spacing(1),
@@ -58,15 +60,15 @@ const useStyles = makeStyles(theme => ({
 ));
 
 
-export default function UploadImage(FilesFlag) {
+export default function UploadImage(props) {
+    const tempRecipe = props.tempRecipe
+    const editMode = props.editMode
     const [file, setFile] = useState(null);
-    const [url, setUrl] = useState("");
-
+    const [url, setUrl] = useState(tempRecipe.getMainImage() || "");
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const timer = useRef();
     const classes = useStyles();
-
     const buttonClassname = clsx({
         [classes.buttonSuccess]: success,
     });
@@ -115,8 +117,7 @@ export default function UploadImage(FilesFlag) {
                     .getDownloadURL()
                     .then(url => {
                         setUrl(url);
-                        const arr = [url,...(tempRecipe.getImageArr())]
-                        tempRecipe.setImages(arr)
+                        tempRecipe.setMainImage([url])
                         setLoading(false);
                         setSuccess(true);
                     });
@@ -131,8 +132,8 @@ export default function UploadImage(FilesFlag) {
     function getPreviewImg() {
         if (url !== "") {
             return (<div className={classes.imgCenter}>
-                <img src={url}
-                     height="135" width="150"
+                <Image src={url}
+                     height={130} width={160}
                      alt="Recipe Photo"/>
             </div>)
         }
@@ -144,7 +145,9 @@ export default function UploadImage(FilesFlag) {
             <div className={classes.imgCenter}>
                 <input accept="image/*" className={classes.input} id="icon-button-add-image-1" type="file"
                        onChange={upload}/>
-                <Typography>Add photo (optional)</Typography>
+                <Typography>
+                    {editMode ? "Edit Recipe Main image" : "Add Display photo (optional)"}
+                </Typography>
 
                 <label htmlFor="icon-button-add-image-1">
                     <div className={classes.wrapper}>
@@ -167,23 +170,7 @@ export default function UploadImage(FilesFlag) {
             </div>
             {getPreviewImg()}
 
-            {/*{/{<LinearProgress variant="determinate" value={progress}/>}/}*/}
-            {/*{/<input accept="image/" className={classes.input} id="icon-button-file" type="file"*!/*/}
-            {/*/!*       onChange={upload}*!/*/}
-            {/*{//>/}*/}
-            {/*{/<label htmlFor="icon-button-file">/}*/}
-            {/*/!*    <IconButton color="primary" aria-label="upload picture" component="span">*!/*/}
-            {/*/!*        <PhotoCamera/>*!/*/}
-            {/*/!*    </IconButton>*!/*/}
-            {/*{/</label>/}*/}
 
-            {/*// {/{/{file !== null &&/}/}*/}
-            {/*// {/{/<Button className={classes.button}/}/}*/}
-            {/*//!        startIcon={<CloudUploadIcon/>}!//}*/}
-            {/*// {//!        onClick={upload}>!//}*/}
-            {/*// {/{/</Button>/}/}*/}
-            {/*// {//!    // <img src={url || "http://via.placeholder.com/300"} alt="firebase-image"/>!//}*/}
-            {/*// {/{/}/}/}*/}
         </div>
     );
 

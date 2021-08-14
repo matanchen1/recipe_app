@@ -1,9 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core";
 // import Grid from "@material-ui/core/Grid";
-import {tempRecipe} from "./addRecipeMain";
 
 const useStyles = makeStyles(theme => ({
     font: {
@@ -19,17 +18,27 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(3),
         marginLeft: theme.spacing(1)
     },
+    inputRoot: {
+        fontSize: 25,
+        height: 100,
+
+    },
+    labelRoot: {
+        fontSize: 25,
+        "&$labelFocused": {}
+    },
+    labelFocused: {},
 }));
 
-function StepLists() {
 
-
-    const [inputList, setInputList] = useState([{step: ""}]);
+function StepLists(props) {
+    const tempRecipe = props.tempRecipe;
+    const [inputList, setInputList] = useState(tempRecipe.getInstruction());
     // handle input change
     const handleInputChange = (e, index) => {
-        const {value} = e.target;
+        const {name, value} = e.target;
         const list = [...inputList];
-        list[index] = value;
+        list[index][name] = value;
         setInputList(list);
         tempRecipe.setInstruction(list);
     };
@@ -49,22 +58,45 @@ function StepLists() {
     };
 
 
+    useEffect(() => {
+        const listener = event => {
+            if ((event.code === "Enter" || event.code === "NumpadEnter")) {
+                handleAddClick();
+            }
+        };
+        console.log("1z", tempRecipe.story)
+        document.addEventListener("keydown", listener);
+        return () => {
+            document.removeEventListener("keydown", listener);
+        };
+    }, [inputList]);
+
+
     const classes = useStyles();
 
 
     return (
         <div className="App">
             {inputList.map((x, i) => {
+                const step = "Step " +(i+1)+ "                                                                                                                                                                                                                  details:"
                 return (
                     <div className="box">
                         <TextField
                             required
-                            InputLabelProps={{shrink: true}}
+                            InputProps={{classes: {root: classes.inputRoot}}}
+                            InputLabelProps={{
+                                shrink: true,
+                                classes: {
+                                    root: classes.labelRoot,
+                                    focused: classes.labelFocused
+                                }
+                            }}
                             fullWidth
-                            name="Steps"
+                            name="step"
+                            multiline
                             color="secondary"
-                            label="Step details:"
-                            value={x.step}
+                            label={step}
+                            value={x["step"]}
                             onChange={e => handleInputChange(e, i)}
                         />
                         <div className={classes.buttons}>
@@ -80,8 +112,8 @@ function StepLists() {
             })}
             {/*debug*/}
             {/*<div style={{marginTop: 20}}>{JSON.stringify(inputList)}</div>*/}
-        </div>
-    );
-}
+                </div>
+                );
+                }
 
-export default StepLists;
+                export default StepLists;

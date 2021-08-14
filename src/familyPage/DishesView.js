@@ -1,267 +1,323 @@
-// import React, {useCallback, useEffect, useState} from "react";
-// import "./familyPage.css";
-// import FilterList from "./FilterList";
-// import filterOptions, {AllFiltersOption} from "../addRecipe/Recipe"
-// import {useAuth} from "../contexts/AuthContext";
-// import withWidth, {isWidthUp} from "@material-ui/core/withWidth";
-// import GridList from "@material-ui/core/GridList";
-// import GridListTile from "@material-ui/core/GridListTile";
-// import MediaCard from "./mediaCard";
-// import {makeStyles} from "@material-ui/core/styles";
-//
-//
-// const useStyles = makeStyles((theme) => ({
-//     root: {
-//         zoom: "100%",
-//         justifyContent: 'space-around',
-//         overflow: 'hidden',
-//         background: "none",
-//     },
-//     gridList: {
-//         width: "auto",
-//         height: "auto"
-//     }
-// }));
-//
-// const States = {
-//     FoodType: 1,
-//     DIET: 2
-// }
-//
-// function GetRecipes() {
-//     const {recipes} = useAuth();
-//     // if (typeof recipes === 'undefined') return [];
-//     return {recipes};
-// }
-//
-// export default function DishesView() {
-//     const classes = useStyles();
-//     const [AllRecipes, setAllRecipes] = useState(GetRecipes().recipes);
-//     const [curRecipes, setCurRecipes] = useState(GetRecipes().recipes);
-//     const [foodTypeMap, setFoodTypeMap] = useState(createFoodTypeMap()); // {Salads, pies, Chines}
-//     const [dietFiltersMap, SetDietFiltersMap] = useState(CreateDietTypeMap()); // { kosher, vegan}
-//
-//
-//     // const [holidays, setHolidays] = useState(CreateMap(holidayOption));
-// //TODO: get users list from firebase
-//     // const [authors, setAuthors] = useState(); //get from FB
-//
-//
-//     function createFoodTypeMap() {
-//         const filtersMap = {}
-//         AllFiltersOption.getFoodTypes().forEach((f) => filtersMap[f] = false)
-//         return filtersMap;
-//     }
-//
-//     function CreateDietTypeMap() {
-//         const dietMap = {}
-//         AllFiltersOption.getDietFilters().forEach((f) => dietMap[f] = false);
-//         return dietMap;
-//     }
-//
-//     const filterRecipeByDiet = (recipe) => {
-//         let recipeFilterDiet = recipe.getFilters();
-//         console.log("recipeFilterDiet", recipeFilterDiet)
-//         for (const filter of recipeFilterDiet) {
-//             if (dietFiltersMap[filter] !== false) {
-//                 return true;
-//             }
-//         }
-//
-//         return false;
-//     }
-//
-//
-//     function handleFilter() {
-//         console.log("lolog!!")
-//         let foodTypeList = Object.fromEntries(Object.entries(foodTypeMap).filter(([k, v]) => foodTypeMap[k] === true));
-//         let dietFilter = Object.fromEntries(Object.entries(dietFiltersMap).filter(([k, v]) => dietFiltersMap[k] === true));
-//         let numOfFootTypeFilter = Object.keys(foodTypeList).length;
-//         let numOfDietFilter = Object.keys(dietFilter).length;
-//         console.log("numOfDietFilter!!", numOfDietFilter)
-//         if (numOfFootTypeFilter === 0 && numOfDietFilter === 0) {
-//             setCurRecipes(AllRecipes)
-//             return;
-//         }
-//
-//         let tempList = [];
-//         if (numOfFootTypeFilter === 0) {
-//             AllRecipes.forEach((recipe) => {
-//                 tempList.push(recipe)
-//             })
-//         } else {
-//             AllRecipes.forEach((recipe) => {
-//                 let category = recipe.getCategory();
-//                 if (foodTypeMap[category] === true) {
-//                     tempList.push(recipe)
-//                 }
-//             })
-//         }
-//         console.log("tempDataAfterDiet!!", tempList)
-//
-//         let tempDataAfterDiet = []
-//         if (numOfDietFilter === 0) {
-//             tempDataAfterDiet = tempList
-//             console.log("0", tempDataAfterDiet)
-//
-//         } else {
-//             tempList.forEach((recipe) => {
-//                 let recipeFilterDiet = recipe.getFilters();
-//                 for (const filter of recipeFilterDiet) {
-//                     if (dietFiltersMap[filter] !== false) {
-//                         tempDataAfterDiet.push(recipe);
-//                         break;
-//                     }
-//                 }
-//             })
-//         }
-//         console.log("end", tempDataAfterDiet);
-//         setCurRecipes(tempDataAfterDiet);
-//
-//     }
-//
-//     useEffect(() => {
-//         console.log("CC!!", curRecipes)
-//     }, [curRecipes]);
-//
-//     function onClickChange(state, value) {
-//         console.log(state)
-//         switch (state) {
-//             case States.FoodType:
-//                 let tempMapFood = foodTypeMap;
-//                 tempMapFood[value] = !tempMapFood[value]
-//                 setFoodTypeMap(tempMapFood)
-//                 break;
-//             case States.DIET:
-//                 let tempDietMap = dietFiltersMap;
-//                 tempDietMap[value] = !tempDietMap[value]
-//                 SetDietFiltersMap(tempDietMap)
-//                 console.log("tempDietMap!!", dietFiltersMap)
-//                 break;
-//             // case States.HOLIDAY:
-//             //     holidays[value] = !holidays[value];
-//             //     break;
-//
-//             // case States.AUTHOR:
-//             //     break;
-//             // default:
-//             // return;
-//         }
-//     }
-//
-//
-// //TITLEBARGRIDLIST
-//     const getGridListCols = () => {
-//         if (isWidthUp('md', curRecipes.width)) {
-//             return 3;
-//         }
-//         return 2;
-//     }
-//
-//     if (curRecipes.length < 0) {
-//         return (
-//             <div>
-//                 <div className="recipes">
-//                     <h1>
-//                         Empty for now. add a recipe!
-//                     </h1></div>
-//                 <div className="filters">
-//                     <FilterList clickChange={onClickChange}
-//                                 handleFilter={handleFilter}
-//                                 curRecpies={curRecipes}/>
-//                 </div>
-//             </div>
-//         );
-//     } else {
-//         console.log("not empty")
-//         return (
-//             <div className="recipes">
-//                 <div className={classes.root}>
-//                     <h1>
-//                         not empty!
-//                     </h1>
-//                     <GridList spacing={70} cellWidth={getGridListCols() * 100} cellHeight={"auto"}
-//                               cols={getGridListCols()}>
-//                         {curRecipes.map((tile) => (
-//                             <div>
-//                                 <GridListTile>
-//                                     <MediaCard
-//                                         author={tile.getAuthor()}
-//                                         img={tile.getMainImage() || 'https://ifoodreal.com/wp-content/uploads/2018/12/FG-healthy-spinach-salad-recipe.jpg'}
-//                                         title={tile.getName()}
-//                                     />
-//                                 </GridListTile>
-//                             </div>
-//                         ))}
-//                     </GridList>
-//                 </div>
-//                 <div className="filters">
-//                     {/*{<FilterList clickChange={onClickChange}*/}
-//                     {/*             handleFilter={handleFilter}*/}
-//                     {/*             foodValues={foodTypeMap}*/}
-//                     {/*             dietValues={dietFiltersMap}*/}
-//                     {/*/>}*/}
-//                 </div>
-//             </div>)
-//     }
-// }
-//
-// // {9GXI06CmcleSUEE5k2m7AD9upFP2}
-// // export default withWidth()(TitleBarGridList);
-//
-//
-// //
-// //
-// //     /**
-// //
-// //
-// // {/*{alldishes.map((tile) => (*/}
-// {/*    <div>*/
-// }
-// {/*    <GridListTile>*/
-// }
-// {/*        <MediaCard*/
-// }
-// {/*            author={tile.getAuthor()}*/
-// }
-// {/*            img='https://ifoodreal.com/wp-content/uploads/2018/12/FG-healthy-spinach-salad-recipe.jpg'*/
-// }
-// {/*            title={tile.getName()}*/
-// }
-// {/*        />*/
-// }
-// {/*    </GridListTile>*/
-// }
-// {/*    </div>*/
-// }
-// {/*))}*/
-// }
-//
-// {/*9GXI06CmcleSUEE5k2m7AD9upFP2*/
-// }
-//
-// //
-// //     salads : true
-// //      Pie : true
-// //      :false
-// //      ....
-// //      false;
-// //
-// // }
-// //
-// // //Returns true if checkBox is empty
-// // function isAllFalse(map) {
-// //     for (let val of map.values()) {
-// //         if (val) return false;
-// //     }
-// //     return true;
-// // }
-//
-// //check diet filters
-// // function checkDietFilters(dietFilters, recipeDietFilters) {
-// //
-// //     for (let key of dietFilters.keys()) {
-// //         if (dietFilters[key] && !recipeDietFilters[key]) return false;
-// //     }
-// //     return true;
-// // }
+import {makeStyles} from "@material-ui/core/styles";
+import {useAuth} from "../contexts/AuthContext";
+import React, {useEffect, useState} from "react";
+import MediaCard from "./MediaCard";
+import CheckBox from "./CheckBox";
+import {getDietFilters, getFoodTypes, getOnlyNameFiltersOption} from "../addRecipe/Recipe";
+import "./familyPage.css";
+import SearchBox from "./SearchBox";
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import {Col, Row} from 'antd';
+import Button from "@material-ui/core/Button";
+import {tempRecipe} from "../addRecipe/tempRecipeObj";
+import {Checkbox, FormControlLabel} from "@material-ui/core";
+import {Favorite, FavoriteBorder, Star, StarBorder} from "@material-ui/icons";
+import MediaCardComments from "./MediaCardComments";
+import 'antd/dist/antd.css';
+import {Card} from 'antd';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        zoom: "100%",
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+        background: "none",
+    },
+    gridList: {
+        width: "auto",
+        height: "auto"
+    },
+    margin: {
+        marginTop: "30px",
+        // Sivan changed the margin for now, we can totally go back
+        // margin: theme.spacing(1),
+        // border: "0.5px solid black"
+    },
+    extendedIcon: {
+        marginRight: theme.spacing(1.5),
+    },
+    mainRecipeGrid: {
+        marginBottom: "40px",
+    },
+    mediaCardHover: {
+        // marginRight: "20px",
+        // marginLeft: "20px",
+        // marginBottom: "30px",
+        maxWidth: "350px",
+        // "&:hover": {
+        //     boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+        // }
+    },
+
+}));
+
+const FilterOptionStates = {
+    1: "FoodCategoryFilter",
+    2: "DietFilter",
+    3: "curMembers"
+}
+
+function GetRecipes() {
+    const {recipes} = useAuth();
+    return {recipes}.recipes;
+}
+
+export default function DishesView(props) {
+
+    const classes = useStyles();
+    const {member, members, findMemberInArr} = useAuth()
+    const AllRecipes = GetRecipes();
+    const [curRecipes, setCurRecipes] = useState(GetRecipes());
+    const [sort, setSorted] = useState(false);
+    const [searchField, setSearchField] = useState("");
+    const [check, setCheck] = useState(false);
+
+    const [Filters, setFilters] = useState({
+        FoodCategoryFilter: [],
+        DietFilter: [],
+        curMembers: [],
+        favChecked: false,
+    })
+    const membersArr = [];
+    for (const member of {members}.members) {
+        membersArr.push(member)
+    }
+    useEffect(() => {
+        console.log("CC!!", curRecipes)
+    }, [curRecipes, Filters, check]);
+
+    function sortByUploaded() {
+        let sortedRecipe = curRecipes.sort((a, b) => {
+            return (a.getUploadedBy().localeCompare(b.getUploadedBy()));
+        })
+        console.log(sortedRecipe)
+        setCurRecipes(sortedRecipe)
+        setSorted(!sort)
+    }
+
+    function checkFavoriteRecipes(recipe, newFilters) {
+        console.log("!newFilters[\"favChecked\"]", !newFilters["favChecked"])
+
+        if (!newFilters["favChecked"]) {
+            return true;
+        } else {
+            return (member.favourites.has(parseInt(recipe.key)))
+            // return member.FavoriteRecipe.contains(recipe.key)
+        }
+    }
+
+
+    const handleFilters = (filters, category) => {
+
+
+        if (filters === "clearChoice") {
+            const newFilters = {
+                FoodCategoryFilter: [],
+                DietFilter: [],
+                curMembers: [],
+                favChecked: false,
+            }
+            setCheck(false);
+            updateCurRecipe(newFilters)
+            setFilters(newFilters)
+            return;
+        }
+
+        const newFilters = {...Filters}
+        newFilters[category] = filters
+        // console.log("filters", filters)
+
+        //        newFilters[FoodCategory] = [Salades, Pies, Others]
+
+        if (category === FilterOptionStates["1"]) {
+            updateRecipesForFoodType(newFilters)
+        } else if (category === FilterOptionStates["2"]) {
+            updateRecipesForDiet(newFilters)
+        } else if (category === FilterOptionStates["3"]) {
+            updateFamilyMember(newFilters)
+        } else {
+            updateCurRecipe(newFilters)
+        }
+        setFilters(newFilters)
+    }
+
+    const updateFamilyMember = (newFilters) => {
+        let FamilyMemberList = newFilters[FilterOptionStates["3"]];
+        updateCurRecipe(newFilters)
+    }
+    const FamilyMembersCheck = (recipe, newFilter) => {
+        let FamilyMemberdList = newFilter[FilterOptionStates["3"]];
+        if (!FamilyMemberdList || FamilyMemberdList.length === 0) {
+            return true
+        }
+        const uploadedBy = recipe.getUploadedBy()
+        for (let i = 0; i < FamilyMemberdList.length; i++) {
+            let tempMember = findMemberInArr(membersArr, FamilyMemberdList[i])
+            if (tempMember.name === uploadedBy) {
+                return true
+            }
+        }
+        return false;
+    }
+
+    const dietFilterCheck = (recipe, newFilter) => {
+        let DietList = newFilter[FilterOptionStates["2"]];
+        const list = getDietFilters();
+
+        if (!DietList || DietList.length === 0) {
+            return true
+        }
+        let filtersArr = recipe.getFilters()
+        for (let i = 0; i < DietList.length; i++) {
+            if (!filtersArr.includes(list[DietList[i] - 100].name)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    const FoodTypeCheck = (recipe, newFilters) => {
+        let foodTypeList = newFilters[FilterOptionStates["1"]]
+        if (foodTypeList.length === 0) {
+            return true;
+        }
+        let list = getFoodTypes();
+        let category = recipe.getCategory();
+
+        for (let i = 0; i < foodTypeList.length; i++) {
+            console.log("list[foodTypeList[i]]", list[foodTypeList[i]].name)
+            if (list[foodTypeList[i]].name === category) {
+                return true
+            }
+        }
+        return false;
+    }
+
+
+    const updateRecipesForDiet = (newFilters) => {
+        let dietList = newFilters[FilterOptionStates["2"]];
+        console.log("diet", dietList)
+        updateCurRecipe(newFilters)
+    }
+
+    const updateCurRecipe = (newFilters) => {
+        let tempRecipes = [];
+        for (let recipe of AllRecipes) {
+            if (FoodTypeCheck(recipe, newFilters) && dietFilterCheck(recipe, newFilters) &&
+                FamilyMembersCheck(recipe, newFilters) && checkFavoriteRecipes(recipe, newFilters)) {
+                tempRecipes.push(recipe)
+            }
+        }
+        setCurRecipes(tempRecipes)
+    }
+
+    const updateRecipesForFoodType = (newFilters) => {
+        let foodTypeList = newFilters[FilterOptionStates["1"]]
+
+        updateCurRecipe(newFilters)
+    }
+
+    function recipeIngredientsList(ingredientsList) {
+        for (let ing of ingredientsList) {
+            if (ing && ing.toLowerCase().includes(searchField.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    const getFilterRecipe = (curRecipes) => {
+        const filteredRecipe = [];
+        for (const recipe of curRecipes) {
+            if (recipe.name.toLowerCase().includes(searchField.toLowerCase()) ||
+                recipe.author.toLowerCase().includes(searchField.toLowerCase()) ||
+                recipeIngredientsList(recipe.ingredientNameForFilter)) {
+                filteredRecipe.push(recipe);
+            }
+        }
+        return filteredRecipe;
+    }
+    // const filteredRobots = curRecipes.filter(robot => {
+    //     return robot.name.toLowerCase().includes(this.state.searchfield.toLowerCase())
+    // })
+    const onSearchChange = (event) => {
+        setSearchField(event.target.value)
+    }
+
+    function FloatingActionButtonSize() {
+        const classes = useStyles();
+
+        return (
+            <div>
+                <div>
+                    <Fab
+                        variant="extended"
+                        size="large"
+                        color="secondary"
+                        aria-label="add"
+                        className={classes.margin}
+                        onClick={() => {
+                            props.handleClickBtn()
+                        }}
+                    >
+                        <AddIcon color="success" className={classes.extendedIcon}/>
+                        Add Recipe
+                    </Fab>
+                </div>
+            </div>
+        );
+    }
+
+
+    const renderRecipes = (Recipes) => getFilterRecipe(Recipes).map((recipe, i) => (//TODO: can we remove this index?
+        <Col lg={8} md={12} sm={24} id={i}
+             className={classes.mediaCardHover}
+        >
+            <MediaCard
+                recipe={recipe}
+                author={recipe.getAuthor()}
+                img={recipe.getMainImage() || 'https://ifoodreal.com/wp-content/uploads/2018/12/FG-healthy-spinach-salad-recipe.jpg'}
+                title={recipe.getName()}
+                recipeIndex={recipe.key}
+            />
+            <Card><MediaCardComments comments={recipe.comments}/></Card>
+        </Col>
+    ))
+    return (
+
+        <div className="filters_and_recipes">
+            <FloatingActionButtonSize/>
+            <FormControlLabel
+                control={<Checkbox
+                    icon={<StarBorder/>}
+                    checkedIcon={<Star/>}
+                    checked={check}
+                    onChange={() => {
+                        handleFilters(!check, "favChecked")
+                        setCheck(!check);
+                    }
+                    }
+                    inputProps={{'aria-label': 'primary checkbox'}}/>}
+                label="My Favorites"
+            />
+            <div className={"searchRecipeMain"}>
+                <SearchBox searchChange={onSearchChange}/>
+
+            </div>
+            <CheckBox className="filtersCheckbox" handleFilters={handleFilters}
+                      FoodTypeCatList={getFoodTypes()}
+                      DietList={getDietFilters()}
+            />
+            {(curRecipes.length === 0) &&
+            <h1>
+                {AllRecipes.length === 0 ? "\n Add Your First Recipe :)" : "\n There's nothing here! Add recipes and memories to your collection :)"}
+            </h1>}
+            <div className={"recipes"}>
+                <Row className={classes.mainRecipeGrid} gutter={[55, 30]}>
+                    {renderRecipes(curRecipes)}
+                </Row>
+            </div>
+        </div>
+    )
+}

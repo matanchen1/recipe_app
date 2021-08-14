@@ -72,18 +72,19 @@ function CheckBox2(props) {
         </React.Fragment>
         </div>
     ))
-
+// TODO: Style Filtering
     return (
         <div className={"filterHeader"}>
             {/*<Collapse defaultActiveKey={['0']} >*/}
             {/*<Panel header="Food Type" key="1"/>*/}
-            <ListItem button onClick={() => {
+            {/*style={{boxShadow: "0px 4px 2px #888888"}}*/}
+            <ListItem button  onClick={() => {
                 setOpen(!open);
             }}>
                 <ListItemText primary={"Food Type"}/>
                 {open ? <ExpandLess/> : <ExpandMore/>}
             </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
+            <Collapse in={open} timeout="auto" unmountOnExit >
                 <List component="div" disablePadding>
                     {renderCheckboxLists("FoodCategoryFilter")}
                 </List>
@@ -91,7 +92,7 @@ function CheckBox2(props) {
             <ListItem button onClick={() => {
                 setOpen2(!open2);
             }}>
-                <ListItemText primary={"Diet Filter"}/>
+                <ListItemText primary={"Diet Filter"} />
                 {open2 ? <ExpandLess/> : <ExpandMore/>}
             </ListItem>
             <Collapse in={open2} timeout="auto" unmountOnExit>

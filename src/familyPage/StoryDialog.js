@@ -8,9 +8,19 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
-import MenuBookIcon from "@material-ui/icons/MenuBook";
 import {Image} from "react-bootstrap";
 import {Grid} from "@material-ui/core";
+import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
+import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import Fab from "@material-ui/core/Fab";
+import WhatsAppShare from "./WhatsAppShare";
+import FaceBookShare from "./FaceBookShare";
+import {useAuth} from "../contexts/AuthContext";
+import CopyShareLink from "./CopyShareLink";
+
 
 const styles = (theme) => ({
     root: {
@@ -54,6 +64,8 @@ const DialogActions = withStyles((theme) => ({
 
 export default function StoryDialog(props) {
     const [open, setOpen] = React.useState(false);
+    const {groupcode} = useAuth();
+    const recipeShareLink = "https://grandma-cooked-oatmeal.web.app/shared-recipe/" + groupcode + "/" + props.id;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -61,45 +73,51 @@ export default function StoryDialog(props) {
     const handleClose = () => {
         setOpen(false);
     };
-
     return (
         <div>
-            <Button size="small" color="secondary" variant="outlined"  onClick={handleClickOpen}>
-                <b>Story&nbsp;&nbsp;</b>
-                <MenuBookIcon />
-            </Button>
+            <ShareOutlinedIcon style={{fill:"#3b9ce5"}} fill={"green"} onClick={handleClickOpen}/>
             <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    The story of the plate:
+                    Share the recipe
                 </DialogTitle>
                 <DialogContent dividers>
                     <Grid container xs={12} spacing={30}>
                         <Grid item xs={4}>
-                            <br/><br/><br/><br/><br/>
                             <Typography gutterBottom style={{fontSize: "2em"}}>
                                 {props.title}
                             </Typography>
                         </Grid>
                         <Grid item xs={2}/>
                         <Grid item xs={4}>
-
                             <Image className="img-thumbnail"
                                    style={{maxHeight: "250px", alignContent: "center"}}
                                    src={props.img}
                                    alt="family's img"/>
                         </Grid>
+
                     </Grid>
+                    {/*<Typography style={{padding: "12px"}} gutterBottom>*/}
+                    {/*    {props.author || "no author"}*/}
+                    {/*</Typography>*/}
                     <br/><br/>
-                    <Typography  style={{padding:"12px"}} gutterBottom>
-                        {props.text}
-                    </Typography>
+                    <IconButton color="primary" aria-label="upload picture" component="span">
+                        {/*<WhatsAppIcon/>*/}
+                        <WhatsAppShare shareValue={recipeShareLink} message="Check out my recipe! "/>
+                    </IconButton>
+                    <IconButton color="primary" aria-label="upload picture" component="span">
+                        {/*<FacebookIcon/>*/}
+                        <FaceBookShare shareValue={recipeShareLink} message="Check out my recipe! "/>
+                    </IconButton>
+
+                    <CopyShareLink shareValue={recipeShareLink}/>
+                    <br/>
 
                 </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleClose} color="primary">
-                        Back
-                    </Button>
-                </DialogActions>
+                {/*<DialogActions>*/}
+                {/*    /!*<Button autoFocus onClick={handleClose} color="primary">*!/*/}
+                {/*    /!*    Back*!/*/}
+                {/*    /!*</Button>*!/*/}
+                {/*</DialogActions>*/}
             </Dialog>
         </div>
     );

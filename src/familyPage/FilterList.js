@@ -6,8 +6,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import CheckboxListSecondary from "./checkBox";
-import {AllFiltersOption} from "../addRecipe/Recipe"
+import CheckboxListSecondary from "./CheckBox";
+import {AllFiltersOption} from "../../../../../../WebstormProjects/untitled3/src/addRecipe/Recipe"
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Checkbox from '@material-ui/core/Checkbox';
 

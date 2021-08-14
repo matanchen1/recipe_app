@@ -5,7 +5,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import CheckboxListSecondary from "./checkBox";
+import CheckboxListSecondary from "./CheckBox";
 
 export default function DropDown(props) {
     const [open, setOpen] = React.useState(true);

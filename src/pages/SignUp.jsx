@@ -1,11 +1,8 @@
 import React, { useRef, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { useHistory } from "react-router-dom";
+import {useAuth} from "../contexts/AuthContext";
 import { Button, Form, Alert } from "react-bootstrap";
 
 export default function SignUp({ setShowSignUp }) {
-    // const [email, setEmail] = React.useState("");
-    // const [password, setPassword] = React.useState("");
     const emailRef = useRef();
     const passRef = useRef();
     const passwordConfRef = useRef();
@@ -13,7 +10,6 @@ export default function SignUp({ setShowSignUp }) {
     const { signup } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const history = useHistory();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -26,20 +22,19 @@ export default function SignUp({ setShowSignUp }) {
             setError("");
             setLoading(true);
             await signup(emailRef.current.value, passRef.current.value, familyNameRef.current.value);
-            // history.push("/");
+            setShowSignUp(false);
         } catch (err) {
             setError(err.message);
         }
         setLoading(false);
     }
 
-    //   here we'll add fancy things that send the info to the database
-    //   Or, for the first milestome, send us to the next page
     return (
         <div id="signup">
             <h2>
-                Start collecting <br /> family memories
+               It's the recipes that make the memories <br /> keep them both in one place
             </h2>
+            <br/>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
                 <Form.Group id="family-name">
@@ -51,7 +46,6 @@ export default function SignUp({ setShowSignUp }) {
                     />
                 </Form.Group>
                 <Form.Group id="email">
-                    {/*<Form.Label>Email</Form.Label> */}
                     <Form.Control
                         type="email"
                         placeholder="Email"
@@ -60,7 +54,6 @@ export default function SignUp({ setShowSignUp }) {
                     />
                 </Form.Group>
                 <Form.Group id="password">
-                    {/* <Form.Label>Password</Form.Label> */}
                     <Form.Control
                         type="password"
                         placeholder="Password"
@@ -77,19 +70,16 @@ export default function SignUp({ setShowSignUp }) {
                     />
                 </Form.Group>
                 <Button disabled={loading} variant="success" type="submit">
-                    Sign Up
+                    Create a collection
                 </Button>
             </Form>
-
+                <br/>
             <Form.Text className="text-muted">
-                Already have an account?
+                Already have a collection?
                 <Button variant="link" size="sm" onClick={() => setShowSignUp(false)}>
-                    Sign in
+                    Enter with Family Code
                 </Button>
             </Form.Text>
-            {/* We can see if the email is already signed up and let users
-      know we signed them in/it's the wrong password. In this case the
-      button should have a different kind of text*/}
         </div>
     );
 }

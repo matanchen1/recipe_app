@@ -8,7 +8,7 @@ import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import {tempRecipe} from "./addRecipeMain";
 import {Button} from "@material-ui/core";
-import {filterOptions} from "./Recipe";
+import {filterOptions, getOnlyNameFiltersOption} from "./Recipe";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -46,7 +46,6 @@ const MenuProps = {
     },
 };
 
-const filter_options = filterOptions;
 
 function getStyles(name, personName, theme) {
     return {
@@ -58,15 +57,15 @@ function getStyles(name, personName, theme) {
 }
 
 
-export default function FilterSelect() {
-    const [filterListState, setFilterListState] = React.useState([]);
+export default function FilterSelect(props) {
+    const filter_options = getOnlyNameFiltersOption();
+    const tempRecipe =props.tempRecipe;
+    const [filterListState, setFilterListState] = React.useState(props.tempRecipe.filtersList);
     const classes = useStyles();
     const theme = useTheme();
-
     useEffect(() => {
         console.log(filterListState);
         tempRecipe.setAnotherFilter(filterListState)
-
     }, [filterListState]);
 
 
@@ -78,13 +77,15 @@ export default function FilterSelect() {
     return (
         <div>
             <FormControl className={classes.formControl}>
-                <InputLabel id="demo-mutiple-chip-label">Tags</InputLabel>
+                <InputLabel id="dietary-restrictions-mutiple-chip-label">
+                    Dietary Restrictions
+                </InputLabel>
                 <Select
-                    labelId="demo-mutiple-chip-label"
-                    id="demo-mutiple-chip"
+                    labelId="dietary-restrictions-mutiple-chip-label"
+                    id="dietary-restrictions-mutiple-chip"
                     multiple
                     fullWidth
-                    defaultValue={filterListState}
+                    defaultValue={tempRecipe.filtersList}
                     value={filterListState}
                     onChange={handleChange}
                     input={<Input id="select-multiple-chip"/>}
