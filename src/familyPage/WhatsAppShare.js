@@ -5,7 +5,6 @@ function WhatsAppShare(props) {
             <WhatsappShareButton
                 title={props.message}
                 url={props.shareValue}
-                // quote={"blabla"}
             >
                 <WhatsappIcon size={40} round/>
             </WhatsappShareButton>

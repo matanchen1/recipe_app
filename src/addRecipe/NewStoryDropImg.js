@@ -3,8 +3,7 @@ import { Upload, Modal } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import {makeStyles} from "@material-ui/core/styles";
 import './NewStoryDropImg.css'
-import resolveAfter2Seconds from "./resolveAfter2seconds";
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({ //TODO: remove this?
     root: {
         zoom: "100%",
         justifyContent: 'space-around',

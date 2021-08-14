@@ -7,7 +7,7 @@ import {Form} from "react-bootstrap";
 import StoryDropImage from "./StoryDropImage";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import {useAuth} from "../contexts/AuthContext";
-import {InputAdornment, Select} from "@material-ui/core";
+import {InputAdornment} from "@material-ui/core";
 
 
 import FaceIcon from '@material-ui/icons/Face';
@@ -57,18 +57,6 @@ const AddStoryRecipe = forwardRef((props, ref) => {
         )
     )
     let ref1 = useRef(null);
-// const mySet1 = new Set()
-// let s;
-// let c = 0
-// for(let e of list){
-//     s = e
-//     for(let i of (e.ingredients)){
-//         if (mySet1.size <1000){
-//             mySet1.add(i);
-//             console.log(i)
-//         }
-//     }
-// }
     const [value, setValue] = useState(tempRecipe.getStoryContent() || "");
     return (
         <form ref={formHtmlRef} onSubmit={(e) => {
@@ -176,7 +164,6 @@ const AddStoryRecipe = forwardRef((props, ref) => {
 
                 </Typography></b>
                 <Form.Group id="photo">
-                    {/*<Form.Label>Add Photo/s</Form.Label>*/}
                     <StoryDropImage ref={ref1} tempRecipe={tempRecipe}/>
                 </Form.Group>
             </React.Fragment>

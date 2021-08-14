@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import 'antd/dist/antd.css';
 import {Card} from 'antd';
 import {useHistory} from "react-router-dom";
@@ -10,7 +9,6 @@ import {useAuth} from "../contexts/AuthContext";
 import {icons} from "../userSelect/ChooseUser";
 import StoryDialog from "./StoryDialog";
 import StarIcon from '@material-ui/icons/Star';
-import Member from '../userSelect/Member'
 import ss from "../familyPage/story-icon-png-16.jpg"
 const FONT = "'Trebuchet MS', sans-serif";
 
@@ -83,12 +81,6 @@ export default function MediaCard(props) {
                   />
               }
               actions={[
-                  // <IconButton size={"small"} color="primary" aria-label="upload picture"
-                  //             component="span">
-                  //     <FavoriteBorderIcon color={"secondary"} key="Like" onClick={() => {
-                  //         console.log(member)
-                  //     }}/>
-                  // </IconButton>,
                   <IconButton size={"small"} aria-label="upload picture" component="span">
                       {renderFavBtn(memberFav, props.recipe.key, render)}
                   </IconButton>,

@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import { Alert} from "react-bootstrap";
-import "./ShowRecipeCopy.css";
+import "./ShowRecipe.css";
 import {useAuth} from "../contexts/AuthContext";
 
-import {Header, Story, Recipe, useStyles} from "./ShowRecipeCopy"
+import {Header, Recipe, useStyles} from "./ShowRecipe"
 
 
 export default function ViewOnlyRecipe() {
@@ -18,7 +18,6 @@ export default function ViewOnlyRecipe() {
             return (
                 <div className={classes.container}>
                     <Header recipe={recipeDetails}/>
-                    {/*<Story recipe={recipeDetails}/>*/}
                     <Recipe recipe={recipeDetails}/>
                 </div>);
         } else {

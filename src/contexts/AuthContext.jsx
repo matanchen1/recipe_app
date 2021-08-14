@@ -5,7 +5,6 @@ import {recipeConverter} from "../addRecipe/Recipe";
 
 import {memberConverter} from "../userSelect/Member";
 import {getStorageMemberKey, setStorageMemberKey} from '../userSelect/ChooseUser'
-import {useHistory} from "react-router-dom";
 
 
 /**
@@ -30,9 +29,7 @@ export function AuthProvider({children}) {
     const [members, setMembers] = useState([]);
     const [familyImgUrl, setFamilyImgUrl] = useState([]);
     const [viewOnly, setViewOnly] = useState();
-    // const [isChangeUser,SetIsChangeUser] = useState(false);
 
-    const history = useHistory();
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             setCurrentUser(user)
@@ -67,8 +64,6 @@ export function AuthProvider({children}) {
 
     }
 
-    function addImagesTofb() {
-    }
 
     function addMember(member) {
         let dataDoc = db.collection('users').doc(groupcode);

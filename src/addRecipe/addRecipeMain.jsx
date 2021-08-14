@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
@@ -20,7 +20,6 @@ import RecipeDetails from "./RecipeDetails";
 import AddStoryRecipe from "./AddStoryRecipe";
 import tempRecipeObj, {tempRecipe} from "./tempRecipeObj"
 import {DefaultPictures} from "./DefaultPictures";
-import UploadFiles from "./UploadFiles";
 import firebase from "firebase";
 
 const useStyles = makeStyles(theme => ({
@@ -208,21 +207,6 @@ export default function AddRecipeMain(props) {
     let formRef = useRef(null);
 
 
-    // useEffect(() => {
-    //     window.scrollTo(0, 15);
-    //     const listener = event => {
-    //         if ((event.code === "Enter" || event.code === "NumpadEnter") && (activeStep < steps.length)
-    //         && activeStep<2) {
-    //             handleNext();
-    //         }
-    //     };
-    //     console.log("1z", tempRecipe.story)
-    //     document.addEventListener("keydown", listener);
-    //     return () => {
-    //         document.removeEventListener("keydown", listener);
-    //     };
-    // }, [activeStep]);
-
     function getStepContent(step) {
         switch (step) {
 
@@ -250,7 +234,7 @@ export default function AddRecipeMain(props) {
     }
 
 
-    const UploadFiles = async () => {
+    const UploadFiles = async () => { //TODO: remove this?
         const files = tempRecipe.tempStoryImages
         console.log("FILES,", files)
         if (!files || files.length === 0) return tempRecipe;
@@ -285,37 +269,6 @@ export default function AddRecipeMain(props) {
             tempRecipe.setMainImage([defImageUrl])
         }
         tempRecipe.setUploadedBy(member.name || "Guest")
-        // const files = tempRecipe.tempStoryImages
-        // let tempUrlArr = []
-        // let flag = false;
-        // if (files || files.length > 0) {
-        //     for (let i = 0; i < files.length; i++) {
-        //         let file = files[i];
-        //         let fileName = file.name;
-        //         const storageRef = await firebase.storage().ref("images");
-        //         const fileRef = await storageRef.child(fileName)
-        //         fileRef.put(file).on(
-        //             "state_changed",
-        //             (snapshot) => {
-        //             },
-        //             error => {
-        //                 console.log(error);
-        //             },
-        //             () => {
-        //                 storageRef.child(fileName).getDownloadURL().then(url => {
-        //                     tempUrlArr.push(url);
-        //                     tempRecipe.story.images = tempUrlArr;
-        //                     flag = (tempRecipe.story.images !== null)
-        //
-        //                 });
-        //             })
-        //         tempRecipe.story.images = tempUrlArr;
-        //
-        //     }
-        // }
-        // else{
-        //     flag=true
-        // }
         if (editMode) editRecipe(tempRecipe)
         if (!editMode) addRecipe(tempRecipe);
     }
@@ -356,10 +309,6 @@ export default function AddRecipeMain(props) {
                 <CssBaseline/>
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
-                        {/*<Typography component="h1" variant="h1" align="center">*/}
-                        {/*    <p className={classes.font}> Add Recipe </p>*/}
-                        {/*</Typography>*/}
-                        {/*{resetRecipe}*/}
                         <Stepper
                             className={classes.stepper}
                             alternativeLabel
@@ -369,7 +318,6 @@ export default function AddRecipeMain(props) {
                             {steps.map((label, index) => (
                                 <Step key={label}>
                                     <StepButton onClick={handleStep(index)}
-                                        // completed={completed[index]}
                                     >
 
                                         <StepLabel StepIconComponent={ColorlibStepIcon}>
