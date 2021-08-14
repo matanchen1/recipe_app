@@ -87,7 +87,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const steps = [ "Memories", "General Info", "Ingredients", " Instructions"];
+const steps = ["Memories", "General Info", "Ingredients", " Instructions"];
 
 const useColorlibStepIconStyles = makeStyles({
     root: {
