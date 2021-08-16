@@ -104,19 +104,7 @@ const useStyles = makeStyles(theme => ({
 export default function ChooseUser() {
     const history = useHistory();
     let {members} = useAuth();
-    const getAllMembers = () => {
-        const membersArr = []
-        for (const member of {members}.members) {
-            let element = {
-                name: member.name,
-                avatar: member.avatar,
-                recipesNum: member.recipesNum,
-                key: member.key,
-            }
-            membersArr.push(element);
-        }
-        return membersArr;
-    }
+
     const classes = useStyles();
     const {setMember} = useAuth()
 
@@ -125,7 +113,6 @@ export default function ChooseUser() {
         const {addMember, members} = useAuth();
         const [open, setOpen] = useState(false);
         const [error, setError] = useState("");
-        const [avatarImg, setAvatarImg] = useState("");
         const memberNameRef = useRef();
 
 
@@ -201,19 +188,6 @@ export default function ChooseUser() {
                                             src={icon} alt={index}/>
                                     </Radio>
                                 ))}
-                                {/*<Button>*/}
-                                {/*<input accept="image/*" className={classes.input} id="add-avatar-img" type="file"*/}
-                                {/*       onChange={() => {*/}
-
-                                {/*       }}*/}
-                                {/*/>*/}
-                                {/*<label htmlFor="add-avatar-img">*/}
-                                {/*    {<img*/}
-                                {/*        src={"https://static.thenounproject.com/png/348334-200.png"}*/}
-                                {/*        width="75"*/}
-                                {/*        height="75"/>}*/}
-                                {/*</label>*/}
-                                {/*</Button>*/}
                             </Radio.Group>
                         </Row>
                     </DialogContent>
@@ -247,20 +221,6 @@ export default function ChooseUser() {
         </Col>);
     }
 
-    const renderMembers = () =>
-        members.map((member, index) => (
-            <Col style={{display: "table-column"}} lg={8} md={12} sm={24}>
-                <Button>
-                    <img onClick={() => {
-                        setMember(member);
-                        setStorageMemberKey(member.getMemberKey());
-                        history.push("/");
-                    }} className={classes.membersClass}
-                         src={icons[member.avatar]} alt={index}/>
-                </Button>
-                <br/> <br/>
-                <h5><b>{member.name}</b></h5>
-            </Col>))
     return (
         <div className={classes.backgroundImg}>
             <React.Fragment>

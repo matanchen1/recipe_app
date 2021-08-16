@@ -1,10 +1,10 @@
 // Diet icon imports
-import GlutenFreeIcon from "../assets/GlutenFree.png"
-import kosherIcon from "../assets/kosher.png"
-import NoFatIcon from "../assets/no-fat.png"
-import SugarFreeIcon from "../assets/sugar-free.png"
-import VeganIcon from "../assets/vegan (1).png"
-import VegetarianIcon from "../assets/vegetarian.png"
+import GlutenFreeIcon from "../icons/GlutenFree.png"
+import kosherIcon from "../icons/kosher.png"
+import NoFatIcon from "../icons/no-fat.png"
+import SugarFreeIcon from "../icons/sugar-free.png"
+import VeganIcon from "../icons/vegan (1).png"
+import VegetarianIcon from "../icons/vegetarian.png"
 
 export const filterOptions = [
     'Vegan',
@@ -96,13 +96,13 @@ export const dietOption = [
     },
 ];
 
-export const holidayOption = [
+export const holidayOption = [ //TODO: remove this?
     'Passover',
     'Purim',
     'Rosh Hashana',
     'Shavuot'
 ];
-export const AllFiltersOption = {
+export const AllFiltersOption = { //TODO: remove this?
     filterOptions: [
         'Vegan',
         'Kosher',
@@ -197,7 +197,7 @@ export default class Recipe {
         return n
     }
 
-    setUniqueId() {
+    setUniqueId() { //TODO: remove this?
         this.uniqueId = generateUniqueKey()
     }
 
@@ -252,7 +252,6 @@ export default class Recipe {
     }
 
     setOvenHeat(ovenHeat) {
-        console.log("recipe", ovenHeat)
         this.ovenHeat = ovenHeat
     }
 
@@ -284,7 +283,6 @@ export default class Recipe {
 
     setAnotherFilter(filterList) {
         this.filtersList = filterList;
-        console.log("filterList: ", this.filtersList)
     }
 
     getFilters() {
@@ -322,16 +320,16 @@ export default class Recipe {
         return this.ovenHeat;
     }
 
-    getFilterOption() {
+    getFilterOption() { //TODO: remove this?
         return filterOptions;
     }
 
-    getCategoryOption() {
+    getCategoryOption() { //TODO: remove this?
         return categoryOption;
     }
 
 
-    getHoliday() {
+    getHoliday() { //TODO: remove this?
         return this.holiday;
     }
 
@@ -369,7 +367,7 @@ export default class Recipe {
         return steps
     }
 
-    setStoryBrief(storyBrief) {
+    setStoryBrief(storyBrief) { //TODO: remove this?
         this.storyBrief = storyBrief;
     }
 }
@@ -377,7 +375,6 @@ export default class Recipe {
 
 export const recipeConverter = {
     toFirestore: function (Recipe) {
-        // console.log("recipePrint",Recipe)
         return {
             name: Recipe.name,
             author: Recipe.author,
@@ -414,40 +411,3 @@ export const recipeConverter = {
     }
 
 };
-
-//
-// this.name = recipe.name;
-// this.author = recipe.author;
-// this.serving = recipe.serving;
-// this.images = recipe.images;
-// this.notes = recipe.notes;
-// this.tags = recipe.tags;
-// this.prepTime = recipe.prepTime;
-// this.IngredientsList = recipe.IngredientsList;
-// this.OvenHeat = recipe.OvenHeat;
-// this.StepDetails = recipe.StepDetails;
-// this.story = {
-//     content: "",
-//     images: [],
-// };
-//
-// const RecipesFilter = () => {
-//     //food Type Filter
-//     let tempList = AllRecipes;
-//     let foodTypeList = getSelectedFoodType()
-//     if (foodTypeList.length > 0) {
-//         tempList = (tempList.filter((recipe) => {
-//             foodTypeList.includes(recipe.getCategory())
-//         }));
-//     }
-//
-//     let dietFilter = getSelectedDietFilter()
-// // no battery
-//     if (dietFilter.length > 0) {
-//         tempList.filter((recipe) => {
-//             filterRecipeByDiet(recipe)
-//         });
-//     }
-//
-//     setCurRecipes(tempList);
-// }

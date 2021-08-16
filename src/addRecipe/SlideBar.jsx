@@ -1,15 +1,10 @@
-import Typography from "@material-ui/core/Typography";
-import {makeStyles, Slider} from "@material-ui/core";
-// import Grid from "@material-ui/core/Grid";
-import React, {useEffect, useRef, useState} from "react";
-// import TextField from "@material-ui/core/TextField";
+import {Slider} from "@material-ui/core";
+import React, {useEffect, useState} from "react";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-const useStyles = makeStyles(theme => ({}));
 export default function SlideBar(props) {
 
-    // const classes = useStyles()
     const tempRecipe = props.tempRecipe;
 
     const marks = [
@@ -66,7 +61,6 @@ export default function SlideBar(props) {
     const handleChange = () => {
         setDisable(!disable);
     }
-    console.log("tempRecipe.OvenHeat", tempRecipe.OvenHeat)
 
     return (
         <div>
@@ -90,12 +84,7 @@ export default function SlideBar(props) {
                     setValue(val)
                 }}
 
-                // orientation="vertical"
-
             />
-            {/*<div className={classes.b}>*/}
-            {/*    /!*    empty grid    *!/*/}
-            {/*</div>*/}
         </div>
     )
         ;

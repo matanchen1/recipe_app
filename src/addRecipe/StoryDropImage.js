@@ -1,6 +1,5 @@
 import {DropzoneArea} from "material-ui-dropzone";
-import React, {forwardRef, useEffect, useImperativeHandle, useRef, useState} from "react";
-import Button from "@material-ui/core/Button";
+import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
 import {CircularProgress, createMuiTheme, makeStyles, MuiThemeProvider} from "@material-ui/core";
 import {green} from "@material-ui/core/colors";
 import clsx from "clsx";
@@ -8,14 +7,10 @@ import Fab from "@material-ui/core/Fab";
 import CheckIcon from "@material-ui/icons/Check";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import firebase from "firebase";
-import {tempRecipe} from "./addRecipeMain";
-import {Image} from "antd";
-import DeleteIcon from "@material-ui/icons/Delete";
-import NewStoryDropImg from "./NewStoryDropImg";
-import {Upload, message} from "antd";
-import {InboxOutlined} from "@ant-design/icons";
+import {tempRecipe} from "./addRecipeMain"; //TODO: remove this?
+import {Upload} from "antd";
 
-const {Dragger} = Upload;
+const {Dragger} = Upload; //TODO: remove this?
 const useStyles = makeStyles(theme => ({
         input: {
             display: 'none',
@@ -144,16 +139,12 @@ const StoryDropImage = forwardRef((props, ref) => {
                     backgroundColor: "rgba(173,176,179,0.46)",
                     color: "#000"
                 },
-                // successAlert: {
-                //     backgroundColor: "#FAA",
-                //     color: "#000"
-                // },
             }
         }
     });
 
 
-    function handleDelete() {
+    function handleDelete() { //TODO: remove this?
         tempRecipe.setStoryImages([])
         setUrlArr([])
         setFilesArr(null)
@@ -190,7 +181,7 @@ const StoryDropImage = forwardRef((props, ref) => {
                         tempRecipe.story.images = [];
                         setLoading(true);
                         setSuccess(false)
-                        const urlArrAwait = await uploadFile(filesArr).then(async () => {
+                        const urlArrAwait = await uploadFile(filesArr).then(async () => { //TODO: remove this?
                             await resolveAfter2Seconds()
                             setLoading(false);
                             setSuccess(true)
@@ -199,10 +190,7 @@ const StoryDropImage = forwardRef((props, ref) => {
                             setFilesArr([])
                             setDeleted(false)
                         })
-                        // console.log("urlArrAwait   ", urlArrAwait)
-                        // console.log("images", tempRecipe.story.images)
                     }}
-                    // component="span"
                     aria-label="upload"
                     color="primary"
                     variant="extended"
@@ -215,6 +203,8 @@ const StoryDropImage = forwardRef((props, ref) => {
                 </Fab>
             </div>
             <br/>
+            {/* TODO: remove this? */}
+
             {/*    {urlArr.length > 0 && (!deleted) && !loading &&*/}
             {/*    (<div>*/}
             {/*        <br/> <b> Current Save Photos </b> <br/>*/}
@@ -234,7 +224,7 @@ const StoryDropImage = forwardRef((props, ref) => {
             {/*    )}*/}
         </div>
         {/*}*/}
-
+        {/* TODO: remove this? */}
         {/*<NewStoryDropImg tempRecipe={tempRecipe} handleDelete={handleDelete}/>*/}
     </div>)
 

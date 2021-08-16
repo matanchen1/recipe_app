@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -6,9 +6,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
-import {tempRecipe} from "./addRecipeMain";
-import {Button} from "@material-ui/core";
-import {filterOptions, getOnlyNameFiltersOption} from "./Recipe";
+import {tempRecipe} from "./addRecipeMain"; //TODO: remove this?
+import {getOnlyNameFiltersOption} from "./Recipe";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -64,7 +63,6 @@ export default function FilterSelect(props) {
     const classes = useStyles();
     const theme = useTheme();
     useEffect(() => {
-        console.log(filterListState);
         tempRecipe.setAnotherFilter(filterListState)
     }, [filterListState]);
 

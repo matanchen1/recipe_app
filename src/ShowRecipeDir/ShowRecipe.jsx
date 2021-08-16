@@ -1,25 +1,19 @@
 import React, {useState, useRef} from "react";
 import {Button, Alert} from "react-bootstrap";
 import Collapsible from "./collapse"
-// import CardDeck from "
-// react-bootstrap/CardDeck";
-// import Nav from "react-bootstrap/Nav";
-import "./ShowRecipeCopy.css";
+import "./ShowRecipe.css";
 import {useAuth} from "../contexts/AuthContext";
 import {makeStyles} from "@material-ui/core/styles";
-import {TextareaAutosize, TextField} from "@material-ui/core";
+import {TextareaAutosize} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
-import Member from "../userSelect/Member";
 import FaceBookShare from "../familyPage/FaceBookShare";
 import WhatsAppShare from "../familyPage/WhatsAppShare";
 import Avatar from "@material-ui/core/Avatar";
 import {icons} from "../userSelect/ChooseUser";
-import {element} from "prop-types";
 import {Image} from "antd";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import LocalDiningIcon from '@material-ui/icons/LocalDining';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import CheckCircleTwoToneIcon from '@material-ui/icons/CheckCircleTwoTone';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from "@material-ui/core/IconButton";
@@ -216,7 +210,7 @@ export function Header({recipe, recipeShareLink}) {
     const classes = useStyles();
     const scrollToRecipe = () => {
         document.getElementById("recipeDetails").scrollIntoView({behavior: 'smooth'})
-    }
+    } //TODO: remove this?
 
     return (
         <div className={classes.header}>
@@ -271,7 +265,7 @@ export function Recipe({recipe, member, EditRecipeClick, DeleteRecipeClick}) {
 
     function Item(props) {
         return <li>{props.message} </li>;
-    }
+    } //TODO: remove this?
 
     return (
         <div className={classes.recipe} id="recipeDetails">
@@ -400,8 +394,6 @@ export default function ShowRecipe(props) {
         let fileName = target.name;
         const fileRef = await storageRef.child(fileName)
 
-        // const response = await fetch(uri)
-        // const blob = await response.blob()
         setLoading(true);
         await fileRef.put(target).on(
             "state_changed",
@@ -427,10 +419,6 @@ export default function ShowRecipe(props) {
     function HandleCommentAdd() {
         const date = new Date();
         let imgUrl = (!commentImgUrl) ? "" : commentImgUrl;
-
-
-        // console.log("key " + recipeDetails.key, member.key, date.getDate() + "/" + (date.getMonth() + 1) + "/" + (date.getFullYear()),
-        //     commentRef.current.value, commentImgUrl)
         addComment(recipeDetails.key, member.key, date.getDate() + "/" + (date.getMonth() + 1) + "/" + (date.getFullYear()),
             commentRef.current.value, imgUrl);
     }
@@ -445,7 +433,6 @@ export default function ShowRecipe(props) {
                     break;
                 }
             }
-            // setRecipeDetails(recipes.find(recipe => recipe.key == props.id));
         }
         if (recipeDetails) {
 
@@ -483,8 +470,6 @@ export default function ShowRecipe(props) {
 
         return (
             <div className={classes.comment}>
-                {/*<img alt="avatar"*/}
-                {/*        src={icons[Commentmember.avatar]}/>*/}
                 <div className={classes.commentInfo}>
                     {(Commentmember) && <Avatar src={icons[Commentmember.avatar]}/>}
 

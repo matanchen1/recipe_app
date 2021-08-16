@@ -5,7 +5,6 @@ import {recipeConverter} from "../addRecipe/Recipe";
 
 import {memberConverter} from "../userSelect/Member";
 import {getStorageMemberKey, setStorageMemberKey} from '../userSelect/ChooseUser'
-import {useHistory} from "react-router-dom";
 
 
 /**
@@ -30,9 +29,7 @@ export function AuthProvider({children}) {
     const [members, setMembers] = useState([]);
     const [familyImgUrl, setFamilyImgUrl] = useState([]);
     const [viewOnly, setViewOnly] = useState();
-    // const [isChangeUser,SetIsChangeUser] = useState(false);
 
-    const history = useHistory();
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             setCurrentUser(user)
@@ -67,8 +64,6 @@ export function AuthProvider({children}) {
 
     }
 
-    function addImagesTofb() {
-    }
 
     function addMember(member) {
         let dataDoc = db.collection('users').doc(groupcode);
@@ -86,19 +81,6 @@ export function AuthProvider({children}) {
         })
     }
 
-
-    // function deleteMember(name) {
-    //     const memberByName = members.find(member => member.name == name);
-    //     db.collection('users').doc(groupcode).update({
-    //         members: firebase.firestore.FieldValue.arrayRemove(memberConverter.toFirestore(memberByName))
-    //     }).then(() => {
-    //         ForceFetchData();
-    //     })
-    // }
-
-    // function addFamilyPhoto(photo){
-    //     let dataDoc = db.collection('users').doc(groupcode);
-    // }
 
     function ForceFetchData() {
         setUpdateValue(updateValue => updateValue + 1);
@@ -175,9 +157,7 @@ export function AuthProvider({children}) {
     }
 
     async function addFavourite(memberKey, recipeKey, removeFlag = false) {
-        // ForceFetchData();
         const memberByKey = await findMemberInArr(members, memberKey);
-        // console.log(memberByKey)
         await db.collection('users').doc(groupcode).update({
             members: firebase.firestore.FieldValue.arrayRemove(memberConverter.toFirestore(memberByKey))
         })
@@ -199,14 +179,10 @@ export function AuthProvider({children}) {
 
     function addComment(key, author, date, content, imgUrl = "") {
         const recipeByKey = findRecipeInArr(recipes, key);
-        // const recipeToChange = findRecipeInArr(recipes, key);
-
-        // console.log("before change" + recipeByKey);
         db.collection('users').doc(groupcode).update({
             recipes: firebase.firestore.FieldValue.arrayRemove(recipeConverter.toFirestore(recipeByKey))
         }).then(() => {
             recipeByKey.addComment(author, date, content,imgUrl);
-            // console.log("after change" + recipeToChange);
             return db.collection('users').doc(groupcode).update({
                 recipes: firebase.firestore.FieldValue.arrayUnion(recipeConverter.toFirestore(recipeByKey))
             }).then(() => {
@@ -251,7 +227,6 @@ export function AuthProvider({children}) {
         await db.collection('users').doc(groupcode).update({
             recipes: firebase.firestore.FieldValue.arrayUnion(recipeConverter.toFirestore(newRecipe))
         })
-        // setGetRecipeByKey(recipes.find(recipe => recipe.key == key && recipe.uniqueId != uniqueKey));
         let res = await resolveAfter2Seconds()
         let recipeByKey = findRecipeInArr(recipeArray, key);
         await db.collection('users').doc(groupcode).update({
@@ -262,8 +237,6 @@ export function AuthProvider({children}) {
     }
 
     function deleteRecipe(key) {
-        // const recipeByKey = recipes.find(recipe => recipe.key == key);
-        // ForceFetchData();
         const recipeByKey = findRecipeInArr(recipes, key);
         db.collection('users').doc(groupcode).update({
             recipes: firebase.firestore.FieldValue.arrayRemove(recipeConverter.toFirestore(recipeByKey))
@@ -276,17 +249,12 @@ export function AuthProvider({children}) {
     function getSingleRecipe(code, key) {
         return db.collection('users').doc(code).get().then(doc => {
             const allRecipes = doc.data().recipes;
-            // console.log("the key is " + key);
             console.log("getting single recipe");
             for (let i = 0; i < allRecipes.length; i++) {
                 if (allRecipes[i].key == key) {
-                    // console.log(allRecipes[i].name + " this key is " + allRecipes[i].key);
                     const recipe = recipeConverter.fromFirestore(allRecipes[i]);
-                    // console.log(recipeConverter.fromFirestore(allRecipes[i]));
-                    // console.log(recipe);
                     setViewOnly(recipe);
                     return;
-                    // return recipeConverter.fromFirestore(allRecipes[i]);
                 }
             }
             throw new Error();

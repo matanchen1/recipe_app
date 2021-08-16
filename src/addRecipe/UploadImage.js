@@ -80,7 +80,6 @@ export default function UploadImage(props) {
     }, []);
 
     const handleFocusBack = () => {
-        console.log('focus-back');
         setLoading(false);
         window.removeEventListener('focus', handleFocusBack);
     }
@@ -101,8 +100,6 @@ export default function UploadImage(props) {
         let fileName = target.name;
         const fileRef = await storageRef.child(fileName)
 
-        // const response = await fetch(uri)
-        // const blob = await response.blob()
         setLoading(true);
         await fileRef.put(target).on(
             "state_changed",
@@ -126,7 +123,6 @@ export default function UploadImage(props) {
     };
 
 
-    console.log("url: ", url);
 
 
     function getPreviewImg() {

@@ -1,10 +1,7 @@
 import React, {createRef, forwardRef, useImperativeHandle} from 'react';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import StepLists from "./StepLists";
 import SlideBar from "./SlideBar";
-import {Form} from "react-bootstrap";
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -30,7 +27,6 @@ const InstructionsForm = forwardRef((props, ref) => {
             ValidBeforeNext(test) {
                 if (test === "test") return true;
                 if (!formHtmlRef.current.checkValidity()) submitRef.current.click();
-                console.log("valid? ", formHtmlRef.current.checkValidity())
                 return formHtmlRef.current.checkValidity();
             }
         }

@@ -1,11 +1,9 @@
-import {Button, Image} from 'react-bootstrap';
 import {makeStyles} from "@material-ui/core/styles";
 import WhatsAppShare from "./WhatsAppShare";
 import DishesView from "./DishesView";
 import {useAuth} from "../contexts/AuthContext";
 import {useHistory} from "react-router-dom";
 import FamilyImg from "./FamilyImg";
-import {useEffect} from "react";
 import tempRecipeObj from "../addRecipe/tempRecipeObj";
 
 function Header(props) {

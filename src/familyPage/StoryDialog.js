@@ -1,6 +1,5 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
@@ -11,15 +10,11 @@ import Typography from '@material-ui/core/Typography';
 import {Image} from "react-bootstrap";
 import {Grid} from "@material-ui/core";
 import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
-import WhatsAppIcon from '@material-ui/icons/WhatsApp';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import InstagramIcon from '@material-ui/icons/Instagram';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import Fab from "@material-ui/core/Fab";
 import WhatsAppShare from "./WhatsAppShare";
 import FaceBookShare from "./FaceBookShare";
 import {useAuth} from "../contexts/AuthContext";
 import CopyShareLink from "./CopyShareLink";
+import {db} from "../firebase";
 
 
 const styles = (theme) => ({
@@ -55,7 +50,7 @@ const DialogContent = withStyles((theme) => ({
     },
 }))(MuiDialogContent);
 
-const DialogActions = withStyles((theme) => ({
+const DialogActions = withStyles((theme) => ({ //TODO: remove this?
     root: {
         margin: 0,
         padding: theme.spacing(1),
@@ -96,16 +91,11 @@ export default function StoryDialog(props) {
                         </Grid>
 
                     </Grid>
-                    {/*<Typography style={{padding: "12px"}} gutterBottom>*/}
-                    {/*    {props.author || "no author"}*/}
-                    {/*</Typography>*/}
                     <br/><br/>
                     <IconButton color="primary" aria-label="upload picture" component="span">
-                        {/*<WhatsAppIcon/>*/}
                         <WhatsAppShare shareValue={recipeShareLink} message="Check out my recipe! "/>
                     </IconButton>
                     <IconButton color="primary" aria-label="upload picture" component="span">
-                        {/*<FacebookIcon/>*/}
                         <FaceBookShare shareValue={recipeShareLink} message="Check out my recipe! "/>
                     </IconButton>
 
@@ -113,11 +103,6 @@ export default function StoryDialog(props) {
                     <br/>
 
                 </DialogContent>
-                {/*<DialogActions>*/}
-                {/*    /!*<Button autoFocus onClick={handleClose} color="primary">*!/*/}
-                {/*    /!*    Back*!/*/}
-                {/*    /!*</Button>*!/*/}
-                {/*</DialogActions>*/}
             </Dialog>
         </div>
     );

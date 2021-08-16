@@ -8,10 +8,8 @@ import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
 import {makeStyles} from "@material-ui/core/styles";
 import {useAuth} from "../contexts/AuthContext";
-import {Image} from "antd";
-import {Button} from "react-bootstrap";
 import Fab from "@material-ui/core/Fab";
-// import noGluten from "../assets/GlutenFree.png"
+import {db} from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
     checkBoxText: {
@@ -34,7 +32,7 @@ export default function CheckBox(props) {
         membersArr.push(member)
     }
 
-    const getNameByKey = (key) => {
+    const getNameByKey = (key) => { //TODO: remove this?
         return memberNames[key];
     }
     const classes = useStyles();
@@ -118,7 +116,6 @@ export default function CheckBox(props) {
                     src={value.icon}/></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </React.Fragment>
         </div>
-        // <img style={{height:"20px",width:"20px"}} alt={"ff"} src = {noGluten} />
     ))
 
     const renderCheckboxLists3 = (type) => membersArr.map((value, index) => (
@@ -146,9 +143,6 @@ export default function CheckBox(props) {
     return (
         <div className={"filterHeader"}>
 
-            {/*<Collapse defaultActiveKey={['0']} >*/}
-            {/*<Panel header="Food Type" key="1"/>*/}
-            {/*style={{boxShadow: "0px 4px 2px #888888"}}*/}
             <ListItem button onClick={() => {
                 setOpen(!open);
             }}>
@@ -168,7 +162,6 @@ export default function CheckBox(props) {
             </ListItem>
             <Collapse in={open2} timeout="auto" unmountOnExit>
                 <List>
-                    {/*component="div" disablePadding*/}
                     {renderCheckboxLists2("DietFilter")}
                 </List>
             </Collapse>
@@ -181,7 +174,6 @@ export default function CheckBox(props) {
             </ListItem>
             <Collapse in={open3} timeout="auto" unmountOnExit>
                 <List>
-                    {/*component="div" disablePadding*/}
                     {renderCheckboxLists3("curMembers")}
                 </List>
             </Collapse>

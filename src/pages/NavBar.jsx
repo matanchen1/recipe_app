@@ -9,7 +9,6 @@ import {useAuth} from "../contexts/AuthContext";
 import {useHistory} from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import {icons} from "../userSelect/ChooseUser";
-import Member from "../userSelect/Member";
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -26,8 +25,6 @@ const useStyles = makeStyles(theme => ({
         width: theme.spacing(5),
         height:
             theme.spacing(5),
-        // -moz-box-shadow:    "inset 0 0 10px #000000",
-        // -webkit-box-shadow:" inset 0 0 10px #000000",
         boxShadow: "inset 0 0 2px #000000",
         border: "1px solid #555",
         display: 'flex',
@@ -44,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function NavBar() {
-    const {familyName, member} = useAuth()
+    const {member} = useAuth()
     const {currentUser, logout, ForceFetchData, setLoading} = useAuth();
     const [error, setError] = useState("");
     const history = useHistory();
@@ -59,7 +56,6 @@ export default function NavBar() {
             logout().then(()=> {history.push("/");}).catch(err=> {
                 setError("Failed to Logout, " + err.message);
             })
-            // history.push("/");
         } catch (err) {
             setError("Failed to Logout, " + err.message);
         }
@@ -74,7 +70,7 @@ export default function NavBar() {
         <>
             <Navbar variant="light" expand="lg" className={classes.stickyTop}>
                 <Navbar.Brand onClick={HandleLogoClick}>
-                    <a className="navbar-brand" href="#">
+                    <a className="navbar-brand" href="/">
                         <img
                             src="https://firebasestorage.googleapis.com/v0/b/grandma-cooked-oatmeal.appspot.com/o/images%2FLogo1.png?alt=media&token=bc78965c-aad2-4121-81f9-6feb9ccf5301"
                             width="150" height="45" alt="">
@@ -82,8 +78,6 @@ export default function NavBar() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        {/*             <Nav.Link href="#home">Add Recipe</Nav.Link>
-            <Nav.Link href="#link">Invite Family User</Nav.Link> */}
                     </Nav>
                     {currentUser && member &&
                     <a href className={classes.textCenter}><Avatar className={classes.memberAvatar}

@@ -16,18 +16,4 @@ export default function PrivateRoute({component: Component, ...rest}) {
     )
 }
 
-// export function PrivateRouteForAddRecipe({component: Component, ...rest}) {
-//     const {currentUser} = useAuth();
-//     let editMode = rest.editMode
-//     console.log(rest.editMode, "rest")
-//     return (
-//         <Route
-//             {...rest}
-//             render={props => {
-//                 return currentUser ? <Component editMode ={editMode} /> : <Redirect to="/"/>
-//             }}>
-//
-//         </Route>
-//     )
-// }
 

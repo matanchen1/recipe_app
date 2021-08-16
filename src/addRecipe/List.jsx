@@ -1,14 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
-import {IconButton, InputAdornment, makeStyles} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import {tempRecipe} from "./addRecipeMain";
+import {tempRecipe} from "./addRecipeMain"; //TODO: remove this?
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import IngredientsDataSet from "../data/IngredientsDataSet";
-import FaceIcon from "@material-ui/icons/Face";
 
 const useStyles = makeStyles(theme => ({
         margin: {
@@ -59,7 +58,7 @@ function List(props) {
     const tempRecipe = props.tempRecipe;
     const [inputList, setInputList] = useState(tempRecipe.getIngredientsList());
     // handle click event of the Add button
-    const ing = IngredientsDataSet();
+    const ing = IngredientsDataSet(); //TODO: remove this?
     const handleAddClick = () => {
         setInputList([...inputList, {ingredient: "", amount: "", typeAmount: ""}]);
     };
@@ -220,9 +219,9 @@ function List(props) {
         "Cans",
         "To taste", "pieces", "slices"]
 
-    const [inputValue, setInputValue] = React.useState('')
+    const [inputValue, setInputValue] = React.useState('') //TODO: remove this?
 
-    // useEffect(() => {
+    // useEffect(() => { //TODO: remove this?
     //     // window.scrollTo(0, 15);
     //     const listener = event => {
     //         if ((event.code === "Enter" || event.code === "NumpadEnter")) {
@@ -239,7 +238,6 @@ function List(props) {
     // handle input change
     const handleInputChange = (e, index) => {
         const {name, value} = e.target;
-        console.log(name, value)
         const list = [...inputList];
         list[index][name] = value;
         setInputList(list);
@@ -247,10 +245,7 @@ function List(props) {
     };
     const handleInputChangeAC = (e, v, index) => {
         const {name} = e.target;
-        console.log(name)
-        console.log(e.target, v)
         const list = [...inputList];
-        console.log("list", list)
         list[index][name] = v;
         setInputList(list);
         tempRecipe.setIngredientsList(list);

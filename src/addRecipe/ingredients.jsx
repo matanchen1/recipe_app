@@ -26,7 +26,6 @@ const Ingredients = forwardRef((props, ref) => {
             ValidBeforeNext(test) {
                 if (test === "test") return true;
                 if (!formHtmlRef.current.checkValidity()) submitRef.current.click();
-                console.log("valid? ", formHtmlRef.current.checkValidity());
 
                 return formHtmlRef.current.checkValidity();
 

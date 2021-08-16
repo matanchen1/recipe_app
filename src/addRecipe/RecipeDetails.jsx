@@ -1,14 +1,12 @@
-import React, {createRef, forwardRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
+import React, {createRef, forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import {makeStyles} from "@material-ui/core/styles";
-// import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 import UploadImage from "./UploadImage";
 import Category from "./Category";
 import PrepTime from "./PrepTime";
 import FilterSelect from "./FilterSelect";
-import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import LocalDiningIcon from '@material-ui/icons/LocalDining';
 import {InputAdornment} from "@material-ui/core";
 
@@ -32,23 +30,20 @@ const useStyles = makeStyles(theme => ({
 
 const RecipeDetails = forwardRef((props, ref) => {
     const classes = useStyles();
-    const [submitFLag, setSubmitFlag] = useState(false);
-    const [servingFlag, setServingFlag] = useState(true);
-    const recipeNameRef = useRef("");
+    const [submitFLag, setSubmitFlag] = useState(false); //TODO: remove this?
+    const [servingFlag, setServingFlag] = useState(true); //TODO: remove this?
+    const recipeNameRef = useRef(""); //TODO: remove this?
     const servingsRef = useRef(0);
     const notesRef = useRef("");
     const tagsRef = useRef("");
-    const authorRef = useRef("");
     const formHtmlRef = createRef();
     const submitRef = createRef();
     const tempRecipe = props.tempRecipe;
     const editMode = props.editMode;
-    // const [prepTime, setPrepTime] = useState("");
     useImperativeHandle(ref, () => ({
             ValidBeforeNext(test) {
                 if (test === "test") return true;
                 if (!formHtmlRef.current.checkValidity()) submitRef.current.click();
-                console.log("valid? ", formHtmlRef.current.checkValidity());
                 setSubmitFlag(true);
                 if (!formHtmlRef || !formHtmlRef.current) return false;
                 else return (formHtmlRef.current.checkValidity());

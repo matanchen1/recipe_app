@@ -3,16 +3,14 @@ import {useAuth} from "../contexts/AuthContext";
 import React, {useEffect, useState} from "react";
 import MediaCard from "./MediaCard";
 import CheckBox from "./CheckBox";
-import {getDietFilters, getFoodTypes, getOnlyNameFiltersOption} from "../addRecipe/Recipe";
+import {getDietFilters, getFoodTypes} from "../addRecipe/Recipe";
 import "./familyPage.css";
 import SearchBox from "./SearchBox";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import {Col, Row} from 'antd';
-import Button from "@material-ui/core/Button";
-import {tempRecipe} from "../addRecipe/tempRecipeObj";
 import {Checkbox, FormControlLabel} from "@material-ui/core";
-import {Favorite, FavoriteBorder, Star, StarBorder} from "@material-ui/icons";
+import {Star, StarBorder} from "@material-ui/icons";
 import MediaCardComments from "./MediaCardComments";
 import 'antd/dist/antd.css';
 import {Card} from 'antd';
@@ -30,9 +28,6 @@ const useStyles = makeStyles((theme) => ({
     },
     margin: {
         marginTop: "30px",
-        // Sivan changed the margin for now, we can totally go back
-        // margin: theme.spacing(1),
-        // border: "0.5px solid black"
     },
     extendedIcon: {
         marginRight: theme.spacing(1.5),
@@ -41,13 +36,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: "40px",
     },
     mediaCardHover: {
-        // marginRight: "20px",
-        // marginLeft: "20px",
-        // marginBottom: "30px",
         maxWidth: "350px",
-        // "&:hover": {
-        //     boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-        // }
     },
 
 }));
@@ -87,7 +76,7 @@ export default function DishesView(props) {
         console.log("CC!!", curRecipes)
     }, [curRecipes, Filters, check]);
 
-    function sortByUploaded() {
+    function sortByUploaded() { //TODO: remove?
         let sortedRecipe = curRecipes.sort((a, b) => {
             return (a.getUploadedBy().localeCompare(b.getUploadedBy()));
         })
@@ -103,7 +92,6 @@ export default function DishesView(props) {
             return true;
         } else {
             return (member.favourites.has(parseInt(recipe.key)))
-            // return member.FavoriteRecipe.contains(recipe.key)
         }
     }
 
@@ -126,9 +114,6 @@ export default function DishesView(props) {
 
         const newFilters = {...Filters}
         newFilters[category] = filters
-        // console.log("filters", filters)
-
-        //        newFilters[FoodCategory] = [Salades, Pies, Others]
 
         if (category === FilterOptionStates["1"]) {
             updateRecipesForFoodType(newFilters)
@@ -143,7 +128,7 @@ export default function DishesView(props) {
     }
 
     const updateFamilyMember = (newFilters) => {
-        let FamilyMemberList = newFilters[FilterOptionStates["3"]];
+        let FamilyMemberList = newFilters[FilterOptionStates["3"]]; //TODO: remove this?
         updateCurRecipe(newFilters)
     }
     const FamilyMembersCheck = (recipe, newFilter) => {
@@ -213,7 +198,7 @@ export default function DishesView(props) {
     }
 
     const updateRecipesForFoodType = (newFilters) => {
-        let foodTypeList = newFilters[FilterOptionStates["1"]]
+        let foodTypeList = newFilters[FilterOptionStates["1"]] //TODO: remove this?
 
         updateCurRecipe(newFilters)
     }
@@ -238,9 +223,6 @@ export default function DishesView(props) {
         }
         return filteredRecipe;
     }
-    // const filteredRobots = curRecipes.filter(robot => {
-    //     return robot.name.toLowerCase().includes(this.state.searchfield.toLowerCase())
-    // })
     const onSearchChange = (event) => {
         setSearchField(event.target.value)
     }
