@@ -1,20 +1,18 @@
-import React, {useState} from "react";
+import React, { useState} from "react";
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
-import {makeStyles} from "@material-ui/core";
+import { makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {tempRecipe} from "./addRecipeMain";
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
+import IngredientsDataSet from "../data/IngredientsDataSet";
 
 const useStyles = makeStyles(theme => ({
         margin: {
             margin: theme.spacing(1),
         },
-
-
         font: {
             color: 'rgba(213,195,38,0.9)',
         },
@@ -49,8 +47,6 @@ const useStyles = makeStyles(theme => ({
             "&$labelFocused": {}
         },
         labelFocused: {}
-
-
     }
 ));
 
@@ -58,6 +54,7 @@ function List(props) {
     const tempRecipe = props.tempRecipe;
     const [inputList, setInputList] = useState(tempRecipe.getIngredientsList());
     // handle click event of the Add button
+    const ing = IngredientsDataSet();
     const handleAddClick = () => {
         setInputList([...inputList, {ingredient: "", amount: "", typeAmount: ""}]);
     };
@@ -224,14 +221,30 @@ function List(props) {
     // handle input change
     const handleInputChange = (e, index) => {
         const {name, value} = e.target;
+        console.log(name, value)
         const list = [...inputList];
         list[index][name] = value;
         setInputList(list);
         tempRecipe.setIngredientsList(list);
     };
-    const handleInputChangeAC = (e, v, index) => {
-        const {name} = e.target;
+
+    /**
+     *     handle input change for autocompletion
+
+     * @param e
+     * @param v
+     * @param index
+     * @param name
+     */
+    const handleInputChangeAC = (e, v, index, name) => {
+        console.log("e: ", e)
+        console.log("v: ", v)
+        console.log("ind: ", index)
+        console.log("name", name)
+        console.log(e.target, v)
         const list = [...inputList];
+        console.log("getName: ", e.target.getAttribute('name')
+        )
         list[index][name] = v;
         setInputList(list);
         tempRecipe.setIngredientsList(list);
@@ -258,10 +271,12 @@ function List(props) {
                         <Grid container spacing={3} id={i + "grid"}>
                             <Grid item xs={5} sm={4}>
                                 <Autocomplete
-                                    id="ingFreeSolo"
-                                    onChange={(e, v) => handleInputChangeAC(e, v, i)}
+                                    id="ingredient"
+                                    onChange={(e, v) =>
+                                        handleInputChangeAC(e, v, i, "ingredient")}
                                     freeSolo
                                     inputValue={x["ingredient"]}
+                                    disableClearable
                                     // value={x["ingredient"]}
                                     options={ingLst.map((t) => "" + t)}
                                     renderInput={(params) => (
@@ -295,7 +310,6 @@ function List(props) {
                             <Grid item xs={4} sm={2}>
                                 <TextField
                                     id="ingFreeSolo"
-                                    freeSolo
                                     color="secondary"
                                     fullWidth
                                     name="amount"
@@ -322,8 +336,10 @@ function List(props) {
                                 <Autocomplete
                                     id="typeFreeSolo"
                                     freeSolo
+                                    disableClearable
+                                    autoSelect
                                     inputValue={x.typeAmount}
-                                    onChange={(e, v) => handleInputChangeAC(e, v, i)}
+                                    onChange={(e, v, reason) => handleInputChangeAC(e, v, i, "typeAmount")}
                                     options={typeList.map((t) => "" + t)}
                                     renderInput={(params) => (
                                         <TextField
@@ -368,10 +384,6 @@ function List(props) {
                     </div>
                 );
             })}
-            {/*<IconButton aria-label="delete" className={classes.margin}>*/}
-            {/*    <DeleteIcon />*/}
-            {/*</IconButton>
-            {/*<div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div>*/}
         </div>
     );
 }
