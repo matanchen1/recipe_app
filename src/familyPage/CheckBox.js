@@ -79,7 +79,7 @@ export default function CheckBox(props) {
             newCurMembers.splice(currentIndex, 1)
         }
         setCheckedMembers(newCurMembers)
-        console.log("new", newCurMembers)
+         
         props.handleFilters(newCurMembers, type)
         //update this checked information into Parent Component
     }

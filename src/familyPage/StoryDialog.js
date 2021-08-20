@@ -14,7 +14,6 @@ import WhatsAppShare from "./WhatsAppShare";
 import FaceBookShare from "./FaceBookShare";
 import {useAuth} from "../contexts/AuthContext";
 import CopyShareLink from "./CopyShareLink";
-import {db} from "../firebase";
 
 
 const styles = (theme) => ({

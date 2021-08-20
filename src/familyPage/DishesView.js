@@ -73,11 +73,9 @@ export default function DishesView(props) {
         membersArr.push(member)
     }
     useEffect(() => {
-        console.log("CC!!", curRecipes)
     }, [curRecipes, Filters, check]);
 
     function checkFavoriteRecipes(recipe, newFilters) {
-        console.log("!newFilters[\"favChecked\"]", !newFilters["favChecked"])
 
         if (!newFilters["favChecked"]) {
             return true;
@@ -161,7 +159,7 @@ export default function DishesView(props) {
         let category = recipe.getCategory();
 
         for (let i = 0; i < foodTypeList.length; i++) {
-            console.log("list[foodTypeList[i]]", list[foodTypeList[i]].name)
+             
             if (list[foodTypeList[i]].name === category) {
                 return true
             }
@@ -172,7 +170,7 @@ export default function DishesView(props) {
 
     const updateRecipesForDiet = (newFilters) => {
         let dietList = newFilters[FilterOptionStates["2"]];
-        console.log("diet", dietList)
+         
         updateCurRecipe(newFilters)
     }
 

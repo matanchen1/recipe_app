@@ -35,7 +35,6 @@ export default function FamilyImg() {
     }, [imageUrl])
 
     const uploadFamilyImg = async (e) => {
-        console.log(imageUrl)
         let target = e.target.files[0];
         if (!target) return;
         const storageRef = await firebase.storage().ref("images");
@@ -46,7 +45,7 @@ export default function FamilyImg() {
             (snapshot) => {
             },
             error => {
-                console.log(error);
+                 
             },
             () => {
                 storageRef.child(fileName)

@@ -26,7 +26,7 @@ export default function MediaCard(props) {
 
 
     useEffect(() => {
-        console.log("memberFaUSEffect", memberFav)
+         
     }, [memberFav])
 
     function getAvatar() {
@@ -37,14 +37,14 @@ export default function MediaCard(props) {
                 avatar = members[i].getAvatarIndex();
             }
         }
-        console.log(avatar)
+         
         return (
             <Avatar alt="avatar"
                     src={icons[avatar]}/>)
     }
 
     function renderFavBtn(memberFav, recipeKey) {
-        console.log("memberFAV", memberFav)
+         
         return (!memberFav || !memberFav.has(recipeKey)) ?
             (
                 <StarOutlineIcon style={{fill: "#e5a407"}} key="ellipsis" onClick={async () => {

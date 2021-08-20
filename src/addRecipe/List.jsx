@@ -1,7 +1,7 @@
-import React, { useState} from "react";
+import React, {useState} from "react";
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
-import { makeStyles} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -216,12 +216,9 @@ function List(props) {
         "To taste", "pieces", "slices"]
 
 
-
-
     // handle input change
     const handleInputChange = (e, index) => {
         const {name, value} = e.target;
-        console.log(name, value)
         const list = [...inputList];
         list[index][name] = value;
         setInputList(list);
@@ -237,14 +234,7 @@ function List(props) {
      * @param name
      */
     const handleInputChangeAC = (e, v, index, name) => {
-        console.log("e: ", e)
-        console.log("v: ", v)
-        console.log("ind: ", index)
-        console.log("name", name)
-        console.log(e.target, v)
         const list = [...inputList];
-        console.log("getName: ", e.target.getAttribute('name')
-        )
         list[index][name] = v;
         setInputList(list);
         tempRecipe.setIngredientsList(list);
