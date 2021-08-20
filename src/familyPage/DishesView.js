@@ -76,15 +76,6 @@ export default function DishesView(props) {
         console.log("CC!!", curRecipes)
     }, [curRecipes, Filters, check]);
 
-    function sortByUploaded() { //TODO: remove?
-        let sortedRecipe = curRecipes.sort((a, b) => {
-            return (a.getUploadedBy().localeCompare(b.getUploadedBy()));
-        })
-        console.log(sortedRecipe)
-        setCurRecipes(sortedRecipe)
-        setSorted(!sort)
-    }
-
     function checkFavoriteRecipes(recipe, newFilters) {
         console.log("!newFilters[\"favChecked\"]", !newFilters["favChecked"])
 
@@ -128,7 +119,6 @@ export default function DishesView(props) {
     }
 
     const updateFamilyMember = (newFilters) => {
-        let FamilyMemberList = newFilters[FilterOptionStates["3"]]; //TODO: remove this?
         updateCurRecipe(newFilters)
     }
     const FamilyMembersCheck = (recipe, newFilter) => {
@@ -198,8 +188,6 @@ export default function DishesView(props) {
     }
 
     const updateRecipesForFoodType = (newFilters) => {
-        let foodTypeList = newFilters[FilterOptionStates["1"]] //TODO: remove this?
-
         updateCurRecipe(newFilters)
     }
 
@@ -252,7 +240,7 @@ export default function DishesView(props) {
     }
 
 
-    const renderRecipes = (Recipes) => getFilterRecipe(Recipes).map((recipe, i) => (//TODO: can we remove this index?
+    const renderRecipes = (Recipes) => getFilterRecipe(Recipes).map((recipe, i) => (
         <Col lg={8} md={12} sm={24} id={i}
              className={classes.mediaCardHover}
         >

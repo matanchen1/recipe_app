@@ -5,9 +5,9 @@ import {makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import {tempRecipe} from "./addRecipeMain"; //TODO: remove this?
+import {tempRecipe} from "./addRecipeMain";
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import IngredientsDataSet from "../data/IngredientsDataSet";
+
 
 const useStyles = makeStyles(theme => ({
         margin: {
@@ -58,7 +58,6 @@ function List(props) {
     const tempRecipe = props.tempRecipe;
     const [inputList, setInputList] = useState(tempRecipe.getIngredientsList());
     // handle click event of the Add button
-    const ing = IngredientsDataSet(); //TODO: remove this?
     const handleAddClick = () => {
         setInputList([...inputList, {ingredient: "", amount: "", typeAmount: ""}]);
     };
@@ -219,21 +218,8 @@ function List(props) {
         "Cans",
         "To taste", "pieces", "slices"]
 
-    const [inputValue, setInputValue] = React.useState('') //TODO: remove this?
 
-    // useEffect(() => { //TODO: remove this?
-    //     // window.scrollTo(0, 15);
-    //     const listener = event => {
-    //         if ((event.code === "Enter" || event.code === "NumpadEnter")) {
-    //             handleAddClick();
-    //         }
-    //     };
-    //     console.log("1z", tempRecipe.story)
-    //     document.addEventListener("keydown", listener);
-    //     return () => {
-    //         document.removeEventListener("keydown", listener);
-    //     };
-    // }, [inputList]);
+
 
     // handle input change
     const handleInputChange = (e, index) => {

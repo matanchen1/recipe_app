@@ -234,32 +234,6 @@ export default function AddRecipeMain(props) {
     }
 
 
-    const UploadFiles = async () => { //TODO: remove this?
-        const files = tempRecipe.tempStoryImages
-        // console.log("FILES,", files)
-        if (!files || files.length === 0) return tempRecipe;
-        for (let i = 0; i < files.length; i++) {
-            let file = files[i];
-            let fileName = file.name;
-            const storageRef = await firebase.storage().ref("images");
-            const fileRef = await storageRef.child(fileName)
-            await fileRef.put(file).on(
-                "state_changed",
-                (snapshot) => {
-                },
-                error => {
-                    console.log(error);
-                },
-                () => {
-                    storageRef.child(fileName).getDownloadURL().then(url => {
-                        tempRecipe.story.images = ([...urlArr, url])
-                        setUrlArr([...urlArr, url]);
-                        return tempRecipe
-                    });
-                }
-            );
-        }
-    }
 
     const handleUploadTempRecipe = async (tempRecipe, editMode) => {
         formRef = null;
