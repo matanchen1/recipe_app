@@ -96,42 +96,6 @@ export const dietOption = [
     },
 ];
 
-export const holidayOption = [ //TODO: remove this?
-    'Passover',
-    'Purim',
-    'Rosh Hashana',
-    'Shavuot'
-];
-export const AllFiltersOption = { //TODO: remove this?
-    filterOptions: [
-        'Vegan',
-        'Kosher',
-        'GlutenFree',
-        'Sugar Free',
-        'Low Calories',
-        'Vegetarian'],
-
-    categoryOption: [
-        'Salads',
-        'Pies',
-        'Fish',
-        'Deserts',
-        'Soup',
-        'Other',
-        'Meat',
-        'Side dish',
-        'Pastry',
-        'Dinner',
-        'Drinks'
-    ],
-
-    holidayOption: [
-        'Passover',
-        'Purim',
-        'Rosh Hashana',
-        'Shavuot'
-    ],
-}
 export const getDietFilters = () => {
     return dietOption;
 }
@@ -195,10 +159,6 @@ export default class Recipe {
         let n = parseFloat(this.serving);
         n.toFixed(1);
         return n
-    }
-
-    setUniqueId() { //TODO: remove this?
-        this.uniqueId = generateUniqueKey()
     }
 
     setUploadedBy(userName) {
@@ -320,19 +280,6 @@ export default class Recipe {
         return this.ovenHeat;
     }
 
-    getFilterOption() { //TODO: remove this?
-        return filterOptions;
-    }
-
-    getCategoryOption() { //TODO: remove this?
-        return categoryOption;
-    }
-
-
-    getHoliday() { //TODO: remove this?
-        return this.holiday;
-    }
-
 
     setHoliday(value) {
         this.holiday = value;
@@ -348,7 +295,7 @@ export default class Recipe {
 
     addComment(author, date, content, imgUrl="") {
         this.comments.push({author: author, date: date, content: content, imgUrl: imgUrl});
-        //TODO chang name of author to key
+
     }
 
     getIngredientsListMap() {
@@ -367,9 +314,7 @@ export default class Recipe {
         return steps
     }
 
-    setStoryBrief(storyBrief) { //TODO: remove this?
-        this.storyBrief = storyBrief;
-    }
+
 }
 
 

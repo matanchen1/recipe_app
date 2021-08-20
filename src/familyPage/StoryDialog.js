@@ -50,7 +50,7 @@ const DialogContent = withStyles((theme) => ({
     },
 }))(MuiDialogContent);
 
-const DialogActions = withStyles((theme) => ({ //TODO: remove this?
+const DialogActions = withStyles((theme) => ({
     root: {
         margin: 0,
         padding: theme.spacing(1),

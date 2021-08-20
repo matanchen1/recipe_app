@@ -30,9 +30,6 @@ const useStyles = makeStyles(theme => ({
 
 const RecipeDetails = forwardRef((props, ref) => {
     const classes = useStyles();
-    const [submitFLag, setSubmitFlag] = useState(false); //TODO: remove this?
-    const [servingFlag, setServingFlag] = useState(true); //TODO: remove this?
-    const recipeNameRef = useRef(""); //TODO: remove this?
     const servingsRef = useRef(0);
     const notesRef = useRef("");
     const tagsRef = useRef("");
@@ -44,7 +41,6 @@ const RecipeDetails = forwardRef((props, ref) => {
             ValidBeforeNext(test) {
                 if (test === "test") return true;
                 if (!formHtmlRef.current.checkValidity()) submitRef.current.click();
-                setSubmitFlag(true);
                 if (!formHtmlRef || !formHtmlRef.current) return false;
                 else return (formHtmlRef.current.checkValidity());
             }

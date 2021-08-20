@@ -208,9 +208,6 @@ export const useStyles = makeStyles({
 export function Header({recipe, recipeShareLink}) {
     const history = useHistory();
     const classes = useStyles();
-    const scrollToRecipe = () => {
-        document.getElementById("recipeDetails").scrollIntoView({behavior: 'smooth'})
-    } //TODO: remove this?
 
     return (
         <div className={classes.header}>
@@ -263,9 +260,6 @@ export function Recipe({recipe, member, EditRecipeClick, DeleteRecipeClick}) {
     const classes = useStyles();
     const colors = ["grey", "black", "goldenrod"];
 
-    function Item(props) {
-        return <li>{props.message} </li>;
-    } //TODO: remove this?
 
     return (
         <div className={classes.recipe} id="recipeDetails">
@@ -303,7 +297,6 @@ export function Recipe({recipe, member, EditRecipeClick, DeleteRecipeClick}) {
                             <span>{message}</span>
                             <br/>
                         </>)
-                        // return <Item key={message} message={message}/>;
 
                     })}
                 </div>

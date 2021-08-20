@@ -7,10 +7,9 @@ import Fab from "@material-ui/core/Fab";
 import CheckIcon from "@material-ui/icons/Check";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import firebase from "firebase";
-import {tempRecipe} from "./addRecipeMain"; //TODO: remove this?
-import {Upload} from "antd";
+import {tempRecipe} from "./addRecipeMain";
 
-const {Dragger} = Upload; //TODO: remove this?
+
 const useStyles = makeStyles(theme => ({
         input: {
             display: 'none',
@@ -143,15 +142,6 @@ const StoryDropImage = forwardRef((props, ref) => {
         }
     });
 
-
-    function handleDelete() { //TODO: remove this?
-        tempRecipe.setStoryImages([])
-        setUrlArr([])
-        setFilesArr(null)
-        setDeleted(true)
-        setSuccess(false)
-    }
-
     return (<div>
 
         <div className={classes.wrapper}>
@@ -181,15 +171,6 @@ const StoryDropImage = forwardRef((props, ref) => {
                         tempRecipe.story.images = [];
                         setLoading(true);
                         setSuccess(false)
-                        const urlArrAwait = await uploadFile(filesArr).then(async () => { //TODO: remove this?
-                            await resolveAfter2Seconds()
-                            setLoading(false);
-                            setSuccess(true)
-                            const tempUrl = [...tempRecipe.story.images, ...urlArr]
-                            tempRecipe.setStoryImages(urlArr);
-                            setFilesArr([])
-                            setDeleted(false)
-                        })
                     }}
                     aria-label="upload"
                     color="primary"
@@ -203,29 +184,8 @@ const StoryDropImage = forwardRef((props, ref) => {
                 </Fab>
             </div>
             <br/>
-            {/* TODO: remove this? */}
 
-            {/*    {urlArr.length > 0 && (!deleted) && !loading &&*/}
-            {/*    (<div>*/}
-            {/*        <br/> <b> Current Save Photos </b> <br/>*/}
-            {/*        {urlArr.map((url) => <Image height={80} width={100}*/}
-            {/*                                                     alt="Recipe Photo" src={url}/>)}</div>)}*/}
-
-            {/*    {urlArr.length > 0 && (!deleted) && !loading &&*/}
-            {/*        (<Button*/}
-            {/*        variant="contained"*/}
-            {/*        color="secondary"*/}
-            {/*        className={classes.button}*/}
-            {/*        startIcon={<DeleteIcon/>}*/}
-            {/*        onClick={handleDelete}*/}
-            {/*    >*/}
-            {/*        Delete*/}
-            {/*    </Button>*/}
-            {/*    )}*/}
         </div>
-        {/*}*/}
-        {/* TODO: remove this? */}
-        {/*<NewStoryDropImg tempRecipe={tempRecipe} handleDelete={handleDelete}/>*/}
     </div>)
 
 })

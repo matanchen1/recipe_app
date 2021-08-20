@@ -9,7 +9,6 @@ import List from "@material-ui/core/List";
 import {makeStyles} from "@material-ui/core/styles";
 import {useAuth} from "../contexts/AuthContext";
 import Fab from "@material-ui/core/Fab";
-import {db} from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
     checkBoxText: {
@@ -32,9 +31,6 @@ export default function CheckBox(props) {
         membersArr.push(member)
     }
 
-    const getNameByKey = (key) => { //TODO: remove this?
-        return memberNames[key];
-    }
     const classes = useStyles();
     const [Checked, setChecked] = useState([])
     const [CheckedDiet, setCheckedDiet] = useState([])
@@ -139,7 +135,7 @@ export default function CheckBox(props) {
         props.handleFilters("clearChoice")
     }
 
-// TODO: Style Filtering
+
     return (
         <div className={"filterHeader"}>
 

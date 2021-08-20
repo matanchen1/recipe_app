@@ -1,15 +1,7 @@
 import React from "react";
 import { Upload, Modal } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import {makeStyles} from "@material-ui/core/styles";
 import './NewStoryDropImg.css'
-const useStyles = makeStyles((theme) => ({ //TODO: remove this?
-    root: {
-        zoom: "100%",
-        justifyContent: 'space-around',
-        overflow: 'hidden',
-        background: "none",
-    },}))
 
 
 function getBase64(file) {

@@ -7,7 +7,6 @@ import FamilyImg from "./FamilyImg";
 import tempRecipeObj from "../addRecipe/tempRecipeObj";
 
 function Header(props) {
-// TODO: DEAL WITH SMALL SIZED DISPLAYS
 // styles
     const useStyles = makeStyles({
         mainHeaderBase: {
@@ -66,7 +65,6 @@ function FamilyPage(props) {
     const history = useHistory();
     function handleClickAddRecipe() {
         tempRecipeObj(false,null,"init")
-        // addFavourite(1,22);
         history.push("/addrecipe")
     }
     const {familyName,} = useAuth();
@@ -77,7 +75,7 @@ function FamilyPage(props) {
             <div className={"header"}>
                 {familyName && <Header name={familyName}/>}
                 {!familyName && <Header name="Kaufman"/>}
-                {/*TODO: send image to header from firebase*/}
+
             </div>
             <DishesView handleClickBtn={handleClickAddRecipe}/>
         </div>
